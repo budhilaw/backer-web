@@ -710,6 +710,9 @@ video {
 .-mt-20 {
 	margin-top: -5rem;
 }
+.mb-6 {
+	margin-bottom: 1.5rem;
+}
 .-mt-56 {
 	margin-top: -14rem;
 }
@@ -727,9 +730,6 @@ video {
 }
 .mb-2 {
 	margin-bottom: 0.5rem;
-}
-.mb-6 {
-	margin-bottom: 1.5rem;
 }
 .block {
 	display: block;
@@ -763,6 +763,9 @@ video {
 }
 .h-auto {
 	height: auto;
+}
+.h-screen {
+	height: 100vh;
 }
 .min-h-screen {
 	min-height: 100vh;
@@ -849,6 +852,12 @@ video {
 }
 .rounded-20 {
 	border-radius: 20px;
+}
+.rounded-tr-lg {
+	border-top-right-radius: 0.5rem;
+}
+.rounded-br-lg {
+	border-bottom-right-radius: 0.5rem;
 }
 .border {
 	border-width: 1px;
@@ -950,6 +959,10 @@ video {
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
 }
+.px-10 {
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+}
 .pt-8 {
 	padding-top: 2rem;
 }
@@ -1014,6 +1027,9 @@ video {
 .font-medium {
 	font-weight: 500;
 }
+.font-normal {
+	font-weight: 400;
+}
 .uppercase {
 	text-transform: uppercase;
 }
@@ -1059,12 +1075,19 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(0, 0, 0, var(--tw-text-opacity));
 }
+.text-orange-button {
+	--tw-text-opacity: 1;
+	color: rgba(255, 135, 46, var(--tw-text-opacity));
+}
 .text-gray-800 {
 	--tw-text-opacity: 1;
 	color: rgba(31, 41, 55, var(--tw-text-opacity));
 }
 .underline {
 	text-decoration: underline;
+}
+.no-underline {
+	text-decoration: none;
 }
 .antialiased {
 	-webkit-font-smoothing: antialiased;
@@ -1126,7 +1149,7 @@ body {
 }
 
 .project-header {
-    background-image: url("/auth-background.svg");
+    background-image: url("/images/auth-background.svg");
     background-position: top right;
     background-repeat: no-repeat;
     background-color: #3b41e3;
@@ -1135,7 +1158,7 @@ body {
 }
 
 .dashboard-header {
-    background-image: url("/auth-background.svg");
+    background-image: url("/images/auth-background.svg");
     background-position: top right;
     background-repeat: no-repeat;
     background-color: #3b41e3;
@@ -1151,7 +1174,7 @@ body {
     left: 0;
     width: 100%;
     height: 640px;
-    background-image: url("/auth-background.svg");
+    background-image: url("/images/auth-background.svg");
     background-position: top right;
     background-repeat: no-repeat;
     background-color: #3b41e3;
@@ -1176,7 +1199,7 @@ body {
 }
 
 .call-to-action {
-    background-image: url("/auth-background.svg");
+    background-image: url("/images/auth-background.svg");
     background-position: top right;
     background-repeat: no-repeat;
     background-size: 450px;
@@ -1246,9 +1269,15 @@ footer {
 
 .auth-page {
     background-color: #3b41e3;
-    background-image: url("/auth-background.svg");
+    background-image: url("/images/auth-background.svg");
     background-position: top right;
     background-repeat: no-repeat;
+}
+
+.auth-background {
+    background-image: url("/images/sign-up-background.jpg");
+    background-position: 50%;
+    background-size: cover;
 }
 
 .hover\:bg-green-button:hover {
@@ -1272,6 +1301,21 @@ footer {
 
 .hover\:underline:hover {
 	text-decoration: underline;
+}
+
+.focus\:border-purple-hover-stroke:focus {
+	--tw-border-opacity: 1;
+	border-color: rgba(130, 134, 255, var(--tw-border-opacity));
+}
+
+.focus\:bg-purple-hover:focus {
+	--tw-bg-opacity: 1;
+	background-color: rgba(76, 82, 248, var(--tw-bg-opacity));
+}
+
+.focus\:text-gray-100:focus {
+	--tw-text-opacity: 1;
+	color: rgba(243, 244, 246, var(--tw-text-opacity));
 }
 
 .focus\:shadow-outline:focus {
@@ -1326,6 +1370,10 @@ footer {
 		display: block;
 	}
 
+	.md\:w-2\/4 {
+		width: 50%;
+	}
+
 	.md\:w-3\/4 {
 		width: 75%;
 	}
@@ -1338,9 +1386,26 @@ footer {
 
 @media (min-width: 1024px) {
 
+	.lg\:w-1\/3 {
+		width: 33.333333%;
+	}
+
+	.lg\:w-2\/3 {
+		width: 66.666667%;
+	}
+
+	.lg\:w-1\/2 {
+		width: 50%;
+	}
+
 	.lg\:px-8 {
 		padding-left: 2rem;
 		padding-right: 2rem;
+	}
+
+	.lg\:px-0 {
+		padding-left: 0px;
+		padding-right: 0px;
 	}
 }
 

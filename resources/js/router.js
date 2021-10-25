@@ -3,6 +3,7 @@ import NotFound from './pages/NotFound'
 import Home from './pages/Home'
 import About from "./pages/About";
 import SingleCampaign from "./pages/SingleCampaign";
+import Register from "./pages/Register";
 
 const routes = [
     {
@@ -14,6 +15,11 @@ const routes = [
         path: '/about',
         component: About,
         name: "About"
+    },
+    {
+        path: '/register',
+        component: Register,
+        name: "Register"
     },
     {
         path: '/campaign/:slug',

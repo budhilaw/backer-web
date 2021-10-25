@@ -3,63 +3,45 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthRequest;
+use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
+     * @param User $user
+     * @return JsonResponse
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user): JsonResponse
     {
-        //
+        if($request->validated()) {
+            $input = $request->all();
+            $user->fill($input)->save();
+            return response()->json(['message' => 'User data successfully updated!']);
+        }
+        return response()->json(['message' => 'Failed to update user data'], 400);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Get avatar URL link
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function avatar()
     {
-        //
+        $user = Auth::user();
+        if($user->avatar) {
+            return response()->json(['avatar' => $user->avatar]);
+        } else {
+            return response()->json(['avatar' => $user->getAvatar()]);
+        }
     }
 }

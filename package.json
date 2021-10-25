@@ -18,6 +18,8 @@
         "vue-loader": "^16.8.1"
     },
     "dependencies": {
+        "@dicebear/avatars": "^4.10.0",
+        "@dicebear/avatars-bottts-sprites": "^4.10.0",
         "vue": "^3.2.19",
         "vue-router": "^4.0.11"
     }

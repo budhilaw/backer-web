@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +26,18 @@ Route::prefix('campaign')->group(function() {
     Route::get('/', [CampaignController::class, 'index']);
     Route::get('/{campaign:slug}', [CampaignController::class, 'show']);
 });
+
+Route::group(['middleware' => 'auth:api', 'prefix' => 'user'], function() {
+    Route::get('/', [AuthController::class, 'userProfile']);
+    Route::put('/edit/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::get('/avatar', [UserController::class, 'avatar'])->name('user.avatar');
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function() {
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+});
+
