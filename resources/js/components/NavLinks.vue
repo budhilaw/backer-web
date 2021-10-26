@@ -26,15 +26,25 @@
             </li>
         </ul>
         <ul class="flex ml-auto items-center mt-2">
-            <li>
+            <li v-if="!access_token">
                 <router-link class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full mr-4"
                              to="/register"
                 >Sign Up</router-link>
             </li>
-            <li>
+            <li v-if="!access_token">
                 <router-link class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full"
-                             to="/login.html"
-                >My Account</router-link>
+                             to="/login"
+                >Login</router-link>
+            </li>
+            <li v-if="access_token">
+                <router-link class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full mr-4"
+                             to="/dashboard"
+                >Dashboard</router-link>
+            </li>
+            <li v-if="access_token">
+                <router-link class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full"
+                             to="/logout"
+                >Logout</router-link>
             </li>
         </ul>
     </header>
@@ -42,7 +52,12 @@
 
 <script>
 export default {
-    name: "NavLinks"
+    name: "NavLinks",
+    data() {
+        return {
+            access_token: localStorage.access_token
+        }
+    }
 }
 </script>
 

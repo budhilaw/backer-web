@@ -20,6 +20,9 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Write Your Name Here"
                             />
+                            <div v-if="errors.name" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ errors.name }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-6">
@@ -33,6 +36,9 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Write your occupation here"
                             />
+                            <div v-if="errors.occupation" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ errors.occupation }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-6">
@@ -46,6 +52,9 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Write your email address here"
                             />
+                            <div v-if="errors.email" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ errors.email }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-6">
@@ -59,6 +68,9 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Type your password here"
                             />
+                            <div v-if="errors.password" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ errors.password }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-6">
@@ -72,6 +84,9 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Type the password confirmation here"
                             />
+                            <div v-if="errors.password_confirmation" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ errors.password_confirmation }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-6">
@@ -114,10 +129,10 @@ export default {
             'password_confirmation': '',
         })
 
-        const { errors, storeUser } = useUser()
+        const { errors, register } = useUser()
 
         const saveUser = async () =>  {
-            await storeUser({...form});
+            await register({...form});
         }
 
         return {

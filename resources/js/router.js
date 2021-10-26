@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import About from "./pages/About";
 import SingleCampaign from "./pages/SingleCampaign";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 
 const routes = [
     {
@@ -20,6 +22,16 @@ const routes = [
         path: '/register',
         component: Register,
         name: "Register"
+    },
+    {
+        path: '/login',
+        component: Login,
+        name: "Login"
+    },
+    {
+        path: '/logout',
+        component: Logout,
+        name: "Logout"
     },
     {
         path: '/campaign/:slug',
