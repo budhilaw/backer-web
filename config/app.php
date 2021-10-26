@@ -234,4 +234,8 @@ return [
 
     ],
 
+    'configApp' => [
+        'pathCampaign' => 'images/campaign',
+    ],
+
 ];

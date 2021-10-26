@@ -10,7 +10,7 @@ class CampaignImage extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'file_name', 'is_primary' ];
+    protected $fillable = [ 'campaign_id','file_name', 'is_primary' ];
 
     /**
      * Get the campaign for the campaign_images.

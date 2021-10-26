@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CampaignRequest;
 use App\Http\Resources\CampaignResource;
+use App\Http\Resources\CampaignImageResource;
 use App\Models\Campaign;
+use App\Models\CampaignImage;
+use App\Http\Requests\CampaignImageRequest;
 use Illuminate\Http\Request;
-
+use Config;
 class CampaignController extends Controller
 {
     /**
@@ -66,5 +69,20 @@ class CampaignController extends Controller
     {
         $campaign->delete();
         return response()->noContent();
+    }
+
+    public function uploadImageCampaign(CampaignImageRequest $request)
+    {
+        $path = config('app.configApp.pathCampaign');
+        $patToFile = $request->file('image')->store($path,'public');
+        $filename = $patToFile;
+        $imageCampaign = CampaignImage::query()
+            ->create([
+                'campaign_id' => $request->campaign_id,
+                'file_name' => $filename,
+                'is_primary' => $request->is_primary,
+            ]);
+        return new CampaignImageResource($imageCampaign);
+
     }
 }

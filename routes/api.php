@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('campaign')->group(function() {
     Route::get('/', [CampaignController::class, 'index']);
     Route::get('/{campaign:slug}', [CampaignController::class, 'show']);
+    Route::post('/uploadCampaignImage', [CampaignController::class, 'uploadImageCampaign']);
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'user'], function() {
