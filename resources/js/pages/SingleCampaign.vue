@@ -1,6 +1,6 @@
 <template>
     <Navbar />
-    <section class="container project-container mx-auto -mt-56">
+    <section class="container project-container mx-auto mt-20 relative">
         <div class="flex mt-3">
             <div class="w-3/4 mr-6">
                 <div class="bg-white p-3 mb-3 border border-gray-400 rounded-20">

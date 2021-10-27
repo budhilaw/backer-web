@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthRequest;
 use App\Http\Requests\UserRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -43,5 +39,28 @@ class UserController extends Controller
         } else {
             return response()->json(['avatar' => $user->getAvatar()]);
         }
+    }
+
+    /**
+     * Get list of campaigns from a user.
+     *
+     * @return JsonResponse
+     */
+    public function campaigns(): JsonResponse
+    {
+        $user = User::find(Auth::user()->id);
+        return $this->campaignStructure();
+    }
+
+    /**
+     * Get the campaigns array structure.
+     *
+     * @return JsonResponse
+     */
+    protected function campaignStructure(): JsonResponse
+    {
+        return response()->json([
+            'user' => User::with('campaigns')->find(Auth::id()),
+        ]);
     }
 }

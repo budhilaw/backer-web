@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Campaign extends Model
@@ -22,10 +23,12 @@ class Campaign extends Model
     ];
 
     /**
-     * Get the users for the campaign.
+     * Return a users that have a campaigns.
+     *
+     * @return BelongsTo
      */
-    public function users(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

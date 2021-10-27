@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 
+import Dashboard from "./pages/Dashboard/Index";
+
 const routes = [
     {
         path: '/',
@@ -32,6 +34,11 @@ const routes = [
         path: '/logout',
         component: Logout,
         name: "Logout"
+    },
+    {
+        path: '/dashboard',
+        component: Dashboard,
+        name: "Dashboard"
     },
     {
         path: '/campaign/:slug',

@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 
 export default function useUser() {
     const user = ref([])
+    const campaigns = ref([])
     const router = useRouter()
     const errors = ref([])
 
@@ -44,11 +45,33 @@ export default function useUser() {
         }
     }
 
+    const getCampaigns = async () => {
+        const token = localStorage.access_token
+        try {
+            let res = await axios.get('/api/user/campaigns', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            campaigns.value = res.data.user.campaigns
+        } catch (e) {
+            if(e.response.status === 422) {
+                for(const key in e.response.data.errors) {
+                    errors.value[key] = e.response.data.errors[key][0]
+                }
+            } else if(e.response.status === 401) {
+                errors.value['general'] = e.response.data.error
+            }
+        }
+    }
+
     return {
         user,
         errors,
+        campaigns,
         login,
         register,
-        storeUser
+        storeUser,
+        getCampaigns
     }
 }
