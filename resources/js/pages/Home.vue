@@ -1,6 +1,6 @@
 <template>
     <div class="landing-page">
-        <Hero />
+        <Navbar hero="true" />
         <section class="container mx-auto pt-24">
             <div class="flex justify-between items-center mb-10">
                 <div class="w-auto">
@@ -171,9 +171,10 @@ import useCampaign from "../composables/campaign";
 import { onMounted } from "vue";
 import Footer from "../components/Footer";
 import BaseProgress from "../components/BaseProgress";
+import Navbar from "../components/Navbar";
 
 export default {
-    components: {BaseProgress, Footer, Hero},
+    components: {Navbar, BaseProgress, Footer, Hero},
     name: "Home",
     setup() {
         const { campaign, getCampaign } = useCampaign()

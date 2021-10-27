@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -76,8 +75,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->getUrlfriendlyAvatar($size);
     }
 
-    public function campaign(): BelongsTo
+    /**
+     * Return a list of campaigns
+     *
+     * @return HasMany
+     */
+    public function campaigns(): HasMany
     {
-        return $this->belongsTo(Campaign::class);
+        return $this->hasMany(Campaign::class);
     }
 }
