@@ -26,6 +26,7 @@ Route::prefix('campaign')->group(function() {
     Route::get('/', [CampaignController::class, 'index']);
     Route::get('/{campaign:slug}', [CampaignController::class, 'show']);
     Route::post('/store', [CampaignController::class, 'store']);
+    Route::post('/update', [CampaignController::class, 'update']);
     Route::post('/uploadCampaignImage', [CampaignController::class, 'uploadImageCampaign']);
 });
 

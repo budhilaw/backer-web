@@ -67,10 +67,24 @@ class CampaignController extends Controller
      * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function update(CampaignRequest $request, Campaign $campaign)
+    public function update(CampaignRequest $request)
     {
-        $campaign->update($request->validated());
-        return new CampaignResource($campaign);
+        if($request->validated()){
+            $campaign = Campaign::query()->find($request->id);
+            $campaign->user_id = $request['user_id'];
+            $campaign->name = $request['name'];
+            $campaign->slug = $request['slug'];
+            $campaign->excerpt = $request['excerpt'];
+            $campaign->description = $request['description'];
+            $campaign->perks = $request['perks'];
+            $campaign->backer_count = $request['backer_count'];
+            $campaign->goal_amount = $request['goal_amount'];
+            $campaign->current_amount = $request['current_amount'];
+            $campaign->save();
+            return response()->json(['message' => 'Campaign data successfully updated!'],200);
+        }
+        return response()->json($request->errors(), 422);
+
     }
 
     /**
