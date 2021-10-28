@@ -10,6 +10,7 @@ use App\Models\Campaign;
 use App\Models\CampaignImage;
 use App\Http\Requests\CampaignImageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Config;
 class CampaignController extends Controller
 {
@@ -29,10 +30,23 @@ class CampaignController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CampaignRequest $request)
+    public function store(CampaignRequest $request): JsonResponse
     {
-        $campaign = Campaign::create($request->validated());
+        if($request->validated()) {
+            $campaign = Campaign::query()->create([
+                'user_id' => $request -> user_id,
+                'name' => $request -> name,
+                'slug' => $request -> slug,
+                'excerpt' => $request -> excerpt,
+                'description' => $request -> description,
+                'perks' => $request -> perks,
+                'backer_count' => $request -> backer_count,
+                'goal_amount' => $request -> goal_amount,
+                'current_amount' => $request -> current_amount
+            ]);
         return new CampaignResource($campaign);
+        }
+        return response()->json($request->errors(), 422);
     }
 
     /**

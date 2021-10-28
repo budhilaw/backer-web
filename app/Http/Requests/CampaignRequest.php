@@ -13,7 +13,7 @@ class CampaignRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,7 @@ class CampaignRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'user_id' => ['required'],
             'slug' => ['required'],
             'excerpt' => ['required'],
             'description' => ['required'],

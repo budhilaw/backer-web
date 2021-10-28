@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('campaign')->group(function() {
     Route::get('/', [CampaignController::class, 'index']);
     Route::get('/{campaign:slug}', [CampaignController::class, 'show']);
+    Route::post('/store', [CampaignController::class, 'store']);
     Route::post('/uploadCampaignImage', [CampaignController::class, 'uploadImageCampaign']);
 });
 
