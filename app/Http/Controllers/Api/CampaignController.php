@@ -30,7 +30,7 @@ class CampaignController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CampaignRequest $request): JsonResponse
+    public function store(CampaignRequest $request)
     {
         if($request->validated()) {
             $campaign = Campaign::query()->create([
@@ -93,10 +93,19 @@ class CampaignController extends Controller
      * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Campaign $campaign)
+    public function destroy($id)
     {
-        $campaign->delete();
-        return response()->noContent();
+        $campaign = Campaign::findOrFail($id);
+        if($campaign)
+        {
+            $campaign->delete();
+            return response()->json(['message' => 'Campaign data successfully deleted!'],200);
+        }
+        else
+        {
+            return response()->json(error);
+        }
+        return response()->json(null);
     }
 
     public function uploadImageCampaign(CampaignImageRequest $request)
