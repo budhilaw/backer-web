@@ -57,7 +57,8 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        return new CampaignResource($campaign);
+        $data = Campaign::with('image')->find($campaign->id);
+        return new CampaignResource($data);
     }
 
     /**

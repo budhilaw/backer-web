@@ -32,4 +32,14 @@ class Campaign extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Return a campaigns that have a image.
+     *
+     * @return HasMany
+     */
+    public function image(): HasMany
+    {
+        return $this->hasMany(CampaignImage::class);
+    }
 }

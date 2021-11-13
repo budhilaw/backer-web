@@ -16,7 +16,6 @@ class CampaignResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -27,8 +26,9 @@ class CampaignResource extends JsonResource
             'backer_count' => $this->backer_count,
             'goal_amount' => $this->goal_amount,
             'current_amount' => $this->current_amount,
+            'image' => $this->image,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }
