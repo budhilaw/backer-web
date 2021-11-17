@@ -45,7 +45,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs: laravel-test
+    needs: laravel-tests
 
     if: github.ref == 'refs/heads/main'
 
