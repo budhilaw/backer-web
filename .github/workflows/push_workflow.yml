@@ -8,6 +8,18 @@ jobs:
   laravel-tests:
 
     runs-on: ubuntu-latest
+    container:
+      image: kirschbaumdevelopment/laravel-test-runner:7.3
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s -
 
     steps:
       - uses: actions/checkout@v2
@@ -15,7 +27,8 @@ jobs:
           fetch-depth: 1
 
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        env:
+          DOT_ENV: ${{ secrets.DOT_ENV_PRODUCTION }}
 
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
@@ -27,4 +40,8 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_CONNECTION: mysql
+          DB_DATABASE: test
+          DB_PASSWORD: password
         run: vendor/bin/phpunit
