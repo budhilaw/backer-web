@@ -6,6 +6,7 @@ on:
 
 jobs:
   laravel-tests:
+    name: Testing the project
 
     runs-on: ubuntu-latest
 
@@ -39,9 +40,14 @@ jobs:
           DB_DATABASE: database/database.sqlite
         run: vendor/bin/phpunit
 
-  building:
+  build-frontend:
+    name: Building the Frontend for Production Server
 
     runs-on: ubuntu-latest
+
+    needs: laravel-test
+
+    if: github.ref == 'refs/heads/main'
 
     steps:
 
@@ -60,8 +66,13 @@ jobs:
         run: npm run production
 
   deploy-production:
+    name: Deploying project to Production Server
 
     runs-on: ubuntu-latest
+
+    needs: [build-frontend, laravel-tests]
+
+    if: github.ref == 'refs/heads/main'
 
     steps:
 
@@ -69,7 +80,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deployment
-        uses: appleboy/ssh-action@main
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
