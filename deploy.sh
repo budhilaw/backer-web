@@ -9,8 +9,9 @@ echo "Deploying application ..."
     git fetch origin main
     git pull origin master
 
-    # Reload PHP to update opcache
-    echo "" | sudo -S service php7.4-fpm reload
+    # chmod
+    chmod -R 775 storage
+    chmod -R ugo+rw storage
 # Exit maintenance mode
 php artisan up
 
