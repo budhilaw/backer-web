@@ -8,6 +8,9 @@ echo "Deploying application ..."
     # Update codebase
     git fetch origin main
     git pull origin main
+
+    # Chmod
+    sudo chmod -R 755 storage bootstrap/cache
 # Exit maintenance mode
 php artisan up
 
