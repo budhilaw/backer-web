@@ -7,7 +7,7 @@ echo "Deploying application ..."
 (php artisan down --message 'The app is being (quickly!) updated. Please try again in a minute.') || true
     # Update codebase
     git fetch origin main
-    git pull origin master
+    git pull origin main
 
     # chmod
     chmod -R 775 storage
