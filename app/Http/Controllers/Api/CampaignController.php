@@ -10,6 +10,7 @@ use App\Models\Campaign;
 use App\Models\CampaignImage;
 use App\Http\Requests\CampaignImageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Config;
 class CampaignController extends Controller
 {
@@ -31,8 +32,21 @@ class CampaignController extends Controller
      */
     public function store(CampaignRequest $request)
     {
-        $campaign = Campaign::create($request->validated());
+        if($request->validated()) {
+            $campaign = Campaign::query()->create([
+                'user_id' => $request -> user_id,
+                'name' => $request -> name,
+                'slug' => $request -> slug,
+                'excerpt' => $request -> excerpt,
+                'description' => $request -> description,
+                'perks' => $request -> perks,
+                'backer_count' => $request -> backer_count,
+                'goal_amount' => $request -> goal_amount,
+                'current_amount' => $request -> current_amount
+            ]);
         return new CampaignResource($campaign);
+        }
+        return response()->json($request->errors(), 422);
     }
 
     /**
@@ -43,7 +57,8 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        return new CampaignResource($campaign);
+        $data = Campaign::with('image')->find($campaign->id);
+        return new CampaignResource($data);
     }
 
     /**
@@ -53,10 +68,24 @@ class CampaignController extends Controller
      * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function update(CampaignRequest $request, Campaign $campaign)
+    public function update(CampaignRequest $request)
     {
-        $campaign->update($request->validated());
-        return new CampaignResource($campaign);
+        if($request->validated()){
+            $campaign = Campaign::query()->find($request->id);
+            $campaign->user_id = $request['user_id'];
+            $campaign->name = $request['name'];
+            $campaign->slug = $request['slug'];
+            $campaign->excerpt = $request['excerpt'];
+            $campaign->description = $request['description'];
+            $campaign->perks = $request['perks'];
+            $campaign->backer_count = $request['backer_count'];
+            $campaign->goal_amount = $request['goal_amount'];
+            $campaign->current_amount = $request['current_amount'];
+            $campaign->save();
+            return response()->json(['message' => 'Campaign data successfully updated!'],200);
+        }
+        return response()->json($request->errors(), 422);
+
     }
 
     /**
@@ -65,10 +94,19 @@ class CampaignController extends Controller
      * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Campaign $campaign)
+    public function destroy($id)
     {
-        $campaign->delete();
-        return response()->noContent();
+        $campaign = Campaign::findOrFail($id);
+        if($campaign)
+        {
+            $campaign->delete();
+            return response()->json(['message' => 'Campaign data successfully deleted!'],200);
+        }
+        else
+        {
+            return response()->json(error);
+        }
+        return response()->json(null);
     }
 
     public function uploadImageCampaign(CampaignImageRequest $request)

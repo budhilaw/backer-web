@@ -12,6 +12,7 @@ class Campaign extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'slug',
         'excerpt',
@@ -30,5 +31,15 @@ class Campaign extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Return a campaigns that have a image.
+     *
+     * @return HasMany
+     */
+    public function image(): HasMany
+    {
+        return $this->hasMany(CampaignImage::class);
     }
 }
