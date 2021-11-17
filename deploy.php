@@ -33,7 +33,7 @@ task('deploy:secrets', function () {
 host('karyadev.com')
     ->hostname('159.223.34.209')
     ->stage('production')
-    ->user('root')
+    ->user('kai')
     ->set('deploy_path', '/var/www/karyadev');
 
 after('deploy:failed', 'deploy:unlock');
