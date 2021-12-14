@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
@@ -29,6 +30,14 @@ Route::prefix('campaign')->group(function() {
     Route::post('/update', [CampaignController::class, 'update']);
     Route::delete('/destroy/{id}', [CampaignController::class, 'destroy']);
     Route::post('/uploadCampaignImage', [CampaignController::class, 'uploadImageCampaign']);
+});
+
+Route::prefix('transaction')->group(function() {
+    Route::get('/', [TransactionController::class, 'index']);
+    Route::get('/{transaction:id}', [TransactionController::class, 'show']);
+    Route::post('/store', [TransactionController::class, 'store']);
+    Route::post('/update', [TransactionController::class, 'update']);
+    Route::delete('/destroy/{id}', [TransactionController::class, 'destroy']);
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'user'], function() {
