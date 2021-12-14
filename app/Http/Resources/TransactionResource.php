@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class TransactionResource extends JsonResource
 {
@@ -19,7 +20,7 @@ class TransactionResource extends JsonResource
             'id' => $this->id,
             'amount' => $this->amount,
             'campaign_id' => $this->campaign_id,
-            'date_transaction' => $this->created_at,
+            'date_transaction' => Carbon::parse($this->date_transaction)->toDateTimeString(),
             'user_id' => $this->user_id,
             'status' => $this->status,
         ];
