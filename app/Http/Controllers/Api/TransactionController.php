@@ -53,4 +53,15 @@ class TransactionController extends Controller
         return response()->json($request->errors(), 422);
 
     }
+
+    public function changeStatus(Request $request)
+    {
+        $transaction = Transaction::find($request->campaign_id);
+        $transaction = Transaction::query()
+                ->update([
+                    'status' => 1
+                ]);
+  
+        return response()->json(['success'=>'transaction status change successfully.']);
+    }
 }
