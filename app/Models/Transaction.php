@@ -16,8 +16,8 @@ class Transaction extends Model
         'status',
     ];
 
-    public function campaigns(): BelongsTo
+    public function campaign(): BelongsTo
     {
-        return $this->belongsTo(campaigns::class,'campaign_id');
+        return $this->belongsTo(Campaign::class,'campaign_id');
     }
 }

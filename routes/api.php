@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'transaction'], function()
     Route::get('/', [TransactionController::class, 'index']);
 //    Route::get('/{transaction:id}', [TransactionController::class, 'show']);
     Route::post('/store', [TransactionController::class, 'store']);
+    Route::get('/verify/{id}', [TransactionController::class, 'verify']);
     //Route::post('/update', [TransactionController::class, 'update']);
     Route::delete('/destroy/{id}', [TransactionController::class, 'destroy']);
 });

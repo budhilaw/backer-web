@@ -18,7 +18,7 @@ class CreateTransaction extends Migration
             $table->unsignedBigInteger('campaign_id');
             $table->unsignedBigInteger('user_id');
             $table->integer('amount');
-            $table->integer('status')->default('0')->change();
+            $table->integer('status')->default('0');
             $table->timestamps();
 
             $table->foreign('campaign_id')->references('id')->on('campaigns');
