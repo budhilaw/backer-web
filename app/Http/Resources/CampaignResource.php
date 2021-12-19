@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CampaignResource extends JsonResource

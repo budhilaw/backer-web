@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $table = 'transaction';
     protected $fillable = [
         'campaign_id',
         'user_id',
         'amount',
-        'status', 
+        'status',
     ];
 
     public function campaigns(): BelongsTo
