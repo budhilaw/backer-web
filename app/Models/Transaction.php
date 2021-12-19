@@ -9,16 +9,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $table = 'transaction';
     protected $fillable = [
         'campaign_id',
         'user_id',
         'amount',
-        'status', 
+        'status',
     ];
 
-    public function campaigns(): BelongsTo
+    public function campaign(): BelongsTo
     {
-        return $this->belongsTo(campaigns::class,'campaign_id');
+        return $this->belongsTo(Campaign::class,'campaign_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id');
     }
 }

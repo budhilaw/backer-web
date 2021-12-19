@@ -12,25 +12,31 @@ use App\Http\Requests\CampaignImageRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Config;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Storage;
+
 class CampaignController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        return CampaignResource::collection(Campaign::limit(9)->get());
+        $limit = config('app.configApp.limitPaginate');
+        $campaigns = Campaign::where('status', 1)->paginate($limit);
+        return CampaignResource::collection($campaigns);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CampaignRequest $request
+     * @return CampaignResource
      */
-    public function store(CampaignRequest $request)
+    public function store(CampaignRequest $request): CampaignResource
     {
         if($request->validated()) {
             $campaign = Campaign::query()->create([
@@ -44,18 +50,18 @@ class CampaignController extends Controller
                 'goal_amount' => $request -> goal_amount,
                 'current_amount' => $request -> current_amount
             ]);
-        return new CampaignResource($campaign);
+            return new CampaignResource($campaign);
         }
-        return response()->json($request->errors(), 422);
+        return new CampaignResource(null);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Campaign  $campaign
-     * @return \Illuminate\Http\Response
+     * @param Campaign $campaign
+     * @return CampaignResource
      */
-    public function show(Campaign $campaign)
+    public function show(Campaign $campaign): CampaignResource
     {
         $data = Campaign::with('image')->find($campaign->id);
         return new CampaignResource($data);
@@ -64,63 +70,72 @@ class CampaignController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Campaign  $campaign
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param String $id
+     * @return JsonResponse
      */
-    public function update(CampaignRequest $request)
+    public function update(Request $request, string $id): JsonResponse
     {
-        if($request->validated()){
-            $campaign = Campaign::query()->find($request->id);
-            $campaign->user_id = $request['user_id'];
-            $campaign->name = $request['name'];
-            $campaign->slug = $request['slug'];
-            $campaign->excerpt = $request['excerpt'];
-            $campaign->description = $request['description'];
-            $campaign->perks = $request['perks'];
-            $campaign->backer_count = $request['backer_count'];
-            $campaign->goal_amount = $request['goal_amount'];
-            $campaign->current_amount = $request['current_amount'];
-            $campaign->save();
-            return response()->json(['message' => 'Campaign data successfully updated!'],200);
-        }
-        return response()->json($request->errors(), 422);
-
+        $campaign = Campaign::findOrFail($id);
+        $fields = $request->only($campaign->getFillable());
+        $campaign->fill($fields);
+        $campaign->save();
+        return response()->json(['message' => 'Campaign data successfully updated!'],200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Campaign  $campaign
-     * @return \Illuminate\Http\Response
+     * @param String $id
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(string $id): JsonResponse
     {
         $campaign = Campaign::findOrFail($id);
-        if($campaign)
-        {
-            $campaign->delete();
-            return response()->json(['message' => 'Campaign data successfully deleted!'],200);
-        }
-        else
-        {
-            return response()->json(error);
-        }
-        return response()->json(null);
+        $campaign->delete();
+        return response()->json(['message' => 'Campaign data successfully deleted!'],200);
     }
 
-    public function uploadImageCampaign(CampaignImageRequest $request)
+    /**
+     * Upload an image for campaign
+     *
+     * @param CampaignImageRequest $request
+     * @param String $id
+     * @return CampaignImageResource
+     */
+    public function uploadImageCampaign(CampaignImageRequest $request, String $id): CampaignImageResource
     {
+        // set value
+        $isPrimary = 0; // false
+
+        if($request['is_primary'] == "true") {
+            $isPrimary = 1;
+        }
+
         $path = config('app.configApp.pathCampaign');
-        $patToFile = $request->file('image')->store($path,'public');
-        $filename = $patToFile;
+        $pathToFile = $request->file('image')->store($path,'public');
+        $filename = $pathToFile;
         $imageCampaign = CampaignImage::query()
             ->create([
-                'campaign_id' => $request->campaign_id,
+                'campaign_id' => $id,
                 'file_name' => $filename,
-                'is_primary' => $request->is_primary,
+                'is_primary' => $isPrimary,
             ]);
         return new CampaignImageResource($imageCampaign);
 
+    }
+
+    /**
+     * Delete an campaign image
+     *
+     * @param String $id
+     * @return JsonResponse
+     */
+    public function deleteImageCampaign(String $id): JsonResponse {
+        $campaignImage = CampaignImage::findOrFail($id);
+        $fullPath = storage_path() . '/app/public/' . $campaignImage->file_name;
+        unlink($fullPath);
+        $campaignImage->delete();
+        return response()->json(['message' => 'Campaign Image data successfully deleted!'],200);
     }
 }

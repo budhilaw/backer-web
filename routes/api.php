@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,27 +18,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
-//Route::apiResource('campaign', \App\Http\Controllers\Api\CampaignController::class);
-
-Route::prefix('campaign')->group(function() {
+Route::group(['middleware' => 'api', 'prefix' => 'campaign'], function () {
     Route::get('/', [CampaignController::class, 'index']);
     Route::get('/{campaign:slug}', [CampaignController::class, 'show']);
-    Route::post('/store', [CampaignController::class, 'store']);
-    Route::post('/update', [CampaignController::class, 'update']);
-    Route::delete('/destroy/{id}', [CampaignController::class, 'destroy']);
-    Route::post('/uploadCampaignImage', [CampaignController::class, 'uploadImageCampaign']);
 });
 
-Route::prefix('transaction')->group(function() {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'campaign'], function() {
+    Route::post('/store', [CampaignController::class, 'store']);
+    Route::post('/update/{id}', [CampaignController::class, 'update']);
+    Route::delete('/destroy/{id}', [CampaignController::class, 'destroy']);
+    Route::post('/image/upload/{id}', [CampaignController::class, 'uploadImageCampaign']);
+    Route::delete('/image/destroy/{id}', [CampaignController::class, 'deleteImageCampaign']);
+});
+
+Route::group(['middleware' => 'auth:api', 'prefix' => 'transaction'], function() {
     Route::get('/', [TransactionController::class, 'index']);
-    Route::get('/{transaction:id}', [TransactionController::class, 'show']);
     Route::post('/store', [TransactionController::class, 'store']);
-    Route::post('/update', [TransactionController::class, 'update']);
-    Route::delete('/destroy/{id}', [TransactionController::class, 'destroy']);
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'user'], function() {
@@ -54,5 +50,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function() {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+});
+
+Route::group(['middleware' => ['auth:api', 'adminOnly'], 'prefix' => 'admin'], function () {
+    Route::get('/campaign/publish/{id}', [AdminController::class, 'publishCampaign']);
+    Route::get('/transaction', [AdminController::class, 'listTransactions']);
+    Route::get('/transaction/verify/{id}', [AdminController::class, 'verifyTransaction']);
 });
 

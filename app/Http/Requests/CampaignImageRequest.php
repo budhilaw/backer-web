@@ -24,7 +24,6 @@ class CampaignImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'campaign_id' => ['required'],
             'is_primary' => ['required'],
             'image' => ['required'],
         ];

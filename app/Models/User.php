@@ -84,4 +84,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Campaign::class);
     }
+
+    /**
+     * Return a list of transactions
+     *
+     * @return HasMany
+     */
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

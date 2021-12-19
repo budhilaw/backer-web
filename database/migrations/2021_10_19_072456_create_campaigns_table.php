@@ -15,9 +15,10 @@ class CreateCampaignsTable extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained("users");
             $table->string('name');
             $table->string('slug');
+            $table->integer('status')->default(0);
             $table->string('excerpt');
             $table->text('description');
             $table->string('perks'); // comma separated
@@ -25,8 +26,6 @@ class CreateCampaignsTable extends Migration
             $table->integer('goal_amount');
             $table->integer('current_amount');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

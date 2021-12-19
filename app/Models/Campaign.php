@@ -15,6 +15,7 @@ class Campaign extends Model
         'user_id',
         'name',
         'slug',
+        'status',
         'excerpt',
         'description',
         'perks',
