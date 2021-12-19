@@ -23,7 +23,8 @@ Route::prefix('campaign')->group(function() {
     Route::post('/store', [CampaignController::class, 'store']);
     Route::post('/update/{id}', [CampaignController::class, 'update']);
     Route::delete('/destroy/{id}', [CampaignController::class, 'destroy']);
-    Route::post('/uploadCampaignImage', [CampaignController::class, 'uploadImageCampaign']);
+    Route::post('/image/upload/{id}', [CampaignController::class, 'uploadImageCampaign']);
+    Route::delete('/image/destroy/{id}', [CampaignController::class, 'deleteImageCampaign']);
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'transaction'], function() {

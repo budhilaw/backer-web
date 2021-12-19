@@ -15,7 +15,9 @@ class CreateCampaignImagesTable extends Migration
     {
         Schema::create('campaign_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaign_id")->constrained("campaigns")->onDelete("cascade");
+            $table->foreignId("campaign_id")->constrained("campaigns")
+                ->onUpdate("cascade")
+                ->onDelete("cascade");
             $table->string('file_name');
             $table->boolean('is_primary');
             $table->timestamps();

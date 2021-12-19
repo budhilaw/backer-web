@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Config;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class CampaignController extends Controller
 {
@@ -97,20 +98,36 @@ class CampaignController extends Controller
      * Upload an image for campaign
      *
      * @param CampaignImageRequest $request
+     * @param String $id
      * @return CampaignImageResource
      */
-    public function uploadImageCampaign(CampaignImageRequest $request): CampaignImageResource
+    public function uploadImageCampaign(CampaignImageRequest $request, String $id): CampaignImageResource
     {
+        // set value
+        $isPrimary = 0; // false
+
+        if($request['is_primary'] == "true") {
+            $isPrimary = 1;
+        }
+
         $path = config('app.configApp.pathCampaign');
         $pathToFile = $request->file('image')->store($path,'public');
         $filename = $pathToFile;
         $imageCampaign = CampaignImage::query()
             ->create([
-                'campaign_id' => $request->campaign_id,
+                'campaign_id' => $id,
                 'file_name' => $filename,
-                'is_primary' => $request->is_primary,
+                'is_primary' => $isPrimary,
             ]);
         return new CampaignImageResource($imageCampaign);
 
+    }
+
+    public function deleteImageCampaign(String $id): JsonResponse {
+        $campaignImage = CampaignImage::findOrFail($id);
+        $fullPath = storage_path() . '/app/public/' . $campaignImage->file_name;
+        unlink($fullPath);
+        $campaignImage->delete();
+        return response()->json(['message' => 'Campaign Image data successfully deleted!'],200);
     }
 }
