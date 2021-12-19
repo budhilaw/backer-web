@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 
 import Dashboard from "./pages/Dashboard/Index";
+import CreateCampaign from "./pages/Dashboard/Create";
+import Transactions from "./pages/Dashboard/Transactions";
 
 const routes = [
     {
@@ -39,6 +41,16 @@ const routes = [
         path: '/dashboard',
         component: Dashboard,
         name: "Dashboard"
+    },
+    {
+        path: '/dashboard/campaign/create',
+        component: CreateCampaign,
+        name: "CreateCampaign"
+    },
+    {
+        path: '/dashboard/transactions',
+        component: Transactions,
+        name: "Transactions",
     },
     {
         path: '/campaign/:slug',

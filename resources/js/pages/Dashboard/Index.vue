@@ -1,5 +1,5 @@
 <template>
-    <div class="project-page">
+    <div class="project-page bg-purple-progress">
         <Navbar />
         <section class="container mx-auto pt-8 relative">
             <div class="flex justify-between items-center mb-6">
@@ -7,26 +7,28 @@
                     <h2 class="text-4xl text-white mb-2 font-medium">Dashboard</h2>
                     <ul class="flex mt-2">
                         <li class="mr-6">
-                            <a class="text-white font-bold" href="#"> Your Projects </a>
+                            <router-link class="text-white font-bold" to="/dashboard"> Your Projects </router-link>
                         </li>
                         <li class="mr-6">
-                            <a class="text-gray-300 hover:text-gray-100"
-                               href="/dashboard/transactions.html">
+                            <router-link
+                                class="text-gray-300 hover:text-gray-100"
+                                to="/dashboard/transactions">
                                 Your Transactions
-                            </a>
+                            </router-link>
                         </li>
                     </ul>
                 </div>
                 <div class="w-1/4 text-right">
-                    <a href="/dashboard/create.html"
-                       class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center"
-                    >
+                    <router-link
+                        to="/dashboard/campaign/create"
+                        class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center">
                         + Create Campaign
-                    </a>
+                    </router-link>
                 </div>
             </div>
             <hr />
-            <div v-for="item in campaigns" :key="item.id">
+            <div v-if="campaigns.length > 0">
+                <div v-for="item in campaigns" :key="item.id">
                 <div class="block mb-4">
                 <div class="w-full lg:max-w-full lg:flex mb-4">
                     <div
@@ -60,46 +62,17 @@
                 </div>
             </div>
             </div>
-        </section>
-        <footer class="bg-purple-progress py-20 text-white text-lg">
-            <div class="container mx-auto">
-                <div class="sm:flex mb-4">
-                    <div class="sm:w-1/2 sm:mt-0 mt-8 h-auto">
-                        <img src="/images/logo-footer.svg" alt="" class="mb-3" />
-                        <p class="font-light">
-                            Helps people execute their <br />bright ideas
-                        </p>
-                    </div>
-                    <div class="sm:w-1/4 h-auto">
-                        <div class="mb-8 font-bold">Explore</div>
-                        <ul class="font-light">
-                            <li class="mb-3">Our Services</li>
-                            <li class="mb-3">Equity System</li>
-                            <li class="mb-3">Refund</li>
-                            <li class="mb-3">Shareholder</li>
-                        </ul>
-                    </div>
-                    <div class="sm:w-1/4 h-auto">
-                        <div class="mb-8 font-bold">Investor</div>
-                        <ul class="font-light">
-                            <li class="mb-3">My Account</li>
-                            <li class="mb-3">Top Startups</li>
-                            <li class="mb-3">How-to Tutorials</li>
-                            <li class="mb-3">Withdrawl</li>
-                        </ul>
-                    </div>
-                    <div class="sm:w-1/4 h-auto">
-                        <div class="mb-8 font-bold">Office</div>
-                        <ul class="font-light">
-                            <li class="mb-3">+021 2208 1996</li>
-                            <li class="mb-3">KBP, Bandung</li>
-                            <li class="mb-3">No.12 (Backer)</li>
-                            <li class="mb-3">support@backer.id</li>
-                        </ul>
-                    </div>
+            </div>
+            <div v-else>
+                <div class="h-screen mt-8">
+                    <h4 class="text-2xl text-white">
+                        You don't have any projects. <br />
+                        Let's create one!
+                    </h4>
                 </div>
             </div>
-        </footer>
+        </section>
+        <Footer />
     </div>
 </template>
 
@@ -107,9 +80,10 @@
 import Navbar from "../../components/Navbar";
 import useUser from "../../composables/user";
 import {onMounted} from "vue";
+import Footer from "../../components/Footer";
 export default {
     name: "Index",
-    components: {Navbar},
+    components: { Navbar, Footer },
     setup() {
         const { campaigns, getCampaigns } = useUser()
 
