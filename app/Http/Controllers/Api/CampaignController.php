@@ -25,7 +25,9 @@ class CampaignController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return CampaignResource::collection(Campaign::limit(9)->get());
+        $limit = config('app.configApp.limitPaginate');
+        $campaigns = Campaign::where('status', 1)->paginate($limit);
+        return CampaignResource::collection($campaigns);
     }
 
     /**
@@ -123,6 +125,12 @@ class CampaignController extends Controller
 
     }
 
+    /**
+     * Delete an campaign image
+     *
+     * @param String $id
+     * @return JsonResponse
+     */
     public function deleteImageCampaign(String $id): JsonResponse {
         $campaignImage = CampaignImage::findOrFail($id);
         $fullPath = storage_path() . '/app/public/' . $campaignImage->file_name;

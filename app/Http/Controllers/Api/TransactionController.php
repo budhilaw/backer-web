@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
@@ -22,8 +23,10 @@ class TransactionController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
+        $id = Auth::id();
         $limit = config('app.configApp.limitPaginate');
-        return TransactionResource::collection(Transaction::paginate($limit));
+        $transaction = User::find($id)->transactions()->paginate($limit);
+        return TransactionResource::collection($transaction);
     }
 
     /**
@@ -44,23 +47,5 @@ class TransactionController extends Controller
             ]);
 
         return new TransactionResource($transaction);
-    }
-
-    /**
-     * @param String $id
-     * @return JsonResponse
-     */
-    public function verify(String $id): JsonResponse
-    {
-        $transaction = Transaction::findOrFail($id);
-        if($transaction['status'] != 0) {
-            return response()->json(['failed' => 'transaction is already paid.'], 400);
-        }
-        $campaign = Campaign::find($transaction->campaign->id)->first();
-        $finalAmount = $campaign['current_amount'] + $transaction['amount'];
-        $campaign['current_amount'] = $finalAmount;
-        $campaign->save();
-        Transaction::query()->update(['status' => 1]);
-        return response()->json(['success'=>'transaction status change successfully.'], 200);
     }
 }

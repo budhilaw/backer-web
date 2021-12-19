@@ -18,6 +18,7 @@ class CreateCampaignsTable extends Migration
             $table->foreignId('user_id')->constrained("users");
             $table->string('name');
             $table->string('slug');
+            $table->integer('status')->default(0);
             $table->string('excerpt');
             $table->text('description');
             $table->string('perks'); // comma separated
