@@ -15,9 +15,11 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $user = Auth::user();
-        if($user['role'] != 1) {
-            return response()->json(["message" => "You cannot access this page!"]);
+        if(Auth::check()) {
+            $user = Auth::user();
+            if($user['role'] != 1) {
+                return response()->json(["message" => "You cannot access this page!"]);
+            }
         }
     }
 
