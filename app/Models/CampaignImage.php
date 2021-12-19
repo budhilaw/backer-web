@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CampaignImage extends Model
 {
@@ -15,8 +16,8 @@ class CampaignImage extends Model
     /**
      * Get the campaign for the campaign_images.
      */
-    public function campaigns(): HasMany
+    public function campaigns(): BelongsTo
     {
-        return $this->hasMany(Campaign::class);
+        return $this->belongsTo(Campaign::class);
     }
 }
