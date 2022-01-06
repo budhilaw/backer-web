@@ -236,6 +236,7 @@ return [
 
     'configApp' => [
         'pathCampaign' => 'images/campaign',
+        'limitPaginate' => 9
     ],
 
 ];

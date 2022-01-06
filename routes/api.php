@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'user'], function() {
 // https://backer.test/api/auth/register
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function() {
     Route::post('login', [AuthController::class, 'login'])->name('login');
-    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);

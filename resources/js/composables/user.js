@@ -53,7 +53,7 @@ export default function useUser() {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            campaigns.value = res.data.user.campaigns
+            campaigns.value = res.data.data
         } catch (e) {
             if(e.response.status === 422) {
                 for(const key in e.response.data.errors) {

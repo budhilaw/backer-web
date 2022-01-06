@@ -33,9 +33,7 @@
                 <div class="w-full lg:max-w-full lg:flex mb-4">
                     <div
                         class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-                        style="
-                background-image: url('https://tailwindcss.com/img/card-left.jpg');
-              "
+                        style="background-image: url('https://tailwindcss.com/img/card-left.jpg');"
                     ></div>
                     <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 flex flex-col justify-between leading-normal">
                         <div class="mb-8">
@@ -51,12 +49,12 @@
                             </p>
                         </div>
                         <div class="flex items-center">
-                            <a
-                                href="/dashboard/detail.html"
+                            <router-link
+                                :to="{ name: 'SingleCampaign', params: { slug: item.slug } }"
                                 class="bg-green-button text-white py-2 px-4 rounded"
                             >
                                 Detail
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -81,6 +79,7 @@ import Navbar from "../../components/Navbar";
 import useUser from "../../composables/user";
 import {onMounted} from "vue";
 import Footer from "../../components/Footer";
+
 export default {
     name: "Index",
     components: { Navbar, Footer },
