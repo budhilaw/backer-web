@@ -97,19 +97,38 @@ class CampaignController extends Controller
     }
 
     /**
+     * List of all images on the campaign
+     *
+     * @param String campaignId
+     * @return AnonymousResourceCollection
+     */
+    public function listImageCampaign(String $id): AnonymousResourceCollection
+    {
+        $campaign = Campaign::findOrFail($id);
+        $campaignImages = $campaign->images;
+        return CampaignImageResource::collection($campaignImages);
+    }
+
+    /**
      * Upload an image for campaign
      *
      * @param CampaignImageRequest $request
      * @param String $id
-     * @return CampaignImageResource
+     * @return CampaignImageResource|JsonResponse
      */
-    public function uploadImageCampaign(CampaignImageRequest $request, String $id): CampaignImageResource
+    public function uploadImageCampaign(CampaignImageRequest $request, String $id)
     {
         // set value
         $isPrimary = 0; // false
 
         if($request['is_primary'] == "true") {
             $isPrimary = 1;
+        }
+
+        // get campaignImage
+        $existed = CampaignImage::findOrFail($id)->where('is_primary', 1)->exists();
+        if($existed && $request['is_primary'] == "true") {
+            return response()->json(['error' => 'This campaign image have primary image'], 409);
         }
 
         $path = config('app.configApp.pathCampaign');
@@ -131,11 +150,32 @@ class CampaignController extends Controller
      * @param String $id
      * @return JsonResponse
      */
-    public function deleteImageCampaign(String $id): JsonResponse {
+    public function deleteImageCampaign(String $id): JsonResponse
+    {
         $campaignImage = CampaignImage::findOrFail($id);
         $fullPath = storage_path() . '/app/public/' . $campaignImage->file_name;
         unlink($fullPath);
         $campaignImage->delete();
         return response()->json(['message' => 'Campaign Image data successfully deleted!'],200);
+    }
+
+    /**
+     * Set campaign image as primary image
+     *
+     * @param String $id
+     * @return JsonResponse
+     */
+    public function setPrimaryImageCampaign(String $id): JsonResponse
+    {
+        $campaignImage = CampaignImage::findOrFail($id);
+        $primaryImage = $campaignImage->campaign->images->where('is_primary', 1)->first();
+        if(isset($primaryImage)) {
+            // remove existing primary image
+            $primaryImage->is_primary = false;
+            $primaryImage->save();
+        }
+        $campaignImage->is_primary = true;
+        $campaignImage->save();
+        return response()->json(['message' => 'Successfuly set campaign image to be a primary image!'],200);
     }
 }

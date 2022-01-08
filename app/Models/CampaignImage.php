@@ -16,7 +16,7 @@ class CampaignImage extends Model
     /**
      * Get the campaign for the campaign_images.
      */
-    public function campaigns(): BelongsTo
+    public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
     }

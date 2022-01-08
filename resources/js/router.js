@@ -10,6 +10,7 @@ import Logout from "./pages/Logout";
 import Dashboard from "./pages/Dashboard/Index";
 import CreateCampaign from "./pages/Dashboard/Create";
 import Transactions from "./pages/Dashboard/Transactions";
+import UploadImage from "./pages/Dashboard/UploadImage";
 
 const routes = [
     {
@@ -46,6 +47,12 @@ const routes = [
         path: '/dashboard/campaign/create',
         component: CreateCampaign,
         name: "CreateCampaign"
+    },
+    {
+        path: '/dashboard/campaign/upload/:id',
+        props: true,
+        component: UploadImage,
+        name: "UploadImage",
     },
     {
         path: '/dashboard/transactions',

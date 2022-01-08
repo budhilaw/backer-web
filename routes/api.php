@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'campaign'], function() {
     Route::post('/store', [CampaignController::class, 'store']);
     Route::post('/update/{id}', [CampaignController::class, 'update']);
     Route::delete('/destroy/{id}', [CampaignController::class, 'destroy']);
+    Route::get('/image/list/{id}', [CampaignController::class, 'listImageCampaign']);
+    Route::get('/image/primary/{id}', [CampaignController::class, 'setPrimaryImageCampaign']);
     Route::post('/image/upload/{id}', [CampaignController::class, 'uploadImageCampaign']);
     Route::delete('/image/destroy/{id}', [CampaignController::class, 'deleteImageCampaign']);
 });

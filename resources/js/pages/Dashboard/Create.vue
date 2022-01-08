@@ -12,6 +12,9 @@
                     <h3 class="text-2xl text-white mb-4">Create New Projects</h3>
                 </div>
             </div>
+
+            <input @change="uploadImageCampaign" id="images-upload" type="file" accept="image/*" multiple>
+
             <div class="block mb-2">
                 <div class="w-full lg:max-w-full lg:flex mb-4">
                     <div class="w-full border border-gray-400 bg-white rounded p-8 flex flex-col justify-between leading-normal">
@@ -68,10 +71,10 @@
                                     ></textarea>
                                 </div>
                                 <div class="w-full px-3">
-                                        <a href="/dashboard/detail.html"
+                                        <router-link :to="{ name: 'UploadImage', params: { id: 2 } }"
                                            class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center">
-                                            Save
-                                        </a>
+                                            Create
+                                        </router-link>
                                 </div>
                             </div>
                         </form>
@@ -86,10 +89,19 @@
 <script>
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { UploadMedia } from "@s1modev/media-upload";
+import useCampaign from "../../composables/campaign";
 
 export default {
     name: "CreateCampaign",
-    components: { Navbar, Footer },
+    components: { Navbar, Footer, UploadMedia },
+    setup() {
+        const { uploadImageCampaign } = useCampaign()
+
+        return {
+            uploadImageCampaign
+        }
+    },
 }
 </script>
 

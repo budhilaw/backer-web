@@ -20,6 +20,10 @@
     "dependencies": {
         "@dicebear/avatars": "^4.10.0",
         "@dicebear/avatars-bottts-sprites": "^4.10.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@fortawesome/free-solid-svg-icons": "^5.15.4",
+        "@fortawesome/vue-fontawesome": "^3.0.0-5",
+        "@s1modev/media-upload": "^1.0.3",
         "v-pagination-3": "^0.1.7",
         "vue": "^3.2.19",
         "vue-router": "^4.0.11"
