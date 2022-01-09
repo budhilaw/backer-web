@@ -29727,10 +29727,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
-/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
-/* harmony import */ var _s1modev_media_upload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @s1modev/media-upload */ "./node_modules/@s1modev/media-upload/index.js");
-/* harmony import */ var _composables_campaign__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../composables/campaign */ "./resources/js/composables/campaign.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
+/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
+/* harmony import */ var _s1modev_media_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @s1modev/media-upload */ "./node_modules/@s1modev/media-upload/index.js");
+/* harmony import */ var _composables_campaign__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../composables/campaign */ "./resources/js/composables/campaign.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -29738,16 +29754,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CreateCampaign",
   components: {
-    Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_1__["default"],
-    UploadMedia: _s1modev_media_upload__WEBPACK_IMPORTED_MODULE_2__.UploadMedia
+    Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_2__["default"],
+    UploadMedia: _s1modev_media_upload__WEBPACK_IMPORTED_MODULE_3__.UploadMedia
   },
   setup: function setup() {
-    var _useCampaign = (0,_composables_campaign__WEBPACK_IMPORTED_MODULE_3__["default"])(),
+    var form = (0,vue__WEBPACK_IMPORTED_MODULE_5__.reactive)({
+      'name': "",
+      'excerpt': '',
+      'description': '',
+      'perks': '',
+      'goal_amount': '',
+      'backer_count': 0,
+      'current_amount': 0
+    });
+
+    var _useCampaign = (0,_composables_campaign__WEBPACK_IMPORTED_MODULE_4__["default"])(),
+        createCampaign = _useCampaign.createCampaign,
         uploadImageCampaign = _useCampaign.uploadImageCampaign;
 
+    var storeCampaign = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return createCampaign(_objectSpread({}, form));
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function storeCampaign() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
     return {
-      uploadImageCampaign: uploadImageCampaign
+      form: form,
+      createCampaign: createCampaign,
+      uploadImageCampaign: uploadImageCampaign,
+      storeCampaign: storeCampaign
     };
   }
 });
@@ -30615,48 +30667,115 @@ var _hoisted_8 = {
 var _hoisted_9 = {
   "class": "flex flex-wrap -mx-3 mb-6"
 };
+var _hoisted_10 = {
+  "class": "w-full md:w-1/2 px-3 mb-6 md:mb-0"
+};
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"w-full md:w-1/2 px-3 mb-6 md:mb-0\"><label class=\"block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2\"> Campaign Name </label><input class=\"appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" type=\"text\" placeholder=\"Contoh: Mechanical Keyboard\"></div><div class=\"w-full md:w-1/2 px-3\"><label class=\"block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2\"> Price </label><input class=\"appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" type=\"number\" placeholder=\"Contoh: 200000\"></div><div class=\"w-full px-3\"><label class=\"block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mt-3\"> Short Description </label><input class=\"appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" type=\"text\" placeholder=\"Deskripsi singkat mengenai projectmu\"></div><div class=\"w-full px-3\"><label class=\"block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2\"> What will backers get </label><input class=\"appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" type=\"text\" placeholder=\"Contoh: Ayam, Nasi Goreng, Piring\"></div><div class=\"w-full px-3\"><label class=\"block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2\"> Description </label><textarea class=\"appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" type=\"text\" placeholder=\"Isi deskripsi panjang untuk projectmu\"></textarea></div>", 5);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+}, " Campaign Name ", -1
+/* HOISTED */
+);
 
-var _hoisted_15 = {
+var _hoisted_12 = {
+  "class": "w-full md:w-1/2 px-3"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+}, " Goal Amount ", -1
+/* HOISTED */
+);
+
+var _hoisted_14 = {
   "class": "w-full px-3"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Create ");
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mt-3"
+}, " Short Description ", -1
+/* HOISTED */
+);
 
+var _hoisted_16 = {
+  "class": "w-full px-3"
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+}, " What will backers get ", -1
+/* HOISTED */
+);
+
+var _hoisted_18 = {
+  "class": "w-full px-3"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+}, " Description ", -1
+/* HOISTED */
+);
+
+var _hoisted_20 = {
+  "class": "w-full px-3"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Navbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Navbar");
 
-  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-
   var _component_Footer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Footer");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Navbar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    onChange: _cache[0] || (_cache[0] = function () {
-      return $setup.uploadImageCampaign && $setup.uploadImageCampaign.apply($setup, arguments);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Navbar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    type: "text",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $setup.form.name = $event;
     }),
-    id: "images-upload",
-    type: "file",
-    accept: "image/*",
-    multiple: ""
-  }, null, 32
-  /* HYDRATE_EVENTS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: {
-      name: 'UploadImage',
-      params: {
-        id: 2
-      }
-    },
+    placeholder: "Contoh: Mechanical Keyboard"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    type: "number",
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $setup.form.goal_amount = $event;
+    }),
+    placeholder: "Contoh: 200000"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.goal_amount]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    type: "text",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $setup.form.excerpt = $event;
+    }),
+    placeholder: "Deskripsi singkat mengenai projectmu"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.excerpt]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    type: "text",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $setup.form.perks = $event;
+    }),
+    placeholder: "Contoh: Ayam, Nasi Goreng, Piring"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.perks]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    type: "text",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $setup.form.description = $event;
+    }),
+    placeholder: "Isi deskripsi panjang untuk projectmu"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[5] || (_cache[5] = function () {
+      return $setup.storeCampaign && $setup.storeCampaign.apply($setup, arguments);
+    }),
     "class": "bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_16];
-    }),
-    _: 1
-    /* STABLE */
-
-  })])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
+  }, " Create ")])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
 }
 
 /***/ }),
@@ -31779,6 +31898,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -31787,25 +31907,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 function useCampaign() {
   var campaign = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
   var campaignImages = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+  var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
 
-  var getCampaign = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var response;
+  var createCampaign = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(data) {
+      var token, res, id;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign');
+              token = localStorage.access_token;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/campaign/store', data, {
+                headers: {
+                  'Authorization': "Bearer ".concat(token)
+                }
+              });
 
-            case 2:
-              response = _context.sent;
-              campaign.value = response.data.data;
+            case 3:
+              res = _context.sent;
+              id = res.data.data.id;
+              _context.next = 7;
+              return router.push({
+                name: 'UploadImage',
+                params: {
+                  id: id
+                }
+              });
 
-            case 4:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -31813,20 +31947,20 @@ function useCampaign() {
       }, _callee);
     }));
 
-    return function getCampaign() {
+    return function createCampaign(_x) {
       return _ref.apply(this, arguments);
     };
   }();
 
-  var getCampaignBySlug = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(slug) {
+  var getCampaign = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/' + slug);
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign');
 
             case 2:
               response = _context2.sent;
@@ -31840,20 +31974,47 @@ function useCampaign() {
       }, _callee2);
     }));
 
-    return function getCampaignBySlug(_x) {
+    return function getCampaign() {
       return _ref2.apply(this, arguments);
     };
   }();
 
-  var listCampaignImages = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(campaignId) {
-      var token, res;
+  var getCampaignBySlug = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(slug) {
+      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/' + slug);
+
+            case 2:
+              response = _context3.sent;
+              campaign.value = response.data.data;
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    return function getCampaignBySlug(_x2) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+
+  var listCampaignImages = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(campaignId) {
+      var token, res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
               token = localStorage.access_token;
-              _context3.next = 3;
+              _context4.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/image/list/' + campaignId, {
                 headers: {
                   'Authorization': "Bearer ".concat(token)
@@ -31861,7 +32022,7 @@ function useCampaign() {
               });
 
             case 3:
-              res = _context3.sent;
+              res = _context4.sent;
               res.data.data.forEach(function (item) {
                 var name = item["file_name"].replace("images/campaign/", "");
                 campaignImages.value.push({
@@ -31874,23 +32035,23 @@ function useCampaign() {
 
             case 5:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }));
 
-    return function listCampaignImages(_x2) {
-      return _ref3.apply(this, arguments);
+    return function listCampaignImages(_x3) {
+      return _ref4.apply(this, arguments);
     };
   }();
 
   var uploadImageCampaign = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(event, id) {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(event, id) {
       var token, files, i, formData, url, res, name;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               token = localStorage.access_token;
               files = event.target.files;
@@ -31898,7 +32059,7 @@ function useCampaign() {
 
             case 3:
               if (!(i < files.length)) {
-                _context4.next = 16;
+                _context5.next = 16;
                 break;
               }
 
@@ -31906,7 +32067,7 @@ function useCampaign() {
               url = URL.createObjectURL(files[i]);
               formData.set('image', files[i]);
               formData.set('is_primary', false);
-              _context4.next = 10;
+              _context5.next = 10;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/campaign/image/upload/' + id, formData, {
                 headers: {
                   'Authorization': "Bearer ".concat(token)
@@ -31914,7 +32075,7 @@ function useCampaign() {
               });
 
             case 10:
-              res = _context4.sent;
+              res = _context5.sent;
               name = res.data.data["file_name"].replace("images/campaign/", "");
               campaignImages.value.push({
                 id: res.data.data["id"],
@@ -31927,42 +32088,10 @@ function useCampaign() {
 
             case 13:
               i++;
-              _context4.next = 3;
+              _context5.next = 3;
               break;
 
             case 16:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4);
-    }));
-
-    return function uploadImageCampaign(_x3, _x4) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-
-  var deleteImageCampaign = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(id, index) {
-      var token, res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              token = localStorage.access_token;
-              _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default()["delete"]('/api/campaign/image/destroy/' + id, {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 3:
-              res = _context5.sent;
-              campaignImages.value.splice(index, 1);
-
-            case 5:
             case "end":
               return _context5.stop();
           }
@@ -31970,12 +32099,12 @@ function useCampaign() {
       }, _callee5);
     }));
 
-    return function deleteImageCampaign(_x5, _x6) {
+    return function uploadImageCampaign(_x4, _x5) {
       return _ref5.apply(this, arguments);
     };
   }();
 
-  var setPrimaryImage = /*#__PURE__*/function () {
+  var deleteImageCampaign = /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(id, index) {
       var token, res;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
@@ -31984,7 +32113,7 @@ function useCampaign() {
             case 0:
               token = localStorage.access_token;
               _context6.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/image/primary/' + id, {
+              return axios__WEBPACK_IMPORTED_MODULE_2___default()["delete"]('/api/campaign/image/destroy/' + id, {
                 headers: {
                   'Authorization': "Bearer ".concat(token)
                 }
@@ -31992,6 +32121,38 @@ function useCampaign() {
 
             case 3:
               res = _context6.sent;
+              campaignImages.value.splice(index, 1);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+
+    return function deleteImageCampaign(_x6, _x7) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+
+  var setPrimaryImage = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7(id, index) {
+      var token, res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              token = localStorage.access_token;
+              _context7.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/image/primary/' + id, {
+                headers: {
+                  'Authorization': "Bearer ".concat(token)
+                }
+              });
+
+            case 3:
+              res = _context7.sent;
               campaignImages.value = campaignImages.value.map(function (item, index) {
                 if (item.primary === 1) {
                   campaignImages.value[index].primary = 0;
@@ -32003,20 +32164,21 @@ function useCampaign() {
 
             case 6:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     }));
 
-    return function setPrimaryImage(_x7, _x8) {
-      return _ref6.apply(this, arguments);
+    return function setPrimaryImage(_x8, _x9) {
+      return _ref7.apply(this, arguments);
     };
   }();
 
   return {
     campaign: campaign,
     campaignImages: campaignImages,
+    createCampaign: createCampaign,
     getCampaign: getCampaign,
     getCampaignBySlug: getCampaignBySlug,
     listCampaignImages: listCampaignImages,

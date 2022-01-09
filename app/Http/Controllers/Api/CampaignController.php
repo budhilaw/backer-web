@@ -14,7 +14,9 @@ use Illuminate\Http\JsonResponse;
 use Config;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CampaignController extends Controller
 {
@@ -39,16 +41,19 @@ class CampaignController extends Controller
     public function store(CampaignRequest $request): CampaignResource
     {
         if($request->validated()) {
+            $userId = Auth::id();
+            $slug = Str::slug($request->name);
+
             $campaign = Campaign::query()->create([
-                'user_id' => $request -> user_id,
-                'name' => $request -> name,
-                'slug' => $request -> slug,
-                'excerpt' => $request -> excerpt,
-                'description' => $request -> description,
-                'perks' => $request -> perks,
-                'backer_count' => $request -> backer_count,
-                'goal_amount' => $request -> goal_amount,
-                'current_amount' => $request -> current_amount
+                'user_id' => $userId,
+                'name' => $request->name,
+                'slug' => $slug,
+                'excerpt' => $request->excerpt,
+                'description' => $request->description,
+                'perks' => $request->perks,
+                'backer_count' => $request->backer_count,
+                'goal_amount' => $request->goal_amount,
+                'current_amount' => $request->current_amount
             ]);
             return new CampaignResource($campaign);
         }
@@ -63,7 +68,7 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign): CampaignResource
     {
-        $data = Campaign::with('image')->find($campaign->id);
+        $data = Campaign::with('images')->find($campaign->id);
         return new CampaignResource($data);
     }
 
@@ -118,19 +123,6 @@ class CampaignController extends Controller
      */
     public function uploadImageCampaign(CampaignImageRequest $request, String $id)
     {
-        // set value
-        $isPrimary = 0; // false
-
-        if($request['is_primary'] == "true") {
-            $isPrimary = 1;
-        }
-
-        // get campaignImage
-        $existed = CampaignImage::findOrFail($id)->where('is_primary', 1)->exists();
-        if($existed && $request['is_primary'] == "true") {
-            return response()->json(['error' => 'This campaign image have primary image'], 409);
-        }
-
         $path = config('app.configApp.pathCampaign');
         $pathToFile = $request->file('image')->store($path,'public');
         $filename = $pathToFile;
@@ -138,7 +130,7 @@ class CampaignController extends Controller
             ->create([
                 'campaign_id' => $id,
                 'file_name' => $filename,
-                'is_primary' => $isPrimary,
+                'is_primary' => 0,
             ]);
         return new CampaignImageResource($imageCampaign);
 

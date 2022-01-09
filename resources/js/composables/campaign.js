@@ -1,9 +1,22 @@
 import { ref } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 export default function useCampaign() {
     const campaign = ref([])
     const campaignImages = ref([])
+    const router = useRouter()
+
+    const createCampaign = async (data) => {
+        const token = localStorage.access_token
+        let res = await axios.post('/api/campaign/store', data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        let id = res.data.data.id
+        await router.push({ name: 'UploadImage', params: { id: id } })
+    }
 
     const getCampaign = async () => {
         let response = await axios.get('/api/campaign')
@@ -96,6 +109,7 @@ export default function useCampaign() {
     return {
         campaign,
         campaignImages,
+        createCampaign,
         getCampaign,
         getCampaignBySlug,
         listCampaignImages,

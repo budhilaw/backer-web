@@ -25,8 +25,6 @@ class CampaignRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'user_id' => ['required'],
-            'slug' => ['required'],
             'excerpt' => ['required'],
             'description' => ['required'],
             'perks' => ['required'],
