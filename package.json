@@ -26,6 +26,7 @@
         "@s1modev/media-upload": "^1.0.3",
         "v-pagination-3": "^0.1.7",
         "vue": "^3.2.19",
+        "vue-pagination-tw": "^0.1.2",
         "vue-router": "^4.0.11"
     }
 }

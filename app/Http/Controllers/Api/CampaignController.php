@@ -13,9 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Config;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CampaignController extends Controller
@@ -28,7 +26,7 @@ class CampaignController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $limit = config('app.configApp.limitPaginate');
-        $campaigns = Campaign::where('status', 1)->paginate($limit);
+        $campaigns = Campaign::where('status', 1)->orderByDesc('created_at')->paginate($limit);
         return CampaignResource::collection($campaigns);
     }
 

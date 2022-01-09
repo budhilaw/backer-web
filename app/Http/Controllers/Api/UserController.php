@@ -55,11 +55,11 @@ class UserController extends Controller
         $user = Auth::user();
 
         if($user->role == 1) {
-            $campaigns = Campaign::paginate($limit);
+            $campaigns = Campaign::orderByDesc('created_at')->paginate($limit);
             return CampaignResource::collection($campaigns);
         }
 
-        $userCampaigns = $user->campaigns()->paginate(5);
+        $userCampaigns = $user->campaigns()->orderByDesc('created_at')->paginate(5);
         return CampaignResource::collection($userCampaigns);
     }
 }
