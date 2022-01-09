@@ -33,10 +33,8 @@
                 <div class="w-full lg:max-w-full lg:flex mb-4">
                     <div
                         class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-                        style="
-                background-image: url('https://tailwindcss.com/img/card-left.jpg');
-              "
-                    ></div>
+                        v-bind:style="{ 'background-image': 'url(https://backer.test/storage/' + item.image.file_name + ')' }">
+                    </div>
                     <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 flex flex-col justify-between leading-normal">
                         <div class="mb-8">
                             <div class="text-gray-900 font-bold text-xl mb-1">
@@ -51,12 +49,16 @@
                             </p>
                         </div>
                         <div class="flex items-center">
-                            <a
-                                href="/dashboard/detail.html"
+                            <router-link
+                                :to="{ name: 'SingleCampaign', params: { slug: item.slug } }"
                                 class="bg-green-button text-white py-2 px-4 rounded"
                             >
                                 Detail
-                            </a>
+                            </router-link>
+
+                            <button class="bg-red-500 text-white py-2 px-4 ml-4 rounded" @click="removeCampaign(item.id)">
+                                Remove
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -79,19 +81,26 @@
 <script>
 import Navbar from "../../components/Navbar";
 import useUser from "../../composables/user";
-import {onMounted} from "vue";
+import {onMounted, watchEffect} from "vue";
 import Footer from "../../components/Footer";
+import Pagination from "../../components/Pagination";
+
 export default {
     name: "Index",
-    components: { Navbar, Footer },
+    components: { Navbar, Footer, Pagination },
     setup() {
-        const { campaigns, getCampaigns } = useUser()
+        const { campaigns, getCampaigns, removeCampaign } = useUser()
 
-        onMounted(getCampaigns)
+        watchEffect(() => campaigns)
+
+        onMounted(() => {
+            getCampaigns();
+        })
 
         return {
             campaigns,
-            getCampaigns
+            getCampaigns,
+            removeCampaign
         }
     },
 }

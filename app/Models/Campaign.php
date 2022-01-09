@@ -39,7 +39,7 @@ class Campaign extends Model
      *
      * @return HasMany
      */
-    public function image(): HasMany
+    public function images(): HasMany
     {
         return $this->hasMany(CampaignImage::class);
     }

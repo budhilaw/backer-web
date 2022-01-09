@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\CampaignResource;
+use App\Models\Campaign;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -44,23 +47,19 @@ class UserController extends Controller
     /**
      * Get list of campaigns from a user.
      *
-     * @return JsonResponse
+     * @return AnonymousResourceCollection
      */
-    public function campaigns(): JsonResponse
+    public function campaigns(): AnonymousResourceCollection
     {
-        $user = User::find(Auth::user()->id);
-        return $this->campaignStructure();
-    }
+        $limit = config('app.configApp.limitPaginate');
+        $user = Auth::user();
 
-    /**
-     * Get the campaigns array structure.
-     *
-     * @return JsonResponse
-     */
-    protected function campaignStructure(): JsonResponse
-    {
-        return response()->json([
-            'user' => User::with('campaigns')->find(Auth::id()),
-        ]);
+        if($user->role == 1) {
+            $campaigns = Campaign::orderByDesc('created_at')->paginate($limit);
+            return CampaignResource::collection($campaigns);
+        }
+
+        $userCampaigns = $user->campaigns()->orderByDesc('created_at')->paginate(5);
+        return CampaignResource::collection($userCampaigns);
     }
 }

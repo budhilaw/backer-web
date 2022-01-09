@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Config;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CampaignController extends Controller
 {
@@ -26,7 +26,7 @@ class CampaignController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $limit = config('app.configApp.limitPaginate');
-        $campaigns = Campaign::where('status', 1)->paginate($limit);
+        $campaigns = Campaign::where('status', 1)->orderByDesc('created_at')->paginate($limit);
         return CampaignResource::collection($campaigns);
     }
 
@@ -39,16 +39,19 @@ class CampaignController extends Controller
     public function store(CampaignRequest $request): CampaignResource
     {
         if($request->validated()) {
+            $userId = Auth::id();
+            $slug = Str::slug($request->name);
+
             $campaign = Campaign::query()->create([
-                'user_id' => $request -> user_id,
-                'name' => $request -> name,
-                'slug' => $request -> slug,
-                'excerpt' => $request -> excerpt,
-                'description' => $request -> description,
-                'perks' => $request -> perks,
-                'backer_count' => $request -> backer_count,
-                'goal_amount' => $request -> goal_amount,
-                'current_amount' => $request -> current_amount
+                'user_id' => $userId,
+                'name' => $request->name,
+                'slug' => $slug,
+                'excerpt' => $request->excerpt,
+                'description' => $request->description,
+                'perks' => $request->perks,
+                'backer_count' => $request->backer_count,
+                'goal_amount' => $request->goal_amount,
+                'current_amount' => $request->current_amount
             ]);
             return new CampaignResource($campaign);
         }
@@ -63,7 +66,7 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign): CampaignResource
     {
-        $data = Campaign::with('image')->find($campaign->id);
+        $data = Campaign::with('images')->find($campaign->id);
         return new CampaignResource($data);
     }
 
@@ -97,21 +100,27 @@ class CampaignController extends Controller
     }
 
     /**
+     * List of all images on the campaign
+     *
+     * @param String campaignId
+     * @return AnonymousResourceCollection
+     */
+    public function listImageCampaign(String $id): AnonymousResourceCollection
+    {
+        $campaign = Campaign::findOrFail($id);
+        $campaignImages = $campaign->images;
+        return CampaignImageResource::collection($campaignImages);
+    }
+
+    /**
      * Upload an image for campaign
      *
      * @param CampaignImageRequest $request
      * @param String $id
-     * @return CampaignImageResource
+     * @return CampaignImageResource|JsonResponse
      */
-    public function uploadImageCampaign(CampaignImageRequest $request, String $id): CampaignImageResource
+    public function uploadImageCampaign(CampaignImageRequest $request, String $id)
     {
-        // set value
-        $isPrimary = 0; // false
-
-        if($request['is_primary'] == "true") {
-            $isPrimary = 1;
-        }
-
         $path = config('app.configApp.pathCampaign');
         $pathToFile = $request->file('image')->store($path,'public');
         $filename = $pathToFile;
@@ -119,7 +128,7 @@ class CampaignController extends Controller
             ->create([
                 'campaign_id' => $id,
                 'file_name' => $filename,
-                'is_primary' => $isPrimary,
+                'is_primary' => 0,
             ]);
         return new CampaignImageResource($imageCampaign);
 
@@ -131,11 +140,32 @@ class CampaignController extends Controller
      * @param String $id
      * @return JsonResponse
      */
-    public function deleteImageCampaign(String $id): JsonResponse {
+    public function deleteImageCampaign(String $id): JsonResponse
+    {
         $campaignImage = CampaignImage::findOrFail($id);
         $fullPath = storage_path() . '/app/public/' . $campaignImage->file_name;
         unlink($fullPath);
         $campaignImage->delete();
         return response()->json(['message' => 'Campaign Image data successfully deleted!'],200);
+    }
+
+    /**
+     * Set campaign image as primary image
+     *
+     * @param String $id
+     * @return JsonResponse
+     */
+    public function setPrimaryImageCampaign(String $id): JsonResponse
+    {
+        $campaignImage = CampaignImage::findOrFail($id);
+        $primaryImage = $campaignImage->campaign->images->where('is_primary', 1)->first();
+        if(isset($primaryImage)) {
+            // remove existing primary image
+            $primaryImage->is_primary = false;
+            $primaryImage->save();
+        }
+        $campaignImage->is_primary = true;
+        $campaignImage->save();
+        return response()->json(['message' => 'Successfuly set campaign image to be a primary image!'],200);
     }
 }
