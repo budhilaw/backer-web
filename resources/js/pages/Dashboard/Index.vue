@@ -55,6 +55,10 @@
                             >
                                 Detail
                             </router-link>
+
+                            <button class="bg-red-500 text-white py-2 px-4 ml-4 rounded" @click="removeCampaign(item.id)">
+                                Remove
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -85,7 +89,7 @@ export default {
     name: "Index",
     components: { Navbar, Footer, Pagination },
     setup() {
-        const { campaigns, getCampaigns } = useUser()
+        const { campaigns, getCampaigns, removeCampaign } = useUser()
 
         watchEffect(() => campaigns)
 
@@ -95,7 +99,8 @@ export default {
 
         return {
             campaigns,
-            getCampaigns
+            getCampaigns,
+            removeCampaign
         }
     },
 }

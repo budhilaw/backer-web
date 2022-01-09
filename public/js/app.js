@@ -29945,7 +29945,8 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     var _useUser = (0,_composables_user__WEBPACK_IMPORTED_MODULE_1__["default"])(),
         campaigns = _useUser.campaigns,
-        getCampaigns = _useUser.getCampaigns;
+        getCampaigns = _useUser.getCampaigns,
+        removeCampaign = _useUser.removeCampaign;
 
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.watchEffect)(function () {
       return campaigns;
@@ -29955,7 +29956,8 @@ __webpack_require__.r(__webpack_exports__);
     });
     return {
       campaigns: campaigns,
-      getCampaigns: getCampaigns
+      getCampaigns: getCampaigns,
+      removeCampaign: removeCampaign
     };
   }
 });
@@ -31190,11 +31192,12 @@ var _hoisted_22 = {
 
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Detail ");
 
-var _hoisted_24 = {
+var _hoisted_24 = ["onClick"];
+var _hoisted_25 = {
   key: 1
 };
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "h-screen mt-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", {
   "class": "text-2xl text-white"
@@ -31202,7 +31205,7 @@ var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_26 = [_hoisted_25];
+var _hoisted_27 = [_hoisted_26];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Navbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Navbar");
 
@@ -31273,10 +31276,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
-    , ["to"])])])])])]);
+    , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      "class": "bg-red-500 text-white py-2 px-4 ml-4 rounded",
+      onClick: function onClick($event) {
+        return $setup.removeCampaign(item.id);
+      }
+    }, " Remove ", 8
+    /* PROPS */
+    , _hoisted_24)])])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_24, _hoisted_26))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
+  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, _hoisted_27))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
 }
 
 /***/ }),
@@ -32691,12 +32701,11 @@ function useUser() {
               res = _context4.sent;
               campaigns.value = res.data.data;
               paginationMeta.value = res.data;
-              nextLink.value = res.data.links.next;
-              _context4.next = 13;
+              _context4.next = 12;
               break;
 
-            case 10:
-              _context4.prev = 10;
+            case 9:
+              _context4.prev = 9;
               _context4.t0 = _context4["catch"](1);
 
               if (_context4.t0.response.status === 422) {
@@ -32707,22 +32716,21 @@ function useUser() {
                 errors.value['general'] = _context4.t0.response.data.error;
               }
 
-            case 13:
+            case 12:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, null, [[1, 10]]);
+      }, _callee4, null, [[1, 9]]);
     }));
 
     return function getCampaigns() {
       return _ref4.apply(this, arguments);
     };
-  }(); // for pagination
+  }();
 
-
-  var changePage = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(link) {
+  var removeCampaign = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(id) {
       var token, res;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
         while (1) {
@@ -32730,7 +32738,7 @@ function useUser() {
             case 0:
               token = localStorage.access_token;
               _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get(link, {
+              return axios__WEBPACK_IMPORTED_MODULE_2___default()["delete"]('/api/campaign/destroy/' + id, {
                 headers: {
                   'Authorization': "Bearer ".concat(token)
                 }
@@ -32739,9 +32747,12 @@ function useUser() {
             case 3:
               res = _context5.sent;
               campaigns.value = res.data.data;
-              paginationMeta.value = res.data.meta;
+              _context5.next = 7;
+              return router.push({
+                name: 'Home'
+              });
 
-            case 6:
+            case 7:
             case "end":
               return _context5.stop();
           }
@@ -32749,7 +32760,7 @@ function useUser() {
       }, _callee5);
     }));
 
-    return function changePage(_x4) {
+    return function removeCampaign(_x4) {
       return _ref5.apply(this, arguments);
     };
   }();
@@ -32764,7 +32775,7 @@ function useUser() {
     register: register,
     storeUser: storeUser,
     getCampaigns: getCampaigns,
-    changePage: changePage
+    removeCampaign: removeCampaign
   };
 }
 

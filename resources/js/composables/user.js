@@ -57,7 +57,6 @@ export default function useUser() {
             })
             campaigns.value = res.data.data
             paginationMeta.value = res.data
-            nextLink.value = res.data.links.next
         } catch (e) {
             if(e.response.status === 422) {
                 for(const key in e.response.data.errors) {
@@ -69,16 +68,15 @@ export default function useUser() {
         }
     }
 
-    // for pagination
-    const changePage = async(link) => {
+    const removeCampaign = async (id) => {
         const token = localStorage.access_token
-        let res = await axios.get(link, {
+        let res = await axios.delete('/api/campaign/destroy/' + id, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
         campaigns.value = res.data.data
-        paginationMeta.value = res.data.meta
+        await router.push({name: 'Home'})
     }
 
     return {
@@ -91,6 +89,6 @@ export default function useUser() {
         register,
         storeUser,
         getCampaigns,
-        changePage
+        removeCampaign
     }
 }
