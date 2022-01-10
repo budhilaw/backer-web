@@ -58,14 +58,14 @@
                         type="number"
                         class="border border-gray-500 block w-full px-6 py-3 mt-4 rounded-full text-gray-800 transition duration-300 ease-in-out focus:outline-none focus:shadow-outline"
                         placeholder="Amount in Rp"
-                        value=""
+                        v-model="fundForm.amount"
                     />
-                    <a
-                        href="/fund-success.html"
+                    <button
+                        @click="doFund(campaignStore.state.campaign.id)"
                         class="text-center mt-3 button-cta block w-full bg-orange-button hover:bg-green-button text-white font-medium px-6 py-3 text-md rounded-full"
                     >
                         Fund Now
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
 <script>
 import Navbar from "../components/Navbar";
 import BaseProgress from "../components/BaseProgress";
-import { onMounted, inject, computed } from "vue";
+import {onMounted, inject, computed, reactive} from "vue";
 import Footer from "../components/Footer";
 
 export default {
@@ -131,8 +131,11 @@ export default {
     },
     components: {Footer, Navbar, BaseProgress},
     setup(props) {
-
         const campaignStore = inject('campaignStore')
+        let fundForm = reactive({
+            'campaign_id': '',
+            'amount': ''
+        })
 
         onMounted(() => {
             campaignStore.methods.getCampaignsBySlug(props.slug)
@@ -142,9 +145,16 @@ export default {
             return `${process.env.APP_URL}/storage/`
         })
 
+        const doFund = (id) => {
+            fundForm.campaign_id = id
+            campaignStore.methods.fundCampaign(fundForm)
+        }
+
         return {
             campaignStore,
-            baseURL
+            baseURL,
+            fundForm,
+            doFund
         }
     },
 }

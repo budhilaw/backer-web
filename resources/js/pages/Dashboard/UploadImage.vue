@@ -1,7 +1,7 @@
 <template>
     <div class="project-page bg-purple-progress">
         <Navbar />
-        <section class="container mx-auto pt-8 relative">
+        <section class="container mx-auto pt-8 relative my-16">
             <div class="flex justify-between items-center">
                 <div class="w-full mr-6">
                     <h2 class="text-4xl text-white mb-2 font-medium">Upload Images</h2>

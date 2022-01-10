@@ -46,6 +46,12 @@ const methods = {
             }
         }).then((res) => {
             state.campaign = res.data.data
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
         })
     },
 
@@ -53,6 +59,25 @@ const methods = {
         if(state.campaign.perks) {
             return state.campaign.perks.split(',')
         }
+    },
+
+    fundCampaign(data) {
+        const token = localStorage.access_token
+        state.campaign = []
+
+        axios.post('/api/transaction/store', data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+            void router.push({ name: "Transactions" })
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
+        })
     },
 
     removeCampaign(id, index) {
@@ -63,6 +88,12 @@ const methods = {
             }
         }).then((res) => {
             state.campaigns.splice(index, 1)
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
         })
     },
 
@@ -75,6 +106,12 @@ const methods = {
             data: data
         }).then((res) => {
             console.log(res.data)
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
         })
     },
 
@@ -95,6 +132,12 @@ const methods = {
                     primary: item["is_primary"]
                 })
             })
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
         })
     },
 
@@ -123,6 +166,12 @@ const methods = {
                     size: files[i].size,
                     type: files[i].type
                 })
+            }).catch((err) => {
+                userStore.methods.clearErrorMessage()
+                if(err.response) {
+                    void router.push({ name: "Login" })
+                    userStore.methods.setErrorMessage("Please login first!")
+                }
             })
         }
     },
@@ -136,6 +185,12 @@ const methods = {
             },
         }).then((res) => {
             state.campaignImages.splice(index,1)
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
         })
     },
 
@@ -155,6 +210,12 @@ const methods = {
             })
 
             state.campaignImages[index].primary = 1
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
         })
     }
 }

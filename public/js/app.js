@@ -29599,10 +29599,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   inheritAttrs: false,
   props: {
-    color: {
-      type: String,
-      "default": "green"
-    },
     percentage: {
       type: Number,
       "default": 0
@@ -29977,6 +29973,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
 /* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -29984,6 +29982,22 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"],
     Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  setup: function setup() {
+    var userStore = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('userStore');
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
+      userStore.methods.getTransactions();
+      userStore.methods.getMyProfile();
+    });
+
+    var doVerify = function doVerify(id) {
+      userStore.methods.verifyTransactions(id);
+    };
+
+    return {
+      userStore: userStore,
+      doVerify: doVerify
+    };
   }
 });
 
@@ -30325,15 +30339,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   setup: function setup(props) {
     var campaignStore = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('campaignStore');
+    var fundForm = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)({
+      'campaign_id': '',
+      'amount': ''
+    });
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       campaignStore.methods.getCampaignsBySlug(props.slug);
     });
     var baseURL = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return "".concat("https://backer.test", "/storage/");
     });
+
+    var doFund = function doFund(id) {
+      fundForm.campaign_id = id;
+      campaignStore.methods.fundCampaign(fundForm);
+    };
+
     return {
       campaignStore: campaignStore,
-      baseURL: baseURL
+      baseURL: baseURL,
+      fundForm: fundForm,
+      doFund: doFund
     };
   }
 });
@@ -30391,7 +30417,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       indeterminate: $props.indeterminate
     }]])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-full progressbar", ["bg-".concat($props.color, "-500"), {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-full progressbar", ["bg-green-500", {
       'absolute top-0': $props.indeterminate
     }, {
       'rounded-full': $props.rounded
@@ -30456,7 +30482,7 @@ var _hoisted_1 = {
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "header__bg"
+  "class": "header__bg mb-4"
 }, null, -1
 /* HOISTED */
 );
@@ -30682,27 +30708,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "landing-hero pt-5"
+  "class": "landing-hero py-8 bg-purple-progress"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "header__bg"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_3 = {
+var _hoisted_2 = {
   "class": "container mx-auto relative"
 };
-var _hoisted_4 = {
+var _hoisted_3 = {
   key: 0,
   "class": "flex items-center pt-10 px-5 md:px-0"
 };
-var _hoisted_5 = {
+var _hoisted_4 = {
   "class": "w-1/2"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "text-4xl text-white mb-5"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" We helps "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("u", {
   "class": "hero-underline"
@@ -30712,13 +30731,13 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-white text-xl font-light mb-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Fund the best idea to become "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" a real product and be the contributor ")], -1
 /* HOISTED */
 );
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "w-1/2 flex justify-center"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "/images/hero-image@2x.png",
@@ -30730,14 +30749,14 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_NavLinks = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("NavLinks");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavLinks), $props.hero ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavLinks), $props.hero ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$router.push({
         path: '/'
       });
     }),
     "class": "block bg-orange-button hover:bg-green-button text-white font-semibold px-12 py-3 text-xl rounded-full"
-  }, " Find a Project ")]), _hoisted_8])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+  }, " Find a Project ")]), _hoisted_7])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
 }
 
 /***/ }),
@@ -31138,7 +31157,7 @@ var _hoisted_1 = {
   "class": "project-page bg-purple-progress"
 };
 var _hoisted_2 = {
-  "class": "container mx-auto pt-8 relative"
+  "class": "container mx-auto pt-8 relative my-16"
 };
 var _hoisted_3 = {
   "class": "flex justify-between items-center mb-6"
@@ -31374,8 +31393,51 @@ var _hoisted_9 = {
 
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Your Transactions ");
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<hr><div class=\"block mb-2\"><div class=\"w-full lg:max-w-full lg:flex mb-4\"><div class=\"h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden\" style=\"background-color:#bbb;\"></div><div class=\"w-full border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 flex flex-col justify-between leading-normal\"><div><div class=\"text-gray-900 font-bold text-xl mb-1\"> Cari Uang Buat Gunpla </div><p class=\"text-sm text-gray-600 flex items-center mb-2\"> Rp. 200.000.000 · 12 September 2020 </p></div></div></div></div>", 2);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1
+/* HOISTED */
+);
 
+var _hoisted_12 = {
+  "class": "block mb-2"
+};
+var _hoisted_13 = {
+  key: 0,
+  "class": "w-full lg:max-w-full lg:flex flex-col justify-between mb-4"
+};
+var _hoisted_14 = {
+  "class": "w-full border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 mb-4 leading-normal"
+};
+var _hoisted_15 = {
+  "class": "text-sm text-gray-600 flex items-center mb-2"
+};
+var _hoisted_16 = {
+  key: 0
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "text-xl font-bold text-green-600 flex items-center"
+}, " Paid ", -1
+/* HOISTED */
+);
+
+var _hoisted_18 = [_hoisted_17];
+var _hoisted_19 = {
+  key: 1
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Pay Now ");
+
+var _hoisted_21 = {
+  key: 1
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "text-xl font-bold text-red-600 flex items-center my-4"
+}, " Unpaid ", -1
+/* HOISTED */
+);
+
+var _hoisted_23 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Navbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Navbar");
 
@@ -31403,7 +31465,52 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])])])]), _hoisted_11]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
+  })])])])]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [$setup.userStore.state.transactions ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.userStore.state.transactions, function (trans) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+      to: {
+        name: 'SingleCampaign',
+        params: {
+          slug: trans.campaign.slug
+        }
+      },
+      "class": "text-gray-900 font-bold text-xl mb-1"
+    }, {
+      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(trans.campaign.name), 1
+        /* TEXT */
+        )];
+      }),
+      _: 2
+      /* DYNAMIC */
+
+    }, 1032
+    /* PROPS, DYNAMIC_SLOTS */
+    , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(trans.rupiah_amount) + " · " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(trans.date_transaction), 1
+    /* TEXT */
+    ), trans.status == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, _hoisted_18)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [$setup.userStore.state.userProfile.role === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+      key: 0,
+      to: {
+        name: 'Dashboard'
+      },
+      "class": "bg-green-button text-white py-2 px-4 mt-8 rounded"
+    }, {
+      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+        return [_hoisted_20];
+      }),
+      _: 1
+      /* STABLE */
+
+    })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.userStore.state.userProfile.role === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      onClick: function onClick($event) {
+        return $setup.doVerify(trans.id);
+      },
+      "class": "bg-green-600 text-white py-2 px-4 rounded"
+    }, " Verify ", 8
+    /* PROPS */
+    , _hoisted_23)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]))])]);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
 }
 
 /***/ }),
@@ -31580,7 +31687,7 @@ var _hoisted_1 = {
   "class": "project-page bg-purple-progress"
 };
 var _hoisted_2 = {
-  "class": "container mx-auto pt-8 relative"
+  "class": "container mx-auto pt-8 relative my-16"
 };
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"flex justify-between items-center\" data-v-7e4f0786><div class=\"w-full mr-6\" data-v-7e4f0786><h2 class=\"text-4xl text-white mb-2 font-medium\" data-v-7e4f0786>Upload Images</h2></div></div><div class=\"flex justify-between items-center\" data-v-7e4f0786><div class=\"w-3/4 mr-6\" data-v-7e4f0786><h3 class=\"text-2xl text-white mb-4\" data-v-7e4f0786>Upload Campaign Images</h3></div></div>", 2);
@@ -32302,74 +32409,57 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_21 = {
   "class": "list-check mt-3"
 };
-
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "number",
-  "class": "border border-gray-500 block w-full px-6 py-3 mt-4 rounded-full text-gray-800 transition duration-300 ease-in-out focus:outline-none focus:shadow-outline",
-  placeholder: "Amount in Rp",
-  value: ""
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "/fund-success.html",
-  "class": "text-center mt-3 button-cta block w-full bg-orange-button hover:bg-green-button text-white font-medium px-6 py-3 text-md rounded-full"
-}, " Fund Now ", -1
-/* HOISTED */
-);
-
-var _hoisted_24 = {
+var _hoisted_22 = {
   "class": "container mx-auto pt-8"
 };
-var _hoisted_25 = {
+var _hoisted_23 = {
   "class": "flex justify-between items-center"
 };
-var _hoisted_26 = {
+var _hoisted_24 = {
   "class": "w-full md:w-3/4 mr-6"
 };
-var _hoisted_27 = {
+var _hoisted_25 = {
   "class": "text-4xl text-gray-900 mb-2 font-medium"
 };
-var _hoisted_28 = {
+var _hoisted_26 = {
   "class": "font-light text-xl mb-5"
 };
-var _hoisted_29 = {
+var _hoisted_27 = {
   "class": "flex progress-info mb-6"
 };
-var _hoisted_30 = {
+var _hoisted_28 = {
   "class": "text-2xl"
 };
-var _hoisted_31 = {
+var _hoisted_29 = {
   "class": "ml-auto font-semibold text-2xl"
 };
-var _hoisted_32 = {
+var _hoisted_30 = {
   "class": "font-light text-xl mb-5"
 };
 
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "w-1/4 hidden md:block"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "cta-clip -mt-20"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_35 = {
+var _hoisted_33 = {
   "class": "call-to-action bg-purple-progress pt-64 pb-10"
 };
-var _hoisted_36 = {
+var _hoisted_34 = {
   "class": "container mx-auto"
 };
-var _hoisted_37 = {
+var _hoisted_35 = {
   "class": "w-full text-center"
 };
 
-var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "text-5xl text-white font-semibold"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Easy way to funding "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" best idea and innovation ")], -1
 /* HOISTED */
@@ -32416,22 +32506,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     )]);
   }), 256
   /* UNKEYED_FRAGMENT */
-  )), _hoisted_22, _hoisted_23])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.name), 1
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "number",
+    "class": "border border-gray-500 block w-full px-6 py-3 mt-4 rounded-full text-gray-800 transition duration-300 ease-in-out focus:outline-none focus:shadow-outline",
+    placeholder: "Amount in Rp",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $setup.fundForm.amount = $event;
+    })
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.fundForm.amount]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $setup.doFund($setup.campaignStore.state.campaign.id);
+    }),
+    "class": "text-center mt-3 button-cta block w-full bg-orange-button hover:bg-green-button text-white font-medium px-6 py-3 text-md rounded-full"
+  }, " Fund Now ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.excerpt), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.excerpt), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_progress, {
     percentage: $setup.campaignStore.state.campaign.current_amount / $setup.campaignStore.state.campaign.goal_amount * 100
   }, null, 8
   /* PROPS */
-  , ["percentage"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.current_amount / $setup.campaignStore.state.campaign.goal_amount * 100) + "%", 1
+  , ["percentage"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.current_amount / $setup.campaignStore.state.campaign.goal_amount * 100) + "%", 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, "Rp. " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.goal_amount), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, "Rp. " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.goal_amount), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.description), 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.campaignStore.state.campaign.description), 1
   /* TEXT */
-  )]), _hoisted_33])]), _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[0] || (_cache[0] = function ($event) {
+  )]), _hoisted_31])]), _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.$router.push({
         path: '/upload'
       });
@@ -32575,12 +32679,43 @@ var methods = {
       }
     }).then(function (res) {
       state.campaign = res.data.data;
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
     });
   },
   getPerksOnly: function getPerksOnly() {
     if (state.campaign.perks) {
       return state.campaign.perks.split(',');
     }
+  },
+  fundCampaign: function fundCampaign(data) {
+    var token = localStorage.access_token;
+    state.campaign = [];
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/transaction/store', data, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: "Transactions"
+      });
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
+    });
   },
   removeCampaign: function removeCampaign(id, index) {
     var token = localStorage.access_token;
@@ -32590,6 +32725,15 @@ var methods = {
       }
     }).then(function (res) {
       state.campaigns.splice(index, 1);
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
     });
   },
   updateCampaign: function updateCampaign(id, data) {
@@ -32601,6 +32745,15 @@ var methods = {
       data: data
     }).then(function (res) {
       console.log(res.data);
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
     });
   },
   listCampaignImages: function listCampaignImages(campaignId) {
@@ -32620,6 +32773,15 @@ var methods = {
           primary: item["is_primary"]
         });
       });
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
     });
   },
   uploadCampaignImage: function uploadCampaignImage(event, id) {
@@ -32645,6 +32807,15 @@ var methods = {
           size: files[i].size,
           type: files[i].type
         });
+      })["catch"](function (err) {
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+        if (err.response) {
+          void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+            name: "Login"
+          });
+          _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+        }
       });
     };
 
@@ -32660,6 +32831,15 @@ var methods = {
       }
     }).then(function (res) {
       state.campaignImages.splice(index, 1);
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
     });
   },
   setPrimaryImage: function setPrimaryImage(id, index) {
@@ -32677,6 +32857,15 @@ var methods = {
         return item;
       });
       state.campaignImages[index].primary = 1;
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
     });
   }
 };
@@ -32824,21 +33013,57 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
   campaigns: [],
-  user: [],
+  users: [],
+  transactions: [],
+  userProfile: [],
   error: ''
 });
 var methods = {
+  getMyProfile: function getMyProfile() {
+    var _this = this;
+
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/user/', {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.userProfile = res.data;
+    })["catch"](function (err) {
+      _this.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+
+        _this.setErrorMessage("Please login first!");
+      }
+    });
+  },
   login: function login(data) {
+    var _this2 = this;
+
     axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/auth/login', data).then(function (res) {
       localStorage.setItem("access_token", res.data.access_token);
       void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
         name: 'Dashboard'
       });
     })["catch"](function (err) {
-      state.error = "Your E-mail / Password is incorrect!";
+      _this2.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+
+        _this2.setErrorMessage("Your E-mail / Password is incorrect!");
+      }
     });
   },
   getCampaigns: function getCampaigns() {
+    var _this3 = this;
+
     var token = localStorage.access_token;
     axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/user/campaigns', {
       headers: {
@@ -32846,9 +33071,21 @@ var methods = {
       }
     }).then(function (res) {
       state.campaigns = res.data.data;
+    })["catch"](function (err) {
+      _this3.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+
+        _this3.setErrorMessage("Please login first!");
+      }
     });
   },
   removeCampaign: function removeCampaign(id) {
+    var _this4 = this;
+
     var token = localStorage.access_token;
     axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/campaign/destroy/' + id, {
       headers: {
@@ -32856,6 +33093,72 @@ var methods = {
       }
     }).then(function (res) {
       state.campaigns = res.data.data;
+    })["catch"](function (err) {
+      _this4.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+
+        _this4.setErrorMessage("Please login first!");
+      }
+    });
+  },
+  getTransactions: function getTransactions() {
+    var _this5 = this;
+
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/transaction', {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.transactions = res.data.data;
+    })["catch"](function (err) {
+      _this5.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+
+        _this5.setErrorMessage("Please login first!");
+      }
+    });
+  },
+  verifyTransactions: function verifyTransactions(id) {
+    var _state$userProfile,
+        _this6 = this;
+
+    if (((_state$userProfile = state.userProfile) === null || _state$userProfile === void 0 ? void 0 : _state$userProfile.role) !== 1) {
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: "Dashboard"
+      });
+      return;
+    }
+
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/admin/transaction/verify/' + id, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function () {
+      _this6.getTransactions();
+
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: "Transactions"
+      });
+    })["catch"](function (err) {
+      _this6.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+
+        _this6.setErrorMessage("Please login first!");
+      }
     });
   },
   setErrorMessage: function setErrorMessage(errMsg) {

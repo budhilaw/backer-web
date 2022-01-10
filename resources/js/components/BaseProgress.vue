@@ -5,7 +5,7 @@
     >
         <div
             class="h-full progressbar"
-            :class="[`bg-${color}-500`, {'absolute top-0': indeterminate}, {'rounded-full': rounded}]"
+            :class="[`bg-green-500`, {'absolute top-0': indeterminate}, {'rounded-full': rounded}]"
             role="progressbar"
             :style="{width: `${percentage}%`}"
             :aria-valuenow="percentage"
@@ -22,10 +22,6 @@
 export default {
     inheritAttrs: false,
     props: {
-        color: {
-            type: String,
-            default: "green"
-        },
         percentage: {
             type: Number,
             default: 0

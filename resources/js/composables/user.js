@@ -4,11 +4,30 @@ import router from '../router'
 
 const state = reactive({
     campaigns: [],
-    user: [],
+    users: [],
+    transactions: [],
+    userProfile: [],
     error: ''
 })
 
 const methods = {
+    getMyProfile() {
+        const token = localStorage.access_token
+        axios.get('/api/user/', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+            state.userProfile = res.data
+        }).catch((err) => {
+            this.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                this.setErrorMessage("Please login first!")
+            }
+        })
+    },
+
     login(data) {
         axios.post('/api/auth/login', data)
             .then((res) => {
@@ -16,7 +35,11 @@ const methods = {
                 void router.push({ name: 'Dashboard' })
             })
             .catch((err) => {
-                state.error = "Your E-mail / Password is incorrect!"
+                this.clearErrorMessage()
+                if(err.response) {
+                    void router.push({ name: "Login" })
+                    this.setErrorMessage("Your E-mail / Password is incorrect!")
+                }
             })
     },
 
@@ -28,6 +51,12 @@ const methods = {
             }
         }).then((res) => {
             state.campaigns = res.data.data
+        }).catch((err) => {
+            this.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                this.setErrorMessage("Please login first!")
+            }
         })
     },
 
@@ -39,6 +68,52 @@ const methods = {
             }
         }).then((res) => {
             state.campaigns = res.data.data
+        }).catch((err) => {
+            this.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                this.setErrorMessage("Please login first!")
+            }
+        })
+    },
+
+    getTransactions() {
+        const token = localStorage.access_token
+        axios.get('/api/transaction', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+            state.transactions = res.data.data
+        }).catch((err) => {
+            this.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                this.setErrorMessage("Please login first!")
+            }
+        })
+    },
+
+    verifyTransactions(id) {
+        if(state.userProfile?.role !== 1) {
+            void router.push({ name: "Dashboard" })
+            return
+        }
+
+        const token = localStorage.access_token
+        axios.get('/api/admin/transaction/verify/' + id, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(() => {
+            this.getTransactions()
+            void router.push({ name: "Transactions" })
+        }).catch((err) => {
+            this.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                this.setErrorMessage("Please login first!")
+            }
         })
     },
 

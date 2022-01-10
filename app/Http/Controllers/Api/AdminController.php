@@ -57,11 +57,19 @@ class AdminController extends Controller
         if($transaction['status'] != 0) {
             return response()->json(['failed' => 'transaction is already paid.'], 400);
         }
-        $campaign = Campaign::find($transaction->campaign->id)->first();
+        $campaign = Campaign::findOrFail($transaction->campaign->id);
         $finalAmount = $campaign['current_amount'] + $transaction['amount'];
         $campaign['current_amount'] = $finalAmount;
+
+        // count backer_count
+        $existTrans = Transaction::where('user_id', $transaction->user->id)
+            ->where('status', 1)->exists();
+        if(!$existTrans) {
+            $campaign['backer_count'] += 1;
+        }
+
         $campaign->save();
-        Transaction::query()->update(['status' => 1]);
+        $transaction->update(['status' => 1]);
         return response()->json(['success'=>'transaction status change successfully.'], 200);
     }
 }
