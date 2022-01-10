@@ -8,9 +8,9 @@
                         Sign In to Your Account
                     </h2>
 
-<!--                    <div v-if="errors.general" class="bg-gray-100 p-2 my-4 text-sm text-red-600">-->
-<!--                        E-mail or Password is invalid!-->
-<!--                    </div>-->
+                    <div v-if="userStore.state.error" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                        {{ userStore.state.error }}
+                    </div>
 
                     <div class="mb-6">
                         <div class="mb-4">
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { inject, computed, reactive } from "vue";
+import { inject, reactive } from "vue";
 
 export default {
     name: "Login",

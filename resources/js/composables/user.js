@@ -4,7 +4,8 @@ import router from '../router'
 
 const state = reactive({
     campaigns: [],
-    user: []
+    user: [],
+    error: ''
 })
 
 const methods = {
@@ -15,7 +16,7 @@ const methods = {
                 void router.push({ name: 'Dashboard' })
             })
             .catch((err) => {
-                console.log(err)
+                state.error = "Your E-mail / Password is incorrect!"
             })
     },
 
@@ -39,6 +40,14 @@ const methods = {
         }).then((res) => {
             state.campaigns = res.data.data
         })
+    },
+
+    setErrorMessage(errMsg) {
+        state.error = errMsg
+    },
+
+    clearErrorMessage() {
+        state.error = ''
     }
 }
 

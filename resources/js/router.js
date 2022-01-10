@@ -9,6 +9,7 @@ import Logout from "./pages/Logout";
 
 import Dashboard from "./pages/Dashboard/Index";
 import CreateCampaign from "./pages/Dashboard/Create";
+import UpdateCampaign from "./pages/Dashboard/Update";
 import Transactions from "./pages/Dashboard/Transactions";
 import UploadImage from "./pages/Dashboard/UploadImage";
 
@@ -47,6 +48,12 @@ const routes = [
         path: '/dashboard/campaign/create',
         component: CreateCampaign,
         name: "CreateCampaign"
+    },
+    {
+        path: '/dashboard/campaign/update/:slug',
+        component: UpdateCampaign,
+        name: "UpdateCampaign",
+        props: true
     },
     {
         path: '/dashboard/campaign/upload/:id',

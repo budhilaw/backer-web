@@ -1,12 +1,16 @@
 import { readonly } from "vue";
 import axios from "axios";
 import { reactive, computed } from "vue";
+import router from "../router";
+import userStore from "./user"
 
 const state = reactive({
+    campaign: [],
     campaigns: [],
     campaignImages: []
 })
 
+const campaign = computed(() => state.campaign)
 const campaigns = computed(() => state.campaigns)
 const campaignImages = computed(() => state.campaignImages)
 
@@ -23,18 +27,32 @@ const methods = {
             }
         }).then((res) => {
             state.campaigns = res.data.data
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
         })
     },
 
     getCampaignsBySlug(slug) {
         const token = localStorage.access_token
+        state.campaign = []
+
         axios.get('/api/campaign/' + slug, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((res) => {
-            state.campaigns = res.data.data
+            state.campaign = res.data.data
         })
+    },
+
+    getPerksOnly() {
+        if(state.campaign.perks) {
+            return state.campaign.perks.split(',')
+        }
     },
 
     removeCampaign(id, index) {
@@ -45,6 +63,18 @@ const methods = {
             }
         }).then((res) => {
             state.campaigns.splice(index, 1)
+        })
+    },
+
+    updateCampaign(id, data) {
+        const token = localStorage.access_token
+        axios.post('/api/campaign/update/' + id, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            data: data
+        }).then((res) => {
+            console.log(res.data)
         })
     },
 
@@ -132,7 +162,8 @@ const methods = {
 export default {
     state: readonly(state),
     methods,
-    campaigns
+    campaigns,
+    campaign
 }
 
 // export default function useCampaign() {
