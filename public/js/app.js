@@ -29570,9 +29570,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _composables_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../composables/user */ "./resources/js/composables/user.js");
+/* harmony import */ var _composables_campaign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../composables/campaign */ "./resources/js/composables/campaign.js");
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log("Component mounted.");
+  setup: function setup() {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('userStore', _composables_user__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('campaignStore', _composables_campaign__WEBPACK_IMPORTED_MODULE_2__["default"]);
   }
 });
 
@@ -29926,11 +29933,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
-/* harmony import */ var _composables_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../composables/user */ "./resources/js/composables/user.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
-/* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Pagination */ "./resources/js/components/Pagination.vue");
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
+/* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Pagination */ "./resources/js/components/Pagination.vue");
 
 
 
@@ -29939,25 +29944,20 @@ __webpack_require__.r(__webpack_exports__);
   name: "Index",
   components: {
     Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Pagination: _components_Pagination__WEBPACK_IMPORTED_MODULE_4__["default"]
+    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Pagination: _components_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   setup: function setup() {
-    var _useUser = (0,_composables_user__WEBPACK_IMPORTED_MODULE_1__["default"])(),
-        campaigns = _useUser.campaigns,
-        getCampaigns = _useUser.getCampaigns,
-        removeCampaign = _useUser.removeCampaign;
-
-    (0,vue__WEBPACK_IMPORTED_MODULE_2__.watchEffect)(function () {
-      return campaigns;
+    var campaignStore = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('campaignStore');
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      campaignStore.methods.getCampaigns();
     });
-    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
-      getCampaigns();
+    var baseURL = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return "".concat("http://backer.test", "/storage/");
     });
     return {
-      campaigns: campaigns,
-      getCampaigns: getCampaigns,
-      removeCampaign: removeCampaign
+      campaignStore: campaignStore,
+      baseURL: baseURL
     };
   }
 });
@@ -30002,9 +30002,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
 /* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
-/* harmony import */ var _composables_campaign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../composables/campaign */ "./resources/js/composables/campaign.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
 
@@ -30016,20 +30014,12 @@ __webpack_require__.r(__webpack_exports__);
     Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   setup: function setup(props) {
-    var _useCampaign = (0,_composables_campaign__WEBPACK_IMPORTED_MODULE_2__["default"])(),
-        listCampaignImages = _useCampaign.listCampaignImages,
-        uploadImageCampaign = _useCampaign.uploadImageCampaign,
-        deleteImageCampaign = _useCampaign.deleteImageCampaign,
-        setPrimaryImage = _useCampaign.setPrimaryImage,
-        campaignImages = _useCampaign.campaignImages;
-
-    (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(listCampaignImages(props.id));
+    var campaignStore = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('campaignStore');
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
+      campaignStore.methods.listCampaignImages(props.id);
+    });
     return {
-      listCampaignImages: listCampaignImages,
-      uploadImageCampaign: uploadImageCampaign,
-      deleteImageCampaign: deleteImageCampaign,
-      setPrimaryImage: setPrimaryImage,
-      campaignImages: campaignImages
+      campaignStore: campaignStore
     };
   }
 });
@@ -30048,12 +30038,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_Hero__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Hero */ "./resources/js/components/Hero.vue");
-/* harmony import */ var _composables_campaign__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../composables/campaign */ "./resources/js/composables/campaign.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Footer */ "./resources/js/components/Footer.vue");
-/* harmony import */ var _components_BaseProgress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/BaseProgress */ "./resources/js/components/BaseProgress.vue");
-/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Navbar */ "./resources/js/components/Navbar.vue");
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Footer */ "./resources/js/components/Footer.vue");
+/* harmony import */ var _components_BaseProgress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/BaseProgress */ "./resources/js/components/BaseProgress.vue");
+/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Navbar */ "./resources/js/components/Navbar.vue");
 
 
 
@@ -30061,21 +30049,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_5__["default"],
-    BaseProgress: _components_BaseProgress__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_4__["default"],
+    BaseProgress: _components_BaseProgress__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_2__["default"],
     Hero: _components_Hero__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   name: "Home",
   setup: function setup() {
-    var _useCampaign = (0,_composables_campaign__WEBPACK_IMPORTED_MODULE_1__["default"])(),
-        campaign = _useCampaign.campaign,
-        getCampaign = _useCampaign.getCampaign;
-
-    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(getCampaign);
+    var campaignStore = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('campaignStore');
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      campaignStore.methods.visitorCampaigns();
+    });
+    var getCampaigns = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return campaignStore.state.campaigns;
+    });
     return {
-      campaign: campaign,
-      getCampaign: getCampaign
+      campaignStore: campaignStore,
+      getCampaigns: getCampaigns
     };
   }
 });
@@ -30093,61 +30083,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _composables_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../composables/user */ "./resources/js/composables/user.js");
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login",
   setup: function setup() {
-    var form = (0,vue__WEBPACK_IMPORTED_MODULE_1__.reactive)({
+    var userStore = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('userStore');
+    var form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       'email': '',
       'password': ''
     });
 
-    var _useUser = (0,_composables_user__WEBPACK_IMPORTED_MODULE_2__["default"])(),
-        errors = _useUser.errors,
-        login = _useUser.login;
-
-    var doLogin = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return login(_objectSpread({}, form));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      return function doLogin() {
-        return _ref.apply(this, arguments);
-      };
-    }();
+    var doLogin = function doLogin() {
+      userStore.methods.login(form);
+    };
 
     return {
+      userStore: userStore,
       form: form,
-      errors: errors,
       doLogin: doLogin
     };
   }
@@ -31192,12 +31145,14 @@ var _hoisted_22 = {
 
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Detail ");
 
-var _hoisted_24 = ["onClick"];
-var _hoisted_25 = {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Upload Image ");
+
+var _hoisted_25 = ["onClick"];
+var _hoisted_26 = {
   key: 1
 };
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "h-screen mt-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", {
   "class": "text-2xl text-white"
@@ -31205,7 +31160,7 @@ var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_27 = [_hoisted_26];
+var _hoisted_28 = [_hoisted_27];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Navbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Navbar");
 
@@ -31243,17 +31198,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])]), _hoisted_13, $setup.campaigns.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.campaigns, function (item) {
+  })])]), _hoisted_13, $setup.campaignStore.state.campaigns.length > 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.campaignStore.state.campaigns, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: item.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [item.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      key: 0,
       "class": "h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden",
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
-        'background-image': 'url(https://backer.test/storage/' + item.image.file_name + ')'
+        'background-image': 'url(' + $setup.baseURL + item.image.file_name + ')'
       })
     }, null, 4
     /* STYLE */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
+    )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_20, " Rp. " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.goal_amount) + " · " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.current_amount / item.goal_amount * 100) + "% ", 1
     /* TEXT */
@@ -31276,17 +31232,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
+    , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+      to: {
+        name: 'UploadImage',
+        params: {
+          id: item.id
+        }
+      },
+      "class": "bg-blue-600 text-white py-2 px-4 ml-4 rounded"
+    }, {
+      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+        return [_hoisted_24];
+      }),
+      _: 2
+      /* DYNAMIC */
+
+    }, 1032
+    /* PROPS, DYNAMIC_SLOTS */
     , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "bg-red-500 text-white py-2 px-4 ml-4 rounded",
       onClick: function onClick($event) {
-        return $setup.removeCampaign(item.id);
+        return $setup.campaignStore.methods.removeCampaign(item.id, index);
       }
     }, " Remove ", 8
     /* PROPS */
-    , _hoisted_24)])])])])]);
+    , _hoisted_25)])])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, _hoisted_27))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
+  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, _hoisted_28))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
 }
 
 /***/ }),
@@ -31441,7 +31414,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "custom-icon"
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     onChange: _cache[0] || (_cache[0] = function ($event) {
-      return $setup.uploadImageCampaign($event, $props.id);
+      return $setup.campaignStore.methods.uploadCampaignImage($event, $props.id);
     }),
     id: "images-upload",
     type: "file",
@@ -31450,7 +31423,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     hidden: ""
   }, null, 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("IMAGES PREVIEW"), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.campaignImages, function (image, index) {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("IMAGES PREVIEW"), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.campaignStore.state.campaignImages, function (image, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: index,
       "class": "image-container image-margin"
@@ -31465,7 +31438,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* PROPS */
     , _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return $setup.deleteImageCampaign(image.id, index);
+        return $setup.campaignStore.methods.deleteCampaignImage(image.id, index);
       },
       "class": "close-btn",
       type: "button"
@@ -31475,7 +31448,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* PROPS */
     , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return $setup.setPrimaryImage(image.id, index);
+        return $setup.campaignStore.methods.setPrimaryImage(image.id, index);
       },
       "class": "set-primary-btn",
       type: "button"
@@ -31622,7 +31595,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.campaign, function (item) {
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.getCampaigns, function (item) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "w-full p-5 border border-gray-500 rounded-20",
       key: item.id
@@ -31708,51 +31681,39 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  key: 0,
-  "class": "bg-gray-100 p-2 my-4 text-sm text-red-600"
-};
-var _hoisted_8 = {
   "class": "mb-6"
 };
-var _hoisted_9 = {
+var _hoisted_8 = {
   "class": "mb-4"
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "font-normal text-lg text-white block mb-3"
 }, " Email Address ", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = {
-  key: 0,
-  "class": "bg-gray-100 p-2 my-4 text-sm text-red-600"
-};
-var _hoisted_12 = {
+var _hoisted_10 = {
   "class": "mb-6"
 };
-var _hoisted_13 = {
+var _hoisted_11 = {
   "class": "mb-4"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "font-normal text-lg text-white block mb-3"
 }, " Password ", -1
 /* HOISTED */
 );
 
-var _hoisted_15 = {
-  key: 0,
-  "class": "bg-gray-100 p-2 my-4 text-sm text-red-600"
-};
-var _hoisted_16 = {
+var _hoisted_13 = {
   "class": "mb-6"
 };
-var _hoisted_17 = {
+var _hoisted_14 = {
   "class": "mb-4"
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-center"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-white text-md"
@@ -31764,7 +31725,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, $setup.errors.general ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, " E-mail or Password is invalid! ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    <div v-if=\"errors.general\" class=\"bg-gray-100 p-2 my-4 text-sm text-red-600\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                        E-mail or Password is invalid!"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "email",
     "class": "auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100",
     placeholder: "Write your email address here",
@@ -31773,9 +31734,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.email]]), $setup.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.email), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.email]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            <div v-if=\"errors.email\" class=\"bg-gray-100 p-2 my-4 text-sm text-red-600\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                {{ errors.email }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            </div>")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "password",
     "class": "auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100",
     placeholder: "Write your password here",
@@ -31784,14 +31743,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password]]), $setup.errors.password ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.password), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            <div v-if=\"errors.password\" class=\"bg-gray-100 p-2 my-4 text-sm text-red-600\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                {{ errors.password }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            </div>")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[2] || (_cache[2] = function () {
       return $setup.doLogin && $setup.doLogin.apply($setup, arguments);
     }),
     "class": "block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
-  }, " Sign In ")])]), _hoisted_18])])])]);
+  }, " Sign In ")])]), _hoisted_15])])])]);
 }
 
 /***/ }),
@@ -32223,302 +32180,257 @@ window.axios.defaults.baseURL = 'https://backer.test';
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ useCampaign)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
+var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
+  campaigns: [],
+  campaignImages: []
+});
+var campaigns = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+  return state.campaigns;
+});
+var campaignImages = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+  return state.campaignImages;
+});
+var methods = {
+  visitorCampaigns: function visitorCampaigns() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/campaign').then(function (res) {
+      return state.campaigns = res.data.data;
+    });
+  },
+  getCampaigns: function getCampaigns() {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/user/campaigns', {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.campaigns = res.data.data;
+    });
+  },
+  getCampaignsBySlug: function getCampaignsBySlug(slug) {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/campaign/' + slug, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.campaigns = res.data.data;
+    });
+  },
+  removeCampaign: function removeCampaign(id, index) {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/campaign/destroy/' + id, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.campaigns.splice(index, 1);
+    });
+  },
+  listCampaignImages: function listCampaignImages(campaignId) {
+    var token = localStorage.access_token;
+    state.campaignImages = [];
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/campaign/image/list/' + campaignId, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      res.data.data.forEach(function (item) {
+        var name = item["file_name"].replace("images/campaign/", "");
+        state.campaignImages.push({
+          id: item["id"],
+          url: "/storage/" + item["file_name"],
+          name: name,
+          primary: item["is_primary"]
+        });
+      });
+    });
+  },
+  uploadCampaignImage: function uploadCampaignImage(event, id) {
+    var token = localStorage.access_token;
+    var files = event.target.files;
 
-function useCampaign() {
-  var campaign = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-  var campaignImages = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-  var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
-
-  var createCampaign = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(data) {
-      var token, res, id;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              token = localStorage.access_token;
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/campaign/store', data, {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 3:
-              res = _context.sent;
-              id = res.data.data.id;
-              _context.next = 7;
-              return router.push({
-                name: 'UploadImage',
-                params: {
-                  id: id
-                }
-              });
-
-            case 7:
-            case "end":
-              return _context.stop();
-          }
+    var _loop = function _loop(i) {
+      var formData = new FormData();
+      var url = URL.createObjectURL(files[i]);
+      formData.set('image', files[i]);
+      formData.set('is_primary', false);
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/campaign/image/upload/' + id, formData, {
+        headers: {
+          'Authorization': "Bearer ".concat(token)
         }
-      }, _callee);
-    }));
-
-    return function createCampaign(_x) {
-      return _ref.apply(this, arguments);
+      }).then(function (res) {
+        var name = res.data.data["file_name"].replace("images/campaign/", "");
+        state.campaignImages.push({
+          id: res.data.data["id"],
+          url: url,
+          name: name,
+          primary: res.data.data["is_primary"],
+          size: files[i].size,
+          type: files[i].type
+        });
+      });
     };
-  }();
 
-  var getCampaign = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign');
-
-            case 2:
-              response = _context2.sent;
-              campaign.value = response.data.data;
-
-            case 4:
-            case "end":
-              return _context2.stop();
-          }
+    for (var i = 0; i < files.length; i++) {
+      _loop(i);
+    }
+  },
+  deleteCampaignImage: function deleteCampaignImage(id, index) {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/campaign/image/destroy/' + id, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.campaignImages.splice(index, 1);
+    });
+  },
+  setPrimaryImage: function setPrimaryImage(id, index) {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/campaign/image/primary/' + id, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.campaignImages = state.campaignImages.map(function (item, index) {
+        if (item.primary === 1) {
+          state.campaignImages[index].primary = 0;
         }
-      }, _callee2);
-    }));
 
-    return function getCampaign() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  var getCampaignBySlug = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(slug) {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/' + slug);
-
-            case 2:
-              response = _context3.sent;
-              campaign.value = response.data.data;
-
-            case 4:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    return function getCampaignBySlug(_x2) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  var listCampaignImages = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(campaignId) {
-      var token, res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              token = localStorage.access_token;
-              _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/image/list/' + campaignId, {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 3:
-              res = _context4.sent;
-              res.data.data.forEach(function (item) {
-                var name = item["file_name"].replace("images/campaign/", "");
-                campaignImages.value.push({
-                  id: item["id"],
-                  url: "/storage/" + item["file_name"],
-                  name: name,
-                  primary: item["is_primary"]
-                });
-              });
-
-            case 5:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4);
-    }));
-
-    return function listCampaignImages(_x3) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-
-  var uploadImageCampaign = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(event, id) {
-      var token, files, i, formData, url, res, name;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              token = localStorage.access_token;
-              files = event.target.files;
-              i = 0;
-
-            case 3:
-              if (!(i < files.length)) {
-                _context5.next = 16;
-                break;
-              }
-
-              formData = new FormData();
-              url = URL.createObjectURL(files[i]);
-              formData.set('image', files[i]);
-              formData.set('is_primary', false);
-              _context5.next = 10;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/campaign/image/upload/' + id, formData, {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 10:
-              res = _context5.sent;
-              name = res.data.data["file_name"].replace("images/campaign/", "");
-              campaignImages.value.push({
-                id: res.data.data["id"],
-                url: url,
-                name: name,
-                primary: res.data.data["is_primary"],
-                size: files[i].size,
-                type: files[i].type
-              });
-
-            case 13:
-              i++;
-              _context5.next = 3;
-              break;
-
-            case 16:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5);
-    }));
-
-    return function uploadImageCampaign(_x4, _x5) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-
-  var deleteImageCampaign = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(id, index) {
-      var token, res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              token = localStorage.access_token;
-              _context6.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default()["delete"]('/api/campaign/image/destroy/' + id, {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 3:
-              res = _context6.sent;
-              campaignImages.value.splice(index, 1);
-
-            case 5:
-            case "end":
-              return _context6.stop();
-          }
-        }
-      }, _callee6);
-    }));
-
-    return function deleteImageCampaign(_x6, _x7) {
-      return _ref6.apply(this, arguments);
-    };
-  }();
-
-  var setPrimaryImage = /*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7(id, index) {
-      var token, res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              token = localStorage.access_token;
-              _context7.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/campaign/image/primary/' + id, {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 3:
-              res = _context7.sent;
-              campaignImages.value = campaignImages.value.map(function (item, index) {
-                if (item.primary === 1) {
-                  campaignImages.value[index].primary = 0;
-                }
-
-                return item;
-              });
-              campaignImages.value[index].primary = 1;
-
-            case 6:
-            case "end":
-              return _context7.stop();
-          }
-        }
-      }, _callee7);
-    }));
-
-    return function setPrimaryImage(_x8, _x9) {
-      return _ref7.apply(this, arguments);
-    };
-  }();
-
-  return {
-    campaign: campaign,
-    campaignImages: campaignImages,
-    createCampaign: createCampaign,
-    getCampaign: getCampaign,
-    getCampaignBySlug: getCampaignBySlug,
-    listCampaignImages: listCampaignImages,
-    uploadImageCampaign: uploadImageCampaign,
-    deleteImageCampaign: deleteImageCampaign,
-    setPrimaryImage: setPrimaryImage
-  };
-}
+        return item;
+      });
+      state.campaignImages[index].primary = 1;
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: (0,vue__WEBPACK_IMPORTED_MODULE_0__.readonly)(state),
+  methods: methods,
+  campaigns: campaigns
+}); // export default function useCampaign() {
+//     const campaign = ref([])
+//     const campaignImages = ref([])
+//     const router = useRouter()
+//
+//     const createCampaign = async (data) => {
+//         const token = localStorage.access_token
+//         let res = await axios.post('/api/campaign/store', data, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             },
+//         })
+//         let id = res.data.data.id
+//         await router.push({ name: 'UploadImage', params: { id: id } })
+//     }
+//
+//     const getCampaign = async () => {
+//         let response = await axios.get('/api/campaign')
+//         campaign.value = response.data.data
+//     }
+//
+//     const getCampaignBySlug = async (slug) => {
+//         let response = await axios.get('/api/campaign/' + slug)
+//         campaign.value = response.data.data
+//     }
+//
+//     const listCampaignImages = async (campaignId) => {
+//         const token = localStorage.access_token
+//
+//         let res = await axios.get('/api/campaign/image/list/' + campaignId, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             },
+//         });
+//         res.data.data.forEach((item) => {
+//             let name = item["file_name"].replace("images/campaign/", "")
+//             campaignImages.value.push({
+//                 id: item["id"],
+//                 url: "/storage/" + item["file_name"],
+//                 name: name,
+//                 primary: item["is_primary"]
+//             })
+//         })
+//     }
+//
+//     const uploadImageCampaign = async (event, id) => {
+//         const token = localStorage.access_token
+//
+//         let files = event.target.files
+//         for(let i=0; i < files.length; i++){
+//             let formData = new FormData
+//             let url = URL.createObjectURL(files[i])
+//             formData.set('image', files[i])
+//             formData.set('is_primary', false)
+//
+//             let res = await axios.post('/api/campaign/image/upload/' + id, formData, {
+//                 headers: {
+//                     'Authorization': `Bearer ${token}`
+//                 },
+//             })
+//
+//             let name = res.data.data["file_name"].replace("images/campaign/", "")
+//
+//             campaignImages.value.push({
+//                 id: res.data.data["id"],
+//                 url: url,
+//                 name: name,
+//                 primary: res.data.data["is_primary"],
+//                 size: files[i].size,
+//                 type: files[i].type
+//             })
+//         }
+//     }
+//
+//     const deleteImageCampaign = async (id, index) => {
+//         const token = localStorage.access_token
+//
+//         let res = await axios.delete('/api/campaign/image/destroy/' + id, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             },
+//         })
+//         campaignImages.value.splice(index,1)
+//     }
+//
+//     const setPrimaryImage = async (id, index) => {
+//         const token = localStorage.access_token
+//
+//         let res = await axios.get('/api/campaign/image/primary/' + id, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             },
+//         })
+//
+//         campaignImages.value = campaignImages.value.map((item, index) => {
+//             if(item.primary === 1) {
+//                 campaignImages.value[index].primary = 0
+//             }
+//             return item
+//         })
+//
+//         campaignImages.value[index].primary = 1
+//     }
+//
+//     return {
+//         campaign,
+//         campaignImages,
+//         createCampaign,
+//         getCampaign,
+//         getCampaignBySlug,
+//         listCampaignImages,
+//         uploadImageCampaign,
+//         deleteImageCampaign,
+//         setPrimaryImage
+//     }
+// }
 
 /***/ }),
 
@@ -32531,253 +32443,126 @@ function useCampaign() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ useUser)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../router */ "./resources/js/router.js");
 
 
 
-
-function useUser() {
-  var user = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-  var campaigns = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-  var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
-  var errors = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-  var paginationMeta = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-  var nextLink = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)();
-
-  var storeUser = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(data) {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/backer', data);
-
-            case 2:
-              _context.next = 4;
-              return router.push({
-                name: 'user.dashboard'
-              });
-
-            case 4:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function storeUser(_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  var register = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(data) {
-      var key;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/auth/register', data);
-
-            case 3:
-              _context2.next = 5;
-              return router.push({
-                name: 'Login'
-              });
-
-            case 5:
-              _context2.next = 10;
-              break;
-
-            case 7:
-              _context2.prev = 7;
-              _context2.t0 = _context2["catch"](0);
-
-              if (_context2.t0.response.status === 422) {
-                for (key in _context2.t0.response.data.errors) {
-                  errors.value[key] = _context2.t0.response.data.errors[key][0];
-                }
-              } else if (_context2.t0.response.status === 401) {
-                errors.value['general'] = _context2.t0.response.data.error;
-              }
-
-            case 10:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 7]]);
-    }));
-
-    return function register(_x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  var login = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(data) {
-      var res, key;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/auth/login', data);
-
-            case 3:
-              res = _context3.sent;
-              _context3.next = 6;
-              return localStorage.setItem("access_token", res.data.access_token);
-
-            case 6:
-              _context3.next = 8;
-              return router.push({
-                name: 'Home'
-              });
-
-            case 8:
-              _context3.next = 13;
-              break;
-
-            case 10:
-              _context3.prev = 10;
-              _context3.t0 = _context3["catch"](0);
-
-              if (_context3.t0.response.status === 422) {
-                for (key in _context3.t0.response.data.errors) {
-                  errors.value[key] = _context3.t0.response.data.errors[key][0];
-                }
-              } else if (_context3.t0.response.status === 401) {
-                errors.value['general'] = _context3.t0.response.data.error;
-              }
-
-            case 13:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[0, 10]]);
-    }));
-
-    return function login(_x3) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  var getCampaigns = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var token, res, key;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              token = localStorage.access_token;
-              _context4.prev = 1;
-              _context4.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/user/campaigns', {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 4:
-              res = _context4.sent;
-              campaigns.value = res.data.data;
-              paginationMeta.value = res.data;
-              _context4.next = 12;
-              break;
-
-            case 9:
-              _context4.prev = 9;
-              _context4.t0 = _context4["catch"](1);
-
-              if (_context4.t0.response.status === 422) {
-                for (key in _context4.t0.response.data.errors) {
-                  errors.value[key] = _context4.t0.response.data.errors[key][0];
-                }
-              } else if (_context4.t0.response.status === 401) {
-                errors.value['general'] = _context4.t0.response.data.error;
-              }
-
-            case 12:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, null, [[1, 9]]);
-    }));
-
-    return function getCampaigns() {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-
-  var removeCampaign = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(id) {
-      var token, res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              token = localStorage.access_token;
-              _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default()["delete"]('/api/campaign/destroy/' + id, {
-                headers: {
-                  'Authorization': "Bearer ".concat(token)
-                }
-              });
-
-            case 3:
-              res = _context5.sent;
-              campaigns.value = res.data.data;
-              _context5.next = 7;
-              return router.push({
-                name: 'Home'
-              });
-
-            case 7:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5);
-    }));
-
-    return function removeCampaign(_x4) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-
-  return {
-    user: user,
-    errors: errors,
-    campaigns: campaigns,
-    paginationMeta: paginationMeta,
-    nextLink: nextLink,
-    login: login,
-    register: register,
-    storeUser: storeUser,
-    getCampaigns: getCampaigns,
-    removeCampaign: removeCampaign
-  };
-}
+var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
+  campaigns: [],
+  user: []
+});
+var methods = {
+  login: function login(data) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/auth/login', data).then(function (res) {
+      localStorage.setItem("access_token", res.data.access_token);
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: 'Dashboard'
+      });
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  },
+  getCampaigns: function getCampaigns() {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/user/campaigns', {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.campaigns = res.data.data;
+    });
+  },
+  removeCampaign: function removeCampaign(id) {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/campaign/destroy/' + id, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.campaigns = res.data.data;
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: (0,vue__WEBPACK_IMPORTED_MODULE_0__.readonly)(state),
+  methods: methods
+}); // export default function useUser() {
+//     const user = ref([])
+//     const router = useRouter()
+//     const errors = ref([])
+//
+//     const storeUser = async (data) => {
+//         await axios.post('/api/backer', data)
+//         await router.push({name: 'user.dashboard'})
+//     }
+//
+//     const register = async (data) => {
+//         try {
+//             await axios.post('/api/auth/register', data)
+//             await router.push({name: 'Login'})
+//         } catch (e) {
+//             if(e.response.status === 422) {
+//                 for(const key in e.response.data.errors) {
+//                     errors.value[key] = e.response.data.errors[key][0]
+//                 }
+//             } else if(e.response.status === 401) {
+//                 errors.value['general'] = e.response.data.error
+//             }
+//         }
+//     }
+//
+//     const login = async (data) => {
+//         try {
+//             let res = await axios.post('/api/auth/login', data)
+//             await localStorage.setItem("access_token", res.data.access_token)
+//
+//             await router.push({name: 'Home'})
+//         } catch (e) {
+//             if(e.response.status === 422) {
+//                 for(const key in e.response.data.errors) {
+//                     errors.value[key] = e.response.data.errors[key][0]
+//                 }
+//             } else if(e.response.status === 401) {
+//                 errors.value['general'] = e.response.data.error
+//             }
+//         }
+//     }
+//
+//     const getCampaigns = async () => {
+//         const token = localStorage.access_token
+//         let res = await axios.get('/api/user/campaigns', {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         })
+//         state.campaigns = res.data.data
+//     }
+//
+//     const removeCampaign = async (id) => {
+//         const token = localStorage.access_token
+//         let res = await axios.delete('/api/campaign/destroy/' + id, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         })
+//         state.campaigns = res.data.data
+//     }
+//
+//     return {
+//         user,
+//         errors,
+//         login,
+//         register,
+//         storeUser,
+//         getCampaigns,
+//         removeCampaign
+//     }
+// }
 
 /***/ }),
 

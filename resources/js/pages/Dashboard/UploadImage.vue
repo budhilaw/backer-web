@@ -22,18 +22,18 @@
                                 <label for="images-upload" class="images-upload">
                                     <font-awesome-icon icon="plus-circle" class="custom-icon" />
                                 </label>
-                                <input @change="uploadImageCampaign($event, id)" id="images-upload" type="file" accept="image/*" multiple hidden>
+                                <input @change="campaignStore.methods.uploadCampaignImage($event, id)" id="images-upload" type="file" accept="image/*" multiple hidden>
                             </div>
 
                             <!--IMAGES PREVIEW-->
-                            <div v-for="(image, index) in campaignImages" :key="index" class="image-container image-margin">
+                            <div v-for="(image, index) in campaignStore.state.campaignImages" :key="index" class="image-container image-margin">
                                 <div :class="{ 'border-red-500 border-2': image.primary }">
                                     <img :src="image.url" class="images-preview">
-                                    <button @click="deleteImageCampaign(image.id, index)" class="close-btn" type="button">
+                                    <button @click="campaignStore.methods.deleteCampaignImage(image.id, index)" class="close-btn" type="button">
                                         <font-awesome-icon icon="trash" />
                                     </button>
 
-                                    <button @click="setPrimaryImage(image.id, index)" class="set-primary-btn" type="button">
+                                    <button @click="campaignStore.methods.setPrimaryImage(image.id, index)" class="set-primary-btn" type="button">
                                         <font-awesome-icon icon="thumbtack" />
                                     </button>
                                 </div>
@@ -57,24 +57,21 @@
 <script>
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import useCampaign from "../../composables/campaign";
-import {onMounted} from "vue";
+import { onMounted, inject } from "vue";
 
 export default {
     name: "UploadImage",
     props: [ "id" ],
     components: { Navbar, Footer },
     setup(props) {
-        const { listCampaignImages, uploadImageCampaign, deleteImageCampaign, setPrimaryImage, campaignImages } = useCampaign()
+        const campaignStore = inject('campaignStore')
 
-        onMounted(listCampaignImages(props.id))
+        onMounted(() => {
+            campaignStore.methods.listCampaignImages(props.id)
+        })
 
         return {
-            listCampaignImages,
-            uploadImageCampaign,
-            deleteImageCampaign,
-            setPrimaryImage,
-            campaignImages
+            campaignStore
         }
     },
 }

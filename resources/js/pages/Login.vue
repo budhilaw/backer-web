@@ -8,9 +8,9 @@
                         Sign In to Your Account
                     </h2>
 
-                    <div v-if="errors.general" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                        E-mail or Password is invalid!
-                    </div>
+<!--                    <div v-if="errors.general" class="bg-gray-100 p-2 my-4 text-sm text-red-600">-->
+<!--                        E-mail or Password is invalid!-->
+<!--                    </div>-->
 
                     <div class="mb-6">
                         <div class="mb-4">
@@ -23,9 +23,9 @@
                                 placeholder="Write your email address here"
                                 v-model="form.email"
                             />
-                            <div v-if="errors.email" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                                {{ errors.email }}
-                            </div>
+<!--                            <div v-if="errors.email" class="bg-gray-100 p-2 my-4 text-sm text-red-600">-->
+<!--                                {{ errors.email }}-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <div class="mb-6">
@@ -39,9 +39,9 @@
                                 placeholder="Write your password here"
                                 v-model="form.password"
                             />
-                            <div v-if="errors.password" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                                {{ errors.password }}
-                            </div>
+<!--                            <div v-if="errors.password" class="bg-gray-100 p-2 my-4 text-sm text-red-600">-->
+<!--                                {{ errors.password }}-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <div class="mb-6">
@@ -69,27 +69,26 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import useUser from "../composables/user";
+import { inject, computed, reactive } from "vue";
 
 export default {
     name: "Login",
     setup() {
+        const userStore = inject('userStore')
+
         let form = reactive({
             'email': '',
             'password': '',
         })
 
-        const { errors, login } = useUser()
-
-        const doLogin = async () =>  {
-            await login({...form});
+        const doLogin = () => {
+            userStore.methods.login(form)
         }
 
         return {
+            userStore,
             form,
-            errors,
-            doLogin,
+            doLogin
         }
     }
 }
