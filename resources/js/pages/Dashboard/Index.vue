@@ -27,7 +27,7 @@
                 </div>
             </div>
             <hr />
-            <div v-if="campaignStore.state.campaigns.length > 1">
+            <div v-if="campaignStore.state.campaigns.length">
                 <div v-for="(item, index) in campaignStore.state.campaigns" :key="item.id">
                     <div class="block mb-4">
                         <div class="w-full lg:max-w-full lg:flex mb-4">
