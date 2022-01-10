@@ -1,6 +1,6 @@
 <template>
     <section class="landing-hero pt-5">
-        <div class="header__bg"></div>
+        <div class="header__bg mb-4"></div>
         <div class="container mx-auto relative">
             <NavLinks />
             <div class="flex items-center pt-10 px-5 md:px-0">

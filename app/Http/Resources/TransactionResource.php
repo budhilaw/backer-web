@@ -15,13 +15,13 @@ class TransactionResource extends JsonResource
      */
     public function toArray($request)
     {
-//        return parent::toArray($request);
         return [
             'id' => $this->id,
             'amount' => $this->amount,
-            'campaign_id' => $this->campaign_id,
-            'date_transaction' => Carbon::parse($this->date_transaction)->toDateTimeString(),
-            'user_id' => $this->user_id,
+            'rupiah_amount' => "Rp " . number_format($this->amount,2,',','.'),
+            'campaign' => $this->campaign,
+            'date_transaction' => Carbon::parse($this->date_transaction)->format("d F Y"),
+            'user' => $this->user,
             'status' => $this->status,
         ];
     }

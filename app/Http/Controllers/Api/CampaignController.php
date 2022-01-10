@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CampaignRequest;
 use App\Http\Resources\CampaignResource;
 use App\Http\Resources\CampaignImageResource;
+use App\Http\Resources\CampaignSingleResource;
 use App\Models\Campaign;
 use App\Models\CampaignImage;
 use App\Http\Requests\CampaignImageRequest;
@@ -62,12 +63,12 @@ class CampaignController extends Controller
      * Display the specified resource.
      *
      * @param Campaign $campaign
-     * @return CampaignResource
+     * @return CampaignSingleResource
      */
-    public function show(Campaign $campaign): CampaignResource
+    public function show(Campaign $campaign): CampaignSingleResource
     {
         $data = Campaign::with('images')->find($campaign->id);
-        return new CampaignResource($data);
+        return new CampaignSingleResource($data);
     }
 
     /**

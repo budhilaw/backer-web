@@ -3,9 +3,14 @@
 </template>
 
 <script>
+import { provide } from 'vue';
+import userStore from '../composables/user';
+import campaignStore from '../composables/campaign';
+
 export default {
-    mounted() {
-        console.log("Component mounted.");
-    },
+    setup() {
+        provide('userStore', userStore)
+        provide('campaignStore', campaignStore)
+    }
 };
 </script>

@@ -23,9 +23,16 @@ class TransactionController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $id = Auth::id();
+        $user = Auth::user();
         $limit = config('app.configApp.limitPaginate');
-        $transaction = User::find($id)->transactions()->paginate($limit);
+
+        // if user is an Admin
+        if($user->role == 1) {
+            $transaction = Transaction::paginate($limit);
+            return TransactionResource::collection($transaction);
+        }
+
+        $transaction = User::find($user->id)->transactions()->paginate($limit);
         return TransactionResource::collection($transaction);
     }
 

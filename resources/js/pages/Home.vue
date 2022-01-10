@@ -69,7 +69,7 @@
             </div>
             <div class="grid grid-cols-3 gap-4">
                 <div class="w-full p-5 border border-gray-500 rounded-20"
-                     v-for="item in campaign" :key="item.id">
+                     v-for="item in getCampaigns" :key="item.id">
                     <div class="item">
                         <figure class="item-image">
                             <img
@@ -167,8 +167,7 @@
 
 <script>
 import Hero from "../components/Hero";
-import useCampaign from "../composables/campaign";
-import { onMounted } from "vue";
+import {onMounted, inject, computed} from "vue";
 import Footer from "../components/Footer";
 import BaseProgress from "../components/BaseProgress";
 import Navbar from "../components/Navbar";
@@ -177,13 +176,17 @@ export default {
     components: {Navbar, BaseProgress, Footer, Hero},
     name: "Home",
     setup() {
-        const { campaign, getCampaign } = useCampaign()
+        const campaignStore = inject('campaignStore')
 
-        onMounted(getCampaign)
+        onMounted(() => {
+            campaignStore.methods.visitorCampaigns()
+        })
+
+        const getCampaigns = computed(() => campaignStore.state.campaigns)
 
         return {
-            campaign,
-            getCampaign
+            campaignStore,
+            getCampaigns
         }
     },
 }

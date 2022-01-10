@@ -1,6 +1,5 @@
 <template>
-    <section class="landing-hero pt-5">
-        <div class="header__bg"></div>
+    <section class="landing-hero py-8 bg-purple-progress">
         <div class="container mx-auto relative">
             <NavLinks />
             <div v-if="hero" class="flex items-center pt-10 px-5 md:px-0">
