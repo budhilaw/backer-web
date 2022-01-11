@@ -29838,26 +29838,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
-/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
-/* harmony import */ var _s1modev_media_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @s1modev/media-upload */ "./node_modules/@s1modev/media-upload/index.js");
-/* harmony import */ var _composables_campaign__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../composables/campaign */ "./resources/js/composables/campaign.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
+/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
+/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
 
 
 
@@ -29865,12 +29853,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CreateCampaign",
   components: {
-    Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_2__["default"],
-    UploadMedia: _s1modev_media_upload__WEBPACK_IMPORTED_MODULE_3__.UploadMedia
+    Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   setup: function setup() {
-    var form = (0,vue__WEBPACK_IMPORTED_MODULE_5__.reactive)({
+    var campaignStore = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('campaignStore');
+    var form = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)({
       'name': "",
       'excerpt': '',
       'description': '',
@@ -29880,36 +29868,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       'current_amount': 0
     });
 
-    var _useCampaign = (0,_composables_campaign__WEBPACK_IMPORTED_MODULE_4__["default"])(),
-        createCampaign = _useCampaign.createCampaign,
-        uploadImageCampaign = _useCampaign.uploadImageCampaign;
-
-    var storeCampaign = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return createCampaign(_objectSpread({}, form));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      return function storeCampaign() {
-        return _ref.apply(this, arguments);
-      };
-    }();
+    var storeCampaign = function storeCampaign() {
+      campaignStore.methods.createCampaign(_objectSpread({}, form));
+    };
 
     return {
       form: form,
-      createCampaign: createCampaign,
-      uploadImageCampaign: uploadImageCampaign,
+      campaignStore: campaignStore,
       storeCampaign: storeCampaign
     };
   }
@@ -29945,15 +29910,24 @@ __webpack_require__.r(__webpack_exports__);
   },
   setup: function setup() {
     var campaignStore = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('campaignStore');
+    var userStore = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('userStore');
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
       campaignStore.methods.getCampaigns();
+      userStore.methods.getMyProfile();
     });
+
+    var publishCampaign = function publishCampaign(id) {
+      campaignStore.methods.publishCampaign(id);
+    };
+
     var baseURL = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
       return "".concat("https://backer.test", "/storage/");
     });
     return {
       campaignStore: campaignStore,
-      baseURL: baseURL
+      userStore: userStore,
+      baseURL: baseURL,
+      publishCampaign: publishCampaign
     };
   }
 });
@@ -30137,12 +30111,12 @@ __webpack_require__.r(__webpack_exports__);
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
       campaignStore.methods.visitorCampaigns();
     });
-    var getCampaigns = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      return campaignStore.state.campaigns;
+    var baseURL = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return "".concat("https://backer.test", "/storage/");
     });
     return {
       campaignStore: campaignStore,
-      getCampaigns: getCampaigns
+      baseURL: baseURL
     };
   }
 });
@@ -31175,7 +31149,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $setup.form.perks = $event;
     }),
-    placeholder: "Contoh: Ayam, Nasi Goreng, Piring"
+    placeholder: "Contoh: Ayam, Nasi Goreng, Piring (wajib menggunakan koma)"
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.perks]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
@@ -31278,17 +31252,21 @@ var _hoisted_20 = {
 var _hoisted_21 = {
   "class": "flex items-center"
 };
+var _hoisted_22 = {
+  key: 0
+};
+var _hoisted_23 = ["onClick"];
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Detail ");
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Detail ");
 
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Upload Image ");
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Upload Image ");
 
-var _hoisted_24 = ["onClick"];
-var _hoisted_25 = {
+var _hoisted_26 = ["onClick"];
+var _hoisted_27 = {
   key: 1
 };
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "h-screen mt-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", {
   "class": "text-2xl text-white"
@@ -31296,7 +31274,7 @@ var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_27 = [_hoisted_26];
+var _hoisted_29 = [_hoisted_28];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$setup$campaignStore, _$setup$campaignStore2;
 
@@ -31357,17 +31335,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.description), 1
     /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [$setup.userStore.state.userProfile.role === 1 && item.status === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      onClick: function onClick($event) {
+        return $setup.publishCampaign(item.id);
+      },
+      "class": "bg-green-button text-white py-2 px-4 ml-4 rounded"
+    }, " Approve ", 8
+    /* PROPS */
+    , _hoisted_23)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'SingleCampaign',
         params: {
           slug: item.slug
         }
       },
-      "class": "bg-green-button text-white py-2 px-4 rounded"
+      "class": "bg-green-button text-white py-2 px-4 ml-4 rounded"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_22];
+        return [_hoisted_24];
       }),
       _: 2
       /* DYNAMIC */
@@ -31384,7 +31369,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "bg-blue-600 text-white py-2 px-4 ml-4 rounded"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_23];
+        return [_hoisted_25];
       }),
       _: 2
       /* DYNAMIC */
@@ -31398,10 +31383,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, " Remove ", 8
     /* PROPS */
-    , _hoisted_24)])])])])]);
+    , _hoisted_26)])])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, _hoisted_27))], 2
+  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_27, _hoisted_29))], 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
 }
@@ -31924,51 +31909,44 @@ var _hoisted_8 = {
 var _hoisted_9 = {
   "class": "item"
 };
-
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("figure", {
+var _hoisted_10 = {
   "class": "item-image"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/images/project-thumbnail-1.jpg",
-  alt: "",
-  "class": "rounded-20 w-full"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_11 = {
+};
+var _hoisted_11 = ["src"];
+var _hoisted_12 = {
   "class": "item-meta"
 };
-var _hoisted_12 = {
+var _hoisted_13 = {
   "class": "text-3xl font-medium text-gray-900 mt-5 truncate"
 };
-var _hoisted_13 = {
+var _hoisted_14 = {
   "class": "text-md font-light text-gray-900 my-4 truncate"
 };
-var _hoisted_14 = {
+var _hoisted_15 = {
   "class": "flex progress-info"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "ml-auto font-semibold"
 }, "Rp 100.000.000", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Fund Now");
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Fund Now");
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"container mx-auto pt-24\"><div class=\"flex justify-between items-center\"><div class=\"w-auto\"><h2 class=\"text-3xl text-gray-900 mb-8\"> See What Our <br> Happy Clients Say </h2></div></div><div class=\"flex mb-10\"><div class=\"w-2/12 flex justify-center items-start\"><img src=\"/images/testimonial-line.svg\" alt=\"\"></div><div class=\"w-8/12 mt-16\"><h2 class=\"text-3xl text-gray-900 font-light\"> “Funding at Bucker is very easy and comfortable. <br> Just need to find an idea, click and already funding.” </h2><div class=\"testimonial-info mt-8\"><div class=\"name text-xl font-semibold\">Shopie Nicole</div><div class=\"title text-xl font-light text-gray-400\"> Project Manager </div></div><div class=\"testimonial-icon mt-10\"><img src=\"/images/testimonial-1-icon.png\" alt=\"\" class=\"w-20 mr-5 inline-block testimonial-user rounded-full\"><img src=\"/images/testimonial-2-icon.png\" alt=\"\" class=\"w-20 mr-5 inline-block testimonial-user rounded-full\"><img src=\"/images/testimonial-3-icon.png\" alt=\"\" class=\"w-20 mr-5 inline-block testimonial-user active rounded-full\"></div></div><div class=\"w-2/12\"></div></div></section><div class=\"cta-clip -mt-20\"></div>", 2);
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"container mx-auto pt-24\"><div class=\"flex justify-between items-center\"><div class=\"w-auto\"><h2 class=\"text-3xl text-gray-900 mb-8\"> See What Our <br> Happy Clients Say </h2></div></div><div class=\"flex mb-10\"><div class=\"w-2/12 flex justify-center items-start\"><img src=\"/images/testimonial-line.svg\" alt=\"\"></div><div class=\"w-8/12 mt-16\"><h2 class=\"text-3xl text-gray-900 font-light\"> “Funding at Bucker is very easy and comfortable. <br> Just need to find an idea, click and already funding.” </h2><div class=\"testimonial-info mt-8\"><div class=\"name text-xl font-semibold\">Shopie Nicole</div><div class=\"title text-xl font-light text-gray-400\"> Project Manager </div></div><div class=\"testimonial-icon mt-10\"><img src=\"/images/testimonial-1-icon.png\" alt=\"\" class=\"w-20 mr-5 inline-block testimonial-user rounded-full\"><img src=\"/images/testimonial-2-icon.png\" alt=\"\" class=\"w-20 mr-5 inline-block testimonial-user rounded-full\"><img src=\"/images/testimonial-3-icon.png\" alt=\"\" class=\"w-20 mr-5 inline-block testimonial-user active rounded-full\"></div></div><div class=\"w-2/12\"></div></div></section><div class=\"cta-clip -mt-20\"></div>", 2);
 
-var _hoisted_19 = {
+var _hoisted_20 = {
   "class": "call-to-action bg-purple-progress pt-64 pb-10"
 };
-var _hoisted_20 = {
+var _hoisted_21 = {
   "class": "container mx-auto"
 };
-var _hoisted_21 = {
+var _hoisted_22 = {
   "class": "w-full text-center"
 };
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "text-5xl text-white font-semibold"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Easy way to funding "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" best idea and innovation ")], -1
 /* HOISTED */
@@ -31995,21 +31973,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.getCampaigns, function (item) {
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.campaignStore.state.campaigns, function (item) {
+    var _item$image;
+
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "w-full p-5 border border-gray-500 rounded-20",
       key: item.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("figure", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+      src: $setup.baseURL + (item === null || item === void 0 ? void 0 : (_item$image = item.image) === null || _item$image === void 0 ? void 0 : _item$image.file_name),
+      alt: "",
+      "class": "rounded-20 w-full"
+    }, null, 8
+    /* PROPS */
+    , _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.excerpt), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.excerpt), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BaseProgress, {
       percentage: item.current_amount / item.goal_amount * 100
     }, null, 8
     /* PROPS */
-    , ["percentage"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.current_amount / item.goal_amount * 100) + "%", 1
+    , ["percentage"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.current_amount / item.goal_amount * 100) + "%", 1
     /* TEXT */
-    ), _hoisted_15])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    ), _hoisted_16])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       "class": "mt-5 text-center button-cta block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-2 text-lg rounded-full",
       to: {
         name: 'SingleCampaign',
@@ -32019,7 +32005,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_16];
+        return [_hoisted_17];
       }),
       _: 2
       /* DYNAMIC */
@@ -32029,7 +32015,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["to"])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])]), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ))])]), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$router.push({
         path: '/upload'
@@ -32860,8 +32846,9 @@ var campaignImages = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
 });
 var methods = {
   visitorCampaigns: function visitorCampaigns() {
+    state.campaigns = [];
     axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/campaign').then(function (res) {
-      return state.campaigns = res.data.data;
+      state.campaigns = res.data.data;
     });
   },
   getCampaigns: function getCampaigns() {
@@ -32918,6 +32905,57 @@ var methods = {
     }).then(function (res) {
       void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
         name: "Transactions"
+      });
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
+    });
+  },
+  publishCampaign: function publishCampaign(id) {
+    var _this = this;
+
+    var token = localStorage.access_token;
+    state.campaigns = [];
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/admin/campaign/publish/' + id, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      _this.getCampaigns();
+
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: "Dashboard"
+      });
+    })["catch"](function (err) {
+      _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+        _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.setErrorMessage("Please login first!");
+      }
+    });
+  },
+  createCampaign: function createCampaign(data) {
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/campaign/store', data, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      var id = res.data.data.id;
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: 'UploadImage',
+        params: {
+          id: id
+        }
       });
     })["catch"](function (err) {
       _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();

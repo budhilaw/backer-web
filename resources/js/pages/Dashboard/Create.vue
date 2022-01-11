@@ -59,7 +59,7 @@
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
                                         v-model="form.perks"
-                                        placeholder="Contoh: Ayam, Nasi Goreng, Piring"
+                                        placeholder="Contoh: Ayam, Nasi Goreng, Piring (wajib menggunakan koma)"
                                     />
                                 </div>
                                 <div class="w-full px-3">
@@ -92,14 +92,14 @@
 <script>
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { UploadMedia } from "@s1modev/media-upload";
-import useCampaign from "../../composables/campaign";
-import { reactive } from "vue";
+import { reactive, inject } from "vue";
 
 export default {
     name: "CreateCampaign",
-    components: { Navbar, Footer, UploadMedia },
+    components: { Navbar, Footer },
     setup() {
+        const campaignStore = inject('campaignStore')
+
         let form = reactive({
             'name': "",
             'excerpt': '',
@@ -110,16 +110,13 @@ export default {
             'current_amount': 0
         })
 
-        const { createCampaign, uploadImageCampaign } = useCampaign()
-
-        const storeCampaign = async () => {
-            await createCampaign({...form})
+        const storeCampaign = () => {
+            campaignStore.methods.createCampaign({...form})
         }
 
         return {
             form,
-            createCampaign,
-            uploadImageCampaign,
+            campaignStore,
             storeCampaign
         }
     },

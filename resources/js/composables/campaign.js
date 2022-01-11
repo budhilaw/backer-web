@@ -16,7 +16,10 @@ const campaignImages = computed(() => state.campaignImages)
 
 const methods = {
     visitorCampaigns() {
-        axios.get('/api/campaign').then((res) => state.campaigns = res.data.data)
+        state.campaigns = []
+        axios.get('/api/campaign').then((res) => {
+            state.campaigns = res.data.data
+        })
     },
 
     getCampaigns() {
@@ -71,6 +74,44 @@ const methods = {
             }
         }).then((res) => {
             void router.push({ name: "Transactions" })
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
+        })
+    },
+
+    publishCampaign(id) {
+        const token = localStorage.access_token
+        state.campaigns = []
+
+        axios.get('/api/admin/campaign/publish/' + id, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+            this.getCampaigns()
+            void router.push({ name: "Dashboard" })
+        }).catch((err) => {
+            userStore.methods.clearErrorMessage()
+            if(err.response) {
+                void router.push({ name: "Login" })
+                userStore.methods.setErrorMessage("Please login first!")
+            }
+        })
+    },
+
+    createCampaign(data) {
+        const token = localStorage.access_token
+        axios.post('/api/campaign/store', data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        }).then((res) => {
+            let id = res.data.data.id
+            void router.push({ name: 'UploadImage', params: { id: id } })
         }).catch((err) => {
             userStore.methods.clearErrorMessage()
             if(err.response) {

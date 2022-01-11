@@ -49,9 +49,18 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center">
+                                    <div v-if="userStore.state.userProfile.role === 1 && item.status === 0">
+                                        <button
+                                            @click="publishCampaign(item.id)"
+                                            class="bg-green-button text-white py-2 px-4 ml-4 rounded"
+                                        >
+                                            Approve
+                                        </button>
+                                    </div>
+
                                     <router-link
                                         :to="{ name: 'SingleCampaign', params: { slug: item.slug } }"
-                                        class="bg-green-button text-white py-2 px-4 rounded"
+                                        class="bg-green-button text-white py-2 px-4 ml-4 rounded"
                                     >
                                         Detail
                                     </router-link>
@@ -97,10 +106,16 @@ export default {
     components: { Navbar, Footer, Pagination },
     setup() {
         const campaignStore = inject('campaignStore')
+        const userStore = inject('userStore')
 
         onMounted(() => {
             campaignStore.methods.getCampaigns()
+            userStore.methods.getMyProfile()
         })
+
+        const publishCampaign = (id) => {
+            campaignStore.methods.publishCampaign(id)
+        }
 
         const baseURL = computed(() => {
             return `${process.env.APP_URL}/storage/`
@@ -108,7 +123,9 @@ export default {
 
         return {
             campaignStore,
-            baseURL
+            userStore,
+            baseURL,
+            publishCampaign
         }
     },
 }

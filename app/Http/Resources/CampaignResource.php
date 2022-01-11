@@ -25,6 +25,7 @@ class CampaignResource extends JsonResource
             'goal_amount' => $this->goal_amount,
             'current_amount' => $this->current_amount,
             'image' => $this->images->where('is_primary', 1)->first(),
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
