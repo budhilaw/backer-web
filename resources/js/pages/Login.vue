@@ -8,8 +8,8 @@
                         Sign In to Your Account
                     </h2>
 
-                    <div v-if="userStore.state.error" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                        {{ userStore.state.error }}
+                    <div v-if="userStore.state.error[0]?.general" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                        {{ userStore.state.error[0]?.general }}
                     </div>
 
                     <div class="mb-6">
@@ -23,9 +23,9 @@
                                 placeholder="Write your email address here"
                                 v-model="form.email"
                             />
-<!--                            <div v-if="errors.email" class="bg-gray-100 p-2 my-4 text-sm text-red-600">-->
-<!--                                {{ errors.email }}-->
-<!--                            </div>-->
+                            <div v-if="userStore.state.error[0]?.email?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ userStore.state.error[0]?.email?.[0] }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-6">
@@ -39,9 +39,9 @@
                                 placeholder="Write your password here"
                                 v-model="form.password"
                             />
-<!--                            <div v-if="errors.password" class="bg-gray-100 p-2 my-4 text-sm text-red-600">-->
-<!--                                {{ errors.password }}-->
-<!--                            </div>-->
+                            <div v-if="userStore.state.error[0]?.password?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ userStore.state.error[0]?.password?.[0] }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-6">

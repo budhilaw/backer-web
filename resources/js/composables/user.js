@@ -7,7 +7,7 @@ const state = reactive({
     users: [],
     transactions: [],
     userProfile: [],
-    error: ''
+    error: []
 })
 
 const methods = {
@@ -37,10 +37,32 @@ const methods = {
             .catch((err) => {
                 this.clearErrorMessage()
                 if(err.response) {
+                    if(err.response.data.errors) {
+                        state.error.push(err.response.data.errors)
+                        setTimeout(this.clearErrorMessage, 5000)
+                        return
+                    }
                     void router.push({ name: "Login" })
                     this.setErrorMessage("Your E-mail / Password is incorrect!")
                 }
             })
+    },
+
+    register(data) {
+        axios.post('/api/auth/register', data).then(() => {
+            this.clearErrorMessage()
+            void router.push({name: 'Login'})
+        }).catch((err) => {
+            this.clearErrorMessage()
+            if(err.response) {
+                if(err.response.data.errors) {
+                    state.error.push(err.response.data.errors)
+                    setTimeout(this.clearErrorMessage, 5000)
+                    return
+                }
+                this.setErrorMessage("Something went wrong!")
+            }
+        })
     },
 
     getCampaigns() {
@@ -118,11 +140,14 @@ const methods = {
     },
 
     setErrorMessage(errMsg) {
-        state.error = errMsg
+        state.error.push({
+            "general": errMsg
+        })
+        setTimeout(this.clearErrorMessage, 5000)
     },
 
     clearErrorMessage() {
-        state.error = ''
+        state.error = []
     }
 }
 

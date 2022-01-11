@@ -30242,7 +30242,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _composables_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../composables/user */ "./resources/js/composables/user.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -30256,7 +30255,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Register",
   setup: function setup() {
@@ -30268,10 +30266,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       'password': '',
       'password_confirmation': ''
     });
-
-    var _useUser = (0,_composables_user__WEBPACK_IMPORTED_MODULE_2__["default"])(),
-        errors = _useUser.errors,
-        register = _useUser.register;
+    var userStore = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('userStore');
 
     var saveUser = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -30279,10 +30274,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return register(_objectSpread({}, form));
+                userStore.methods.register(_objectSpread({}, form));
 
-              case 2:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -30297,7 +30291,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     return {
       form: form,
-      errors: errors,
+      userStore: userStore,
       saveUser: saveUser
     };
   }
@@ -32018,26 +32012,34 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_11 = {
-  "class": "mb-6"
+  key: 0,
+  "class": "bg-gray-100 p-2 my-4 text-sm text-red-600"
 };
 var _hoisted_12 = {
+  "class": "mb-6"
+};
+var _hoisted_13 = {
   "class": "mb-4"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "font-normal text-lg text-white block mb-3"
 }, " Password ", -1
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_15 = {
+  key: 0,
+  "class": "bg-gray-100 p-2 my-4 text-sm text-red-600"
+};
+var _hoisted_16 = {
   "class": "mb-6"
 };
-var _hoisted_15 = {
+var _hoisted_17 = {
   "class": "mb-4"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-center"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-white text-md"
@@ -32049,7 +32051,9 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, $setup.userStore.state.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.userStore.state.error), 1
+  var _$setup$userStore$sta, _$setup$userStore$sta2, _$setup$userStore$sta3, _$setup$userStore$sta4, _$setup$userStore$sta5, _$setup$userStore$sta6, _$setup$userStore$sta7, _$setup$userStore$sta8, _$setup$userStore$sta9, _$setup$userStore$sta10;
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (_$setup$userStore$sta = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta !== void 0 && _$setup$userStore$sta.general ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_$setup$userStore$sta2 = $setup.userStore.state.error[0]) === null || _$setup$userStore$sta2 === void 0 ? void 0 : _$setup$userStore$sta2.general), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "email",
@@ -32060,7 +32064,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.email]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            <div v-if=\"errors.email\" class=\"bg-gray-100 p-2 my-4 text-sm text-red-600\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                {{ errors.email }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            </div>")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.email]]), (_$setup$userStore$sta3 = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta3 !== void 0 && (_$setup$userStore$sta4 = _$setup$userStore$sta3.email) !== null && _$setup$userStore$sta4 !== void 0 && _$setup$userStore$sta4[0] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_$setup$userStore$sta5 = $setup.userStore.state.error[0]) === null || _$setup$userStore$sta5 === void 0 ? void 0 : (_$setup$userStore$sta6 = _$setup$userStore$sta5.email) === null || _$setup$userStore$sta6 === void 0 ? void 0 : _$setup$userStore$sta6[0]), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "password",
     "class": "auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100",
     placeholder: "Write your password here",
@@ -32069,12 +32075,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            <div v-if=\"errors.password\" class=\"bg-gray-100 p-2 my-4 text-sm text-red-600\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                {{ errors.password }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                            </div>")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password]]), (_$setup$userStore$sta7 = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta7 !== void 0 && (_$setup$userStore$sta8 = _$setup$userStore$sta7.password) !== null && _$setup$userStore$sta8 !== void 0 && _$setup$userStore$sta8[0] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_$setup$userStore$sta9 = $setup.userStore.state.error[0]) === null || _$setup$userStore$sta9 === void 0 ? void 0 : (_$setup$userStore$sta10 = _$setup$userStore$sta9.password) === null || _$setup$userStore$sta10 === void 0 ? void 0 : _$setup$userStore$sta10[0]), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[2] || (_cache[2] = function () {
       return $setup.doLogin && $setup.doLogin.apply($setup, arguments);
     }),
     "class": "block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
-  }, " Sign In ")])]), _hoisted_16])])])]);
+  }, " Sign In ")])]), _hoisted_18])])])]);
 }
 
 /***/ }),
@@ -32263,6 +32271,8 @@ var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _$setup$userStore$sta, _$setup$userStore$sta2, _$setup$userStore$sta3, _$setup$userStore$sta4, _$setup$userStore$sta5, _$setup$userStore$sta6, _$setup$userStore$sta7, _$setup$userStore$sta8, _$setup$userStore$sta9, _$setup$userStore$sta10;
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.form.name = $event;
@@ -32272,7 +32282,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Write Your Name Here"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.name]]), $setup.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.name), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.name]]), (_$setup$userStore$sta = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta !== void 0 && (_$setup$userStore$sta2 = _$setup$userStore$sta.name) !== null && _$setup$userStore$sta2 !== void 0 && _$setup$userStore$sta2[0] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.userStore.state.error[0].name[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -32283,7 +32293,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Write your occupation here"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.occupation]]), $setup.errors.occupation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.occupation), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.occupation]]), (_$setup$userStore$sta3 = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta3 !== void 0 && (_$setup$userStore$sta4 = _$setup$userStore$sta3.occupation) !== null && _$setup$userStore$sta4 !== void 0 && _$setup$userStore$sta4[0] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.userStore.state.error[0].occupation[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
@@ -32294,7 +32304,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Write your email address here"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.email]]), $setup.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.email), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.email]]), (_$setup$userStore$sta5 = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta5 !== void 0 && (_$setup$userStore$sta6 = _$setup$userStore$sta5.email) !== null && _$setup$userStore$sta6 !== void 0 && _$setup$userStore$sta6[0] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.userStore.state.error[0].email[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
@@ -32305,7 +32315,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Type your password here"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password]]), $setup.errors.password ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.password), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password]]), (_$setup$userStore$sta7 = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta7 !== void 0 && (_$setup$userStore$sta8 = _$setup$userStore$sta7.password) !== null && _$setup$userStore$sta8 !== void 0 && _$setup$userStore$sta8[0] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.userStore.state.error[0].password[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
@@ -32316,7 +32326,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Type the password confirmation here"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password_confirmation]]), $setup.errors.password_confirmation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.password_confirmation), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.password_confirmation]]), (_$setup$userStore$sta9 = $setup.userStore.state.error[0]) !== null && _$setup$userStore$sta9 !== void 0 && (_$setup$userStore$sta10 = _$setup$userStore$sta9.password_confirmation) !== null && _$setup$userStore$sta10 !== void 0 && _$setup$userStore$sta10[0] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.userStore.state.error[0].password_confirmation[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[5] || (_cache[5] = function () {
@@ -33016,7 +33026,7 @@ var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
   users: [],
   transactions: [],
   userProfile: [],
-  error: ''
+  error: []
 });
 var methods = {
   getMyProfile: function getMyProfile() {
@@ -33053,6 +33063,12 @@ var methods = {
       _this2.clearErrorMessage();
 
       if (err.response) {
+        if (err.response.data.errors) {
+          state.error.push(err.response.data.errors);
+          setTimeout(_this2.clearErrorMessage, 5000);
+          return;
+        }
+
         void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
           name: "Login"
         });
@@ -33061,33 +33077,34 @@ var methods = {
       }
     });
   },
-  getCampaigns: function getCampaigns() {
+  register: function register(data) {
     var _this3 = this;
 
-    var token = localStorage.access_token;
-    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/user/campaigns', {
-      headers: {
-        'Authorization': "Bearer ".concat(token)
-      }
-    }).then(function (res) {
-      state.campaigns = res.data.data;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/auth/register', data).then(function () {
+      _this3.clearErrorMessage();
+
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: 'Login'
+      });
     })["catch"](function (err) {
       _this3.clearErrorMessage();
 
       if (err.response) {
-        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
-          name: "Login"
-        });
+        if (err.response.data.errors) {
+          state.error.push(err.response.data.errors);
+          setTimeout(_this3.clearErrorMessage, 5000);
+          return;
+        }
 
-        _this3.setErrorMessage("Please login first!");
+        _this3.setErrorMessage("Something went wrong!");
       }
     });
   },
-  removeCampaign: function removeCampaign(id) {
+  getCampaigns: function getCampaigns() {
     var _this4 = this;
 
     var token = localStorage.access_token;
-    axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/campaign/destroy/' + id, {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/user/campaigns', {
       headers: {
         'Authorization': "Bearer ".concat(token)
       }
@@ -33105,16 +33122,16 @@ var methods = {
       }
     });
   },
-  getTransactions: function getTransactions() {
+  removeCampaign: function removeCampaign(id) {
     var _this5 = this;
 
     var token = localStorage.access_token;
-    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/transaction', {
+    axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/api/campaign/destroy/' + id, {
       headers: {
         'Authorization': "Bearer ".concat(token)
       }
     }).then(function (res) {
-      state.transactions = res.data.data;
+      state.campaigns = res.data.data;
     })["catch"](function (err) {
       _this5.clearErrorMessage();
 
@@ -33127,9 +33144,31 @@ var methods = {
       }
     });
   },
+  getTransactions: function getTransactions() {
+    var _this6 = this;
+
+    var token = localStorage.access_token;
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/transaction', {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      state.transactions = res.data.data;
+    })["catch"](function (err) {
+      _this6.clearErrorMessage();
+
+      if (err.response) {
+        void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+          name: "Login"
+        });
+
+        _this6.setErrorMessage("Please login first!");
+      }
+    });
+  },
   verifyTransactions: function verifyTransactions(id) {
     var _state$userProfile,
-        _this6 = this;
+        _this7 = this;
 
     if (((_state$userProfile = state.userProfile) === null || _state$userProfile === void 0 ? void 0 : _state$userProfile.role) !== 1) {
       void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
@@ -33144,28 +33183,31 @@ var methods = {
         'Authorization': "Bearer ".concat(token)
       }
     }).then(function () {
-      _this6.getTransactions();
+      _this7.getTransactions();
 
       void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
         name: "Transactions"
       });
     })["catch"](function (err) {
-      _this6.clearErrorMessage();
+      _this7.clearErrorMessage();
 
       if (err.response) {
         void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
           name: "Login"
         });
 
-        _this6.setErrorMessage("Please login first!");
+        _this7.setErrorMessage("Please login first!");
       }
     });
   },
   setErrorMessage: function setErrorMessage(errMsg) {
-    state.error = errMsg;
+    state.error.push({
+      "general": errMsg
+    });
+    setTimeout(this.clearErrorMessage, 5000);
   },
   clearErrorMessage: function clearErrorMessage() {
-    state.error = '';
+    state.error = [];
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
