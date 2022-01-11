@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'transaction'], function()
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'user'], function() {
     Route::get('/', [AuthController::class, 'userProfile']);
-    Route::put('/edit/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::put('/edit/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/avatar', [UserController::class, 'avatar'])->name('user.avatar');
     Route::post('/edit/avatar/{id}', [UserController::class, 'uploadAvatar'])->name('user.upload.avatar');
     Route::get('/campaigns', [UserController::class, 'campaigns'])->name('user.campaigns');

@@ -10,6 +10,10 @@ const state = reactive({
     error: []
 })
 
+const formState = reactive({
+    user: []
+})
+
 const methods = {
     getMyProfile() {
         const token = localStorage.access_token
@@ -19,6 +23,7 @@ const methods = {
             }
         }).then((res) => {
             state.userProfile = res.data
+            formState.user = res.data
         }).catch((err) => {
             this.clearErrorMessage()
             if(err.response) {
@@ -67,12 +72,35 @@ const methods = {
         })
     },
 
+    updateProfile(id, data) {
+        const token = localStorage.access_token
+        axios.put('/api/user/edit/' + id, data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).
+        then((res) => {
+            this.clearErrorMessage()
+            this.getMyProfile()
+            void router.push({ name: 'Dashboard' })
+        }).catch((err) => {
+            this.clearErrorMessage()
+            if(err.response) {
+                if(err.response.data.errors) {
+                    state.error.push(err.response.data.errors)
+                    setTimeout(this.clearErrorMessage, 5000)
+                    return
+                }
+                this.setErrorMessage("Something went wrong!")
+            }
+        })
+    },
+
     uploadAvatar(event, id) {
         const token = localStorage.access_token
         let files = event.target.files
         for(let i=0; i < files.length; i++) {
             let formData = new FormData
-            console.log(files[i])
             formData.set('image', files[i])
 
             axios.post('/api/user/edit/avatar/' + id, formData, {
@@ -81,14 +109,13 @@ const methods = {
                 }
             }).then((res) => {
                 state.userProfile = res.data
-            })
-                .catch((err) => {
+            }).catch((err) => {
                     this.clearErrorMessage()
                     if(err.response) {
                         void router.push({ name: "Login" })
                         this.setErrorMessage("Please login first!")
                     }
-                })
+            })
         }
     },
 
@@ -188,7 +215,8 @@ const methods = {
 
 export default {
     state: readonly(state),
-    methods
+    methods,
+    formState
 }
 
 // export default function useUser() {

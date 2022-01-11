@@ -24,6 +24,12 @@
                         class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center">
                         + Create Campaign
                     </router-link>
+
+                    <router-link
+                        :to="{ name: 'MyProfile' }"
+                        class="bg-green-600 hover:bg-green-button text-white font-bold py-4 px-4 ml-4 rounded inline-flex items-center">
+                        My Profile
+                    </router-link>
                 </div>
             </div>
             <hr />

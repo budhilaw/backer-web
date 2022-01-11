@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UploadPhotoRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\CampaignResource;
 use App\Models\Campaign;
 use App\Models\User;
@@ -18,15 +19,25 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UserRequest $request
-     * @param User $user
+     * @param UserUpdateRequest $request
+     * @param String $id
      * @return JsonResponse
      */
-    public function update(UserRequest $request, User $user): JsonResponse
+    public function update(UserUpdateRequest $request, String $id): JsonResponse
     {
         if($request->validated()) {
-            $input = $request->all();
-            $user->fill($input)->save();
+            $user = User::findOrFail($id);
+
+            $user->name = $request->name;
+            $user->occupation = $request->occupation;
+            $user->email = $request->email;
+
+            if(isset($request->password)) {
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->save();
+
             return response()->json(['message' => 'User data successfully updated!']);
         }
         return response()->json(['message' => 'Failed to update user data'], 400);

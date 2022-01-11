@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import UploadPhoto from "./pages/UploadPhoto";
+import MyProfile from "./pages/Dashboard/Profile";
 
 import Dashboard from "./pages/Dashboard/Index";
 import CreateCampaign from "./pages/Dashboard/Create";
@@ -39,6 +40,11 @@ const routes = [
         path: '/logout',
         component: Logout,
         name: "Logout"
+    },
+    {
+        path: '/dashboard/user',
+        component: MyProfile,
+        name: "MyProfile"
     },
     {
         path: '/upload/photo/:id',

@@ -149,7 +149,6 @@ export default {
 
         const changeMainImage = (link) => {
             mainImage.link = link
-            console.log(mainImage.link)
         }
 
         const doFund = (id) => {
