@@ -10,6 +10,10 @@ const state = reactive({
     campaignImages: []
 })
 
+const formState = reactive({
+    campaign: []
+})
+
 const campaign = computed(() => state.campaign)
 const campaigns = computed(() => state.campaigns)
 const campaignImages = computed(() => state.campaignImages)
@@ -49,6 +53,7 @@ const methods = {
             }
         }).then((res) => {
             state.campaign = res.data.data
+            formState.campaign = res.data.data
         }).catch((err) => {
             userStore.methods.clearErrorMessage()
             if(err.response) {
@@ -140,13 +145,14 @@ const methods = {
 
     updateCampaign(id, data) {
         const token = localStorage.access_token
-        axios.post('/api/campaign/update/' + id, {
+        axios.post('/api/campaign/update/' + id, data, {
             headers: {
                 'Authorization': `Bearer ${token}`
-            },
-            data: data
+            }
         }).then((res) => {
-            console.log(res.data)
+            formState.campaign = []
+            state.campaign = []
+            void router.push({ name: "Dashboard" })
         }).catch((err) => {
             userStore.methods.clearErrorMessage()
             if(err.response) {
@@ -269,6 +275,7 @@ const methods = {
 
 export default {
     state: readonly(state),
+    formState,
     methods,
     campaigns,
     campaign

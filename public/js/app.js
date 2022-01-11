@@ -30011,27 +30011,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   setup: function setup(props) {
     var campaignStore = (0,vue__WEBPACK_IMPORTED_MODULE_3__.inject)('campaignStore');
-    var form = (0,vue__WEBPACK_IMPORTED_MODULE_3__.reactive)({
-      'name': '',
-      'excerpt': '',
-      'description': '',
-      'perks': '',
-      'goal_amount': '',
-      'backer_count': '',
-      'current_amount': ''
-    });
     (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
       campaignStore.methods.getCampaignsBySlug(props.slug);
     });
 
     var doUpdate = function doUpdate() {
-      var id = campaignStore.state.campaign.id;
-      var data = campaignStore.state.campaign;
+      var id = campaignStore.formState.campaign.id;
+      var data = campaignStore.formState.campaign;
       campaignStore.methods.updateCampaign(id, data);
     };
 
     return {
-      form: form,
       campaignStore: campaignStore,
       doUpdate: doUpdate
     };
@@ -31261,12 +31251,14 @@ var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Upload Image ");
 
-var _hoisted_26 = ["onClick"];
-var _hoisted_27 = {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Edit ");
+
+var _hoisted_27 = ["onClick"];
+var _hoisted_28 = {
   key: 1
 };
 
-var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "h-screen mt-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", {
   "class": "text-2xl text-white"
@@ -31274,7 +31266,7 @@ var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_29 = [_hoisted_28];
+var _hoisted_30 = [_hoisted_29];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$setup$campaignStore, _$setup$campaignStore2;
 
@@ -31376,6 +31368,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
+    , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+      to: {
+        name: 'UpdateCampaign',
+        params: {
+          slug: item.slug
+        }
+      },
+      "class": "bg-blue-600 text-white py-2 px-4 ml-4 rounded"
+    }, {
+      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+        return [_hoisted_26];
+      }),
+      _: 2
+      /* DYNAMIC */
+
+    }, 1032
+    /* PROPS, DYNAMIC_SLOTS */
     , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "bg-red-500 text-white py-2 px-4 ml-4 rounded",
       onClick: function onClick($event) {
@@ -31383,10 +31392,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, " Remove ", 8
     /* PROPS */
-    , _hoisted_26)])])])])]);
+    , _hoisted_27)])])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_27, _hoisted_29))], 2
+  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, _hoisted_30))], 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
 }
@@ -31679,48 +31688,48 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
     type: "text",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-      return $setup.form.name = $event;
+      return $setup.campaignStore.formState.campaign.name = $event;
     }),
     placeholder: "Contoh: Mechanical Keyboard"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.campaignStore.formState.campaign.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
     type: "number",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $setup.form.goal_amount = $event;
+      return $setup.campaignStore.formState.campaign.goal_amount = $event;
     }),
     placeholder: "Contoh: 200000"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.goal_amount]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.campaignStore.formState.campaign.goal_amount]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
     type: "text",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $setup.form.excerpt = $event;
+      return $setup.campaignStore.formState.campaign.excerpt = $event;
     }),
     placeholder: "Deskripsi singkat mengenai projectmu"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.excerpt]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.campaignStore.formState.campaign.excerpt]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
     type: "text",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $setup.form.perks = $event;
+      return $setup.campaignStore.formState.campaign.perks = $event;
     }),
     placeholder: "Contoh: Ayam, Nasi Goreng, Piring"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.perks]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.campaignStore.formState.campaign.perks]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
     type: "text",
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-      return $setup.form.description = $event;
+      return $setup.campaignStore.formState.campaign.description = $event;
     }),
     placeholder: "Isi deskripsi panjang untuk projectmu"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.campaignStore.formState.campaign.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[5] || (_cache[5] = function () {
       return $setup.doUpdate && $setup.doUpdate.apply($setup, arguments);
     }),
@@ -32835,6 +32844,9 @@ var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
   campaigns: [],
   campaignImages: []
 });
+var formState = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
+  campaign: []
+});
 var campaign = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
   return state.campaign;
 });
@@ -32879,6 +32891,7 @@ var methods = {
       }
     }).then(function (res) {
       state.campaign = res.data.data;
+      formState.campaign = res.data.data;
     })["catch"](function (err) {
       _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
 
@@ -32989,13 +33002,16 @@ var methods = {
   },
   updateCampaign: function updateCampaign(id, data) {
     var token = localStorage.access_token;
-    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/campaign/update/' + id, {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/campaign/update/' + id, data, {
       headers: {
         'Authorization': "Bearer ".concat(token)
-      },
-      data: data
+      }
     }).then(function (res) {
-      console.log(res.data);
+      formState.campaign = [];
+      state.campaign = [];
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: "Dashboard"
+      });
     })["catch"](function (err) {
       _user__WEBPACK_IMPORTED_MODULE_3__["default"].methods.clearErrorMessage();
 
@@ -33127,6 +33143,7 @@ var methods = {
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: (0,vue__WEBPACK_IMPORTED_MODULE_0__.readonly)(state),
+  formState: formState,
   methods: methods,
   campaigns: campaigns,
   campaign: campaign
@@ -33326,10 +33343,17 @@ var methods = {
   register: function register(data) {
     var _this3 = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/auth/register', data).then(function () {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/auth/register', data).then(function (res) {
       _this3.clearErrorMessage();
 
-      _this3.login(data);
+      var id = res.data.user.id;
+      localStorage.setItem("access_token", res.data.access_token);
+      void _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: 'UploadPhoto',
+        params: {
+          id: id
+        }
+      });
     })["catch"](function (err) {
       _this3.clearErrorMessage();
 

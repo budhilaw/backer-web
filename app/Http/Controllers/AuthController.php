@@ -6,6 +6,7 @@ use App\Http\Requests\AuthRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -52,10 +53,11 @@ class AuthController extends Controller
                 ]
             ));
 
-            return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user
-            ], 201);
+            if (! $token = Auth::attempt($request->validated())) {
+                return response()->json(['error' => 'Something went wrong'], 401);
+            }
+
+            return $this->createNewToken($token);
         }
         return response()->json($request->errors(), 422);
     }

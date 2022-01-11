@@ -49,9 +49,11 @@ const methods = {
     },
 
     register(data) {
-        axios.post('/api/auth/register', data).then(() => {
+        axios.post('/api/auth/register', data).then((res) => {
             this.clearErrorMessage()
-            this.login(data)
+            let id = res.data.user.id
+            localStorage.setItem("access_token", res.data.access_token)
+            void router.push({ name: 'UploadPhoto', params: { id: id } })
         }).catch((err) => {
             this.clearErrorMessage()
             if(err.response) {

@@ -72,6 +72,13 @@
                                         Upload Image
                                     </router-link>
 
+                                    <router-link
+                                        :to="{ name: 'UpdateCampaign', params: { slug: item.slug } }"
+                                        class="bg-blue-600 text-white py-2 px-4 ml-4 rounded"
+                                    >
+                                        Edit
+                                    </router-link>
+
                                     <button class="bg-red-500 text-white py-2 px-4 ml-4 rounded"
                                             @click="campaignStore.methods.removeCampaign(item.id, index)">
                                         Remove

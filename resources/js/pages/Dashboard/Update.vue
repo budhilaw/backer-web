@@ -25,7 +25,7 @@
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        v-model="form.name"
+                                        v-model="campaignStore.formState.campaign.name"
                                         placeholder="Contoh: Mechanical Keyboard"
                                     />
                                 </div>
@@ -36,7 +36,7 @@
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="number"
-                                        v-model="form.goal_amount"
+                                        v-model="campaignStore.formState.campaign.goal_amount"
                                         placeholder="Contoh: 200000"
                                     />
                                 </div>
@@ -47,7 +47,7 @@
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        v-model="form.excerpt"
+                                        v-model="campaignStore.formState.campaign.excerpt"
                                         placeholder="Deskripsi singkat mengenai projectmu"
                                     />
                                 </div>
@@ -58,7 +58,7 @@
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        v-model="form.perks"
+                                        v-model="campaignStore.formState.campaign.perks"
                                         placeholder="Contoh: Ayam, Nasi Goreng, Piring"
                                     />
                                 </div>
@@ -69,7 +69,7 @@
                                     <textarea
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        v-model="form.description"
+                                        v-model="campaignStore.formState.campaign.description"
                                         placeholder="Isi deskripsi panjang untuk projectmu"
                                     ></textarea>
                                 </div>
@@ -107,28 +107,17 @@ export default {
     setup(props) {
         const campaignStore = inject('campaignStore')
 
-        let form = reactive({
-            'name': '',
-            'excerpt': '',
-            'description': '',
-            'perks': '',
-            'goal_amount': '',
-            'backer_count': '',
-            'current_amount': ''
-        })
-
         onMounted(() => {
             campaignStore.methods.getCampaignsBySlug(props.slug)
         })
 
         const doUpdate = () => {
-            let id = campaignStore.state.campaign.id
-            let data = campaignStore.state.campaign
+            let id = campaignStore.formState.campaign.id
+            let data = campaignStore.formState.campaign
             campaignStore.methods.updateCampaign(id, data)
         }
 
         return {
-            form,
             campaignStore,
             doUpdate
         }

@@ -69,7 +69,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        if($user->avatar != "images/avatar/free.png") {
+        if($user->avatar != "images/avatar/free.png" && $user->avatar != null) {
             $oldPhoto = storage_path() . '/app/public/' . $user->avatar;
             unlink($oldPhoto);
         }
