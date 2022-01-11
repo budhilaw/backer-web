@@ -25,7 +25,7 @@ class CampaignSingleResource extends JsonResource
             'goal_amount' => $this->goal_amount,
             'current_amount' => $this->current_amount,
             'primary_image' => $this->images->where('is_primary', 1)->first(),
-            'images' => $this->images->where('is_primary', 0),
+            'images' => $this->images,
             'user' => $this->user,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

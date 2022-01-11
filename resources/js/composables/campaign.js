@@ -217,6 +217,12 @@ const methods = {
                 userStore.methods.setErrorMessage("Please login first!")
             }
         })
+    },
+
+    resetAll() {
+        state.campaign = []
+        state.campaigns = []
+        state.campaignImages = []
     }
 }
 

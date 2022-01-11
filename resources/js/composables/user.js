@@ -29,7 +29,7 @@ const methods = {
     },
 
     login(data) {
-        axios.post('/api/auth/login', data)
+        axios.post('/api/auth/login', data, )
             .then((res) => {
                 localStorage.setItem("access_token", res.data.access_token)
                 void router.push({ name: 'Dashboard' })
@@ -51,7 +51,7 @@ const methods = {
     register(data) {
         axios.post('/api/auth/register', data).then(() => {
             this.clearErrorMessage()
-            void router.push({name: 'Login'})
+            this.login(data)
         }).catch((err) => {
             this.clearErrorMessage()
             if(err.response) {
@@ -63,6 +63,31 @@ const methods = {
                 this.setErrorMessage("Something went wrong!")
             }
         })
+    },
+
+    uploadAvatar(event, id) {
+        const token = localStorage.access_token
+        let files = event.target.files
+        for(let i=0; i < files.length; i++) {
+            let formData = new FormData
+            console.log(files[i])
+            formData.set('image', files[i])
+
+            axios.post('/api/user/edit/avatar/' + id, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                state.userProfile = res.data
+            })
+                .catch((err) => {
+                    this.clearErrorMessage()
+                    if(err.response) {
+                        void router.push({ name: "Login" })
+                        this.setErrorMessage("Please login first!")
+                    }
+                })
+        }
     },
 
     getCampaigns() {
@@ -147,6 +172,14 @@ const methods = {
     },
 
     clearErrorMessage() {
+        state.error = []
+    },
+
+    resetAll() {
+        state.campaigns = []
+        state.users = []
+        state.transactions = []
+        state.userProfile = []
         state.error = []
     }
 }

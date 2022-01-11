@@ -6,7 +6,7 @@
                 <div class="bg-white p-3 mb-3 border border-gray-400 rounded-20">
                     <figure class="item-image">
                         <img
-                            :src="baseURL + campaignStore.state.campaign.primary_image.file_name"
+                            :src="mainImage.link === '' ? baseURL + campaignStore.state.campaign.primary_image.file_name : mainImage.link"
                             alt=""
                             class="rounded-20 w-full"
                         />
@@ -14,6 +14,7 @@
                 </div>
                 <div class="flex -mx-2">
                     <div v-for="image in campaignStore.state.campaign.images"
+                         @click="changeMainImage(baseURL + image.file_name)"
                          class="relative w-1/4 bg-white h-auto m-2 p-2 border border-gray-400 rounded-20">
                         <figure class="item-thumbnail cursor-pointer">
                             <img
@@ -132,6 +133,7 @@ export default {
     components: {Footer, Navbar, BaseProgress},
     setup(props) {
         const campaignStore = inject('campaignStore')
+        let mainImage = reactive({ 'link': '' })
         let fundForm = reactive({
             'campaign_id': '',
             'amount': ''
@@ -145,6 +147,11 @@ export default {
             return `${process.env.APP_URL}/storage/`
         })
 
+        const changeMainImage = (link) => {
+            mainImage.link = link
+            console.log(mainImage.link)
+        }
+
         const doFund = (id) => {
             fundForm.campaign_id = id
             campaignStore.methods.fundCampaign(fundForm)
@@ -154,6 +161,8 @@ export default {
             campaignStore,
             baseURL,
             fundForm,
+            mainImage,
+            changeMainImage,
             doFund
         }
     },

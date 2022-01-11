@@ -644,6 +644,9 @@ video {
 .right-0 {
 	right: 0px;
 }
+.bottom-0 {
+	bottom: 0px;
+}
 .m-2 {
 	margin: 0.5rem;
 }
@@ -764,6 +767,9 @@ video {
 }
 .mb-2 {
 	margin-bottom: 0.5rem;
+}
+.mt-6 {
+	margin-top: 1.5rem;
 }
 .mb-1 {
 	margin-bottom: 0.25rem;
@@ -970,6 +976,9 @@ video {
 .border {
 	border-width: 1px;
 }
+.border-4 {
+	border-width: 4px;
+}
 .border-2 {
 	border-width: 2px;
 }
@@ -1169,6 +1178,9 @@ video {
 }
 .pb-10 {
 	padding-bottom: 2.5rem;
+}
+.pb-2 {
+	padding-bottom: 0.5rem;
 }
 .text-center {
 	text-align: center;

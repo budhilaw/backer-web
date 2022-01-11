@@ -1,7 +1,7 @@
 <template>
     <div class="project-page bg-purple-progress">
         <Navbar />
-        <section class="container mx-auto pt-8 relative my-16">
+        <section class="container mx-auto pt-8 relative" :class="{'h-screen': campaignStore.state.campaigns?.length <= 3}">
             <div class="flex justify-between items-center mb-6">
                 <div class="w-3/4 mr-6">
                     <h2 class="text-4xl text-white mb-2 font-medium">Dashboard</h2>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <hr />
-            <div v-if="campaignStore.state.campaigns.length">
+            <div v-if="campaignStore.state.campaigns?.length > 0">
                 <div v-for="(item, index) in campaignStore.state.campaigns" :key="item.id">
                     <div class="block mb-4">
                         <div class="w-full lg:max-w-full lg:flex mb-4">
