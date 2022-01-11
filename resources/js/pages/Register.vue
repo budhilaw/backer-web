@@ -20,8 +20,8 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Write Your Name Here"
                             />
-                            <div v-if="errors.name" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                                {{ errors.name }}
+                            <div v-if="userStore.state.error[0]?.name?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ userStore.state.error[0].name[0] }}
                             </div>
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Write your occupation here"
                             />
-                            <div v-if="errors.occupation" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                                {{ errors.occupation }}
+                            <div v-if="userStore.state.error[0]?.occupation?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ userStore.state.error[0].occupation[0] }}
                             </div>
                         </div>
                     </div>
@@ -52,8 +52,8 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Write your email address here"
                             />
-                            <div v-if="errors.email" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                                {{ errors.email }}
+                            <div v-if="userStore.state.error[0]?.email?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ userStore.state.error[0].email[0] }}
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Type your password here"
                             />
-                            <div v-if="errors.password" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                                {{ errors.password }}
+                            <div v-if="userStore.state.error[0]?.password?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ userStore.state.error[0].password[0] }}
                             </div>
                         </div>
                     </div>
@@ -84,8 +84,8 @@
                                 class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                                 placeholder="Type the password confirmation here"
                             />
-                            <div v-if="errors.password_confirmation" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
-                                {{ errors.password_confirmation }}
+                            <div v-if="userStore.state.error[0]?.password_confirmation?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                {{ userStore.state.error[0].password_confirmation[0] }}
                             </div>
                         </div>
                     </div>
@@ -114,8 +114,7 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import useUser from "../composables/user";
+import { reactive, inject } from "vue";
 
 export default {
     name: "Register",
@@ -129,15 +128,15 @@ export default {
             'password_confirmation': '',
         })
 
-        const { errors, register } = useUser()
+        const userStore = inject('userStore')
 
         const saveUser = async () =>  {
-            await register({...form});
+            userStore.methods.register({...form});
         }
 
         return {
             form,
-            errors,
+            userStore,
             saveUser,
         }
     }

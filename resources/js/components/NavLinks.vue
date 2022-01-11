@@ -11,17 +11,17 @@
             </li>
             <li>
                 <router-link class="text-white hover:text-green-500 text-lg px-4 py-3"
-                             to="/about"
+                             to="/"
                 >Project</router-link>
             </li>
             <li>
                 <router-link class="text-white hover:text-green-500 text-lg px-4 py-3"
-                             to="/features"
+                             to="/"
                 >Features</router-link>
             </li>
             <li>
                 <router-link class="text-white hover:text-green-500 text-lg px-4 py-3"
-                             to="/story"
+                             to="/"
                 >Success Stories</router-link>
             </li>
         </ul>

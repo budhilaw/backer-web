@@ -1,7 +1,7 @@
 <template>
     <div class="project-page bg-purple-progress">
         <Navbar />
-        <section class="container mx-auto pt-8 relative my-16">
+        <section class="container mx-auto pt-8 relative" :class="{'h-screen': campaignStore.state.campaigns?.length <= 3}">
             <div class="flex justify-between items-center mb-6">
                 <div class="w-3/4 mr-6">
                     <h2 class="text-4xl text-white mb-2 font-medium">Dashboard</h2>
@@ -24,10 +24,16 @@
                         class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center">
                         + Create Campaign
                     </router-link>
+
+                    <router-link
+                        :to="{ name: 'MyProfile' }"
+                        class="bg-green-600 hover:bg-green-button text-white font-bold py-4 px-4 ml-4 rounded inline-flex items-center">
+                        My Profile
+                    </router-link>
                 </div>
             </div>
             <hr />
-            <div v-if="campaignStore.state.campaigns.length">
+            <div v-if="campaignStore.state.campaigns?.length > 0">
                 <div v-for="(item, index) in campaignStore.state.campaigns" :key="item.id">
                     <div class="block mb-4">
                         <div class="w-full lg:max-w-full lg:flex mb-4">
@@ -49,9 +55,18 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center">
+                                    <div v-if="userStore.state.userProfile.role === 1 && item.status === 0">
+                                        <button
+                                            @click="publishCampaign(item.id)"
+                                            class="bg-green-button text-white py-2 px-4 ml-4 rounded"
+                                        >
+                                            Approve
+                                        </button>
+                                    </div>
+
                                     <router-link
                                         :to="{ name: 'SingleCampaign', params: { slug: item.slug } }"
-                                        class="bg-green-button text-white py-2 px-4 rounded"
+                                        class="bg-green-button text-white py-2 px-4 ml-4 rounded"
                                     >
                                         Detail
                                     </router-link>
@@ -61,6 +76,13 @@
                                         class="bg-blue-600 text-white py-2 px-4 ml-4 rounded"
                                     >
                                         Upload Image
+                                    </router-link>
+
+                                    <router-link
+                                        :to="{ name: 'UpdateCampaign', params: { slug: item.slug } }"
+                                        class="bg-blue-600 text-white py-2 px-4 ml-4 rounded"
+                                    >
+                                        Edit
                                     </router-link>
 
                                     <button class="bg-red-500 text-white py-2 px-4 ml-4 rounded"
@@ -97,10 +119,16 @@ export default {
     components: { Navbar, Footer, Pagination },
     setup() {
         const campaignStore = inject('campaignStore')
+        const userStore = inject('userStore')
 
         onMounted(() => {
             campaignStore.methods.getCampaigns()
+            userStore.methods.getMyProfile()
         })
+
+        const publishCampaign = (id) => {
+            campaignStore.methods.publishCampaign(id)
+        }
 
         const baseURL = computed(() => {
             return `${process.env.APP_URL}/storage/`
@@ -108,7 +136,9 @@ export default {
 
         return {
             campaignStore,
-            baseURL
+            userStore,
+            baseURL,
+            publishCampaign
         }
     },
 }

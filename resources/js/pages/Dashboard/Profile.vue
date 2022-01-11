@@ -4,12 +4,12 @@
         <section class="container mx-auto pt-8 relative">
             <div class="flex justify-between items-center">
                 <div class="w-full mr-6">
-                    <h2 class="text-4xl text-white mb-2 font-medium">Dashboard</h2>
+                    <h2 class="text-4xl text-white mb-2 font-medium">My Profile</h2>
                 </div>
             </div>
             <div class="flex justify-between items-center">
                 <div class="w-3/4 mr-6">
-                    <h3 class="text-2xl text-white mb-4">Create New Projects</h3>
+                    <h3 class="text-2xl text-white mb-4">Edit My Profile</h3>
                 </div>
             </div>
 
@@ -20,58 +20,70 @@
                             <div class="flex flex-wrap -mx-3 mb-6">
                                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                        Campaign Name
+                                        Personal Name
                                     </label>
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        v-model="campaignStore.formState.campaign.name"
-                                        placeholder="Contoh: Mechanical Keyboard"
+                                        v-model="userStore.formState.user.name"
+                                        placeholder="Your Name"
                                     />
+                                    <div v-if="userStore.state.error[0]?.name?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                        {{ userStore.state.error[0].name[0] }}
+                                    </div>
                                 </div>
                                 <div class="w-full md:w-1/2 px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                        Goal Amount
+                                        Occupation
                                     </label>
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        type="number"
-                                        v-model="campaignStore.formState.campaign.goal_amount"
-                                        placeholder="Contoh: 200000"
+                                        type="text"
+                                        v-model="userStore.formState.user.occupation"
+                                        placeholder="Your occupation"
                                     />
+                                    <div v-if="userStore.state.error[0]?.occupation?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                        {{ userStore.state.error[0].occupation[0] }}
+                                    </div>
                                 </div>
                                 <div class="w-full px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mt-3">
-                                        Short Description
+                                        E-mail
                                     </label>
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        v-model="campaignStore.formState.campaign.excerpt"
-                                        placeholder="Deskripsi singkat mengenai projectmu"
+                                        v-model="userStore.formState.user.email"
+                                        placeholder="Your E-mail"
                                     />
+                                    <div v-if="userStore.state.error[0]?.email?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                        {{ userStore.state.error[0].email[0] }}
+                                    </div>
                                 </div>
                                 <div class="w-full px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                        What will backers get
+                                        New Password
                                     </label>
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        type="text"
-                                        v-model="campaignStore.formState.campaign.perks"
-                                        placeholder="Contoh: Ayam, Nasi Goreng, Piring"
+                                        type="password"
+                                        v-model="changePass.password"
+                                        placeholder="Leave empty if you not change your password"
                                     />
+                                    <div v-if="userStore.state.error[0]?.password?.[0]" class="bg-gray-100 p-2 my-4 text-sm text-red-600">
+                                        {{ userStore.state.error[0].password[0] }}
+                                    </div>
                                 </div>
                                 <div class="w-full px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                        Description
+                                        New Password Confirmation
                                     </label>
-                                    <textarea
+                                    <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        type="text"
-                                        v-model="campaignStore.formState.campaign.description"
-                                        placeholder="Isi deskripsi panjang untuk projectmu"
-                                    ></textarea>
+                                        type="password"
+                                        v-model="changePass.password_confirmation"
+                                        placeholder="Leave empty if you not change your password"
+                                    />
                                 </div>
                                 <div class="w-full px-3">
                                         <button @click="doUpdate"
@@ -98,27 +110,29 @@ import { onMounted, reactive, inject } from "vue";
 export default {
     name: "UpdateCampaign",
     components: { Navbar, Footer, UploadMedia },
-    props: {
-        slug: {
-            required: true,
-            type: String
-        }
-    },
-    setup(props) {
+    setup() {
         const campaignStore = inject('campaignStore')
+        const userStore = inject('userStore')
+        const changePass = reactive({
+            password: '',
+            password_confirmation: ''
+        })
 
         onMounted(() => {
-            campaignStore.methods.getCampaignsBySlug(props.slug)
+            userStore.methods.getMyProfile()
         })
 
         const doUpdate = () => {
-            let id = campaignStore.formState.campaign.id
-            let data = campaignStore.formState.campaign
-            campaignStore.methods.updateCampaign(id, data)
+            let id = userStore.formState.user.id
+            let data = userStore.formState.user
+            data.password = changePass.password
+            data.password_confirmation = changePass.password_confirmation
+            userStore.methods.updateProfile(id, data)
         }
 
         return {
-            campaignStore,
+            changePass,
+            userStore,
             doUpdate
         }
     },

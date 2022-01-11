@@ -4,13 +4,20 @@
 
 <script>
 import { useRouter } from "vue-router";
+import { inject } from "vue";
 
 export default {
     name: "Logout",
     mounted() {
+        const userStore = inject('userStore')
+        const campaignStore = inject('campaignStore')
         const router = useRouter()
+
         localStorage.clear()
-        router.push({name: 'Home'})
+        userStore.methods.resetAll()
+        campaignStore.methods.resetAll()
+
+        router.push({ name: 'Home' })
     }
 }
 </script>

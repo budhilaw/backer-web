@@ -1,7 +1,7 @@
 <template>
     <div class="project-page bg-purple-progress">
         <Navbar />
-        <section class="container mx-auto pt-8 relative h-screen">
+        <section class="container mx-auto pt-8 relative" :class="{'h-screen': userStore.state.transactions?.length <= 3}">
             <div class="flex justify-between items-center mb-6">
                 <div class="w-3/4 mr-6">
                     <h2 class="text-4xl text-white mb-2 font-medium">Dashboard</h2>
@@ -25,7 +25,7 @@
             </div>
             <hr />
             <div class="block mb-2">
-                <div v-if="userStore.state.transactions" class="w-full lg:max-w-full lg:flex flex-col justify-between mb-4">
+                <div v-if="userStore.state.transactions?.length > 0" class="w-full lg:max-w-full lg:flex flex-col justify-between mb-4">
                     <div v-for="trans in userStore.state.transactions"
                          class="w-full border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 mb-4 leading-normal">
                         <div>
@@ -63,6 +63,13 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="h-screen mt-8">
+                        <h4 class="text-2xl text-white">
+                            You don't have any transactions. <br />
+                        </h4>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@ use Config;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class CampaignController extends Controller
 {
@@ -125,6 +126,15 @@ class CampaignController extends Controller
         $path = config('app.configApp.pathCampaign');
         $pathToFile = $request->file('image')->store($path,'public');
         $filename = $pathToFile;
+
+        $img = Image::make(storage_path() . '/app/public/' . $filename);
+        $img->fit(895, 520);
+
+        $tempPhoto = storage_path() . '/app/public/' . $filename;
+        unlink($tempPhoto);
+
+        $img->save(storage_path() . '/app/public/' . $filename);
+
         $imageCampaign = CampaignImage::query()
             ->create([
                 'campaign_id' => $id,

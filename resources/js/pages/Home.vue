@@ -69,11 +69,11 @@
             </div>
             <div class="grid grid-cols-3 gap-4">
                 <div class="w-full p-5 border border-gray-500 rounded-20"
-                     v-for="item in getCampaigns" :key="item.id">
+                     v-for="item in campaignStore.state.campaigns" :key="item.id">
                     <div class="item">
                         <figure class="item-image">
                             <img
-                                src="/images/project-thumbnail-1.jpg"
+                                :src="baseURL + item?.image?.file_name"
                                 alt=""
                                 class="rounded-20 w-full"
                             />
@@ -182,11 +182,13 @@ export default {
             campaignStore.methods.visitorCampaigns()
         })
 
-        const getCampaigns = computed(() => campaignStore.state.campaigns)
+        const baseURL = computed(() => {
+            return `${process.env.APP_URL}/storage/`
+        })
 
         return {
             campaignStore,
-            getCampaigns
+            baseURL
         }
     },
 }
