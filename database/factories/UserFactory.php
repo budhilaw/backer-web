@@ -23,7 +23,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'avatar' => '/images/avatar/free.png',
+            'avatar' => '/avatar/avatar.jpg',
             'name' => $this->faker->name(),
             'occupation' => $this->faker->word(),
             'role' => 0,
