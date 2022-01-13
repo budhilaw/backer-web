@@ -1,0 +1,43 @@
+import:
+  - recipe/laravel.php
+  - contrib/php-fpm.php
+  - contrib/npm.php
+
+config:
+  application: 'Backer'
+  repository: 'git@github.com:budhilaw/backer-web.git'
+
+  remote_user: kai
+  base_deploy_path: '/home/kai/app'
+  keep_releases: 3
+  php_fpm_version: '8.0'
+
+hosts:
+  prod:
+    hostname: '157.230.40.38'
+    deploy_path: '{{base_deploy_path}}/backer'
+
+#  stag:
+#    hostname: 'ip_of_stage_host'
+#    deploy_path: '{{base_deploy_path}}/stag.example.com'
+
+tasks:
+  deploy:
+    - deploy:prepare
+    - deploy:vendors
+    - artisan:storage:link
+    - artisan:view:cache
+    - artisan:config:cache
+    - artisan:route:cache
+    - artisan:view:cache
+    - artisan:migrate
+    - npm:install
+    - npm:run:prod
+    - deploy:publish
+    - php-fpm:reload
+  npm:run:prod:
+    script:
+      - 'cd {{release_or_current_path}} && npm run prod'
+
+after:
+  deploy:failed: deploy:unlock
