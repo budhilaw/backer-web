@@ -91,7 +91,7 @@
                                         Change
                                     </button>
 
-                                    <router-link :to="{ name: 'UploadPhoto', params: { id: userStore.state.error[0].id } }"
+                                    <router-link :to="{ name: 'UploadPhoto', params: { id: userStore.state.error[0].id[0] } }"
                                             class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center">
                                         Change
                                     </router-link>
