@@ -15,13 +15,13 @@
                         </div>
                         <div v-else>
                             <img
-                                :src="baseURL + '/images/avatar/avatar.jpg'"
+                                :src="baseURL + '/avatar/avatar.jpg'"
                                 alt=""
                                 class="rounded-full border-white border-4"
                             />
                         </div>
                         <img
-                            :src="baseURL + '/images/avatar/icon-avatar-add.svg'"
+                            :src="baseURL + '/avatar/icon-avatar-add.svg'"
                             alt=""
                             class="absolute right-0 bottom-0 pb-2"
                         />

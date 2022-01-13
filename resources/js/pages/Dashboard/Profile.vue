@@ -86,10 +86,15 @@
                                     />
                                 </div>
                                 <div class="w-full px-3">
-                                        <button @click="doUpdate"
-                                           class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center">
-                                            Create
-                                        </button>
+                                    <button @click="doUpdate"
+                                       class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center">
+                                        Change
+                                    </button>
+
+                                    <router-link :to="{ name: 'UploadPhoto', params: { id: userStore.state.error[0].id } }"
+                                            class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center">
+                                        Change
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
