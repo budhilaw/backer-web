@@ -6,11 +6,8 @@ on:
 
 jobs:
   build-frontend:
-
     name: Building the Frontend for Production Server
-
     runs-on: ubuntu-latest
-
     if: github.ref == 'refs/heads/main'
 
     steps:
