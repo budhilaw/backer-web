@@ -54,7 +54,12 @@ import {computed, onMounted, inject, reactive} from "vue";
 
 export default {
     name: "UploadPhoto",
-    props: ['id'],
+    props: {
+        id: {
+            required: true,
+            type: String
+        }
+    },
     setup() {
         const userStore = inject('userStore')
 

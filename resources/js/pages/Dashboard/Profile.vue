@@ -85,16 +85,19 @@
                                         placeholder="Leave empty if you not change your password"
                                     />
                                 </div>
-                                <div class="w-full px-3">
+                                <div class="flex px-3 mt-4">
                                     <button @click="doUpdate"
-                                       class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center">
+                                       class="bg-green-button hover:bg-green-400 text-white font-bold px-4 py-1 rounded inline-flex items-center">
                                         Change
                                     </button>
 
-                                    <router-link :to="{ name: 'UploadPhoto', params: { id: userStore.state.error[0].id[0] } }"
-                                            class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center">
-                                        Change
-                                    </router-link>
+                                    <div v-if="userStore.formState.user?.id" class="ml-4">
+                                        <router-link
+                                            :to="{ name: 'UploadPhoto', params: { id: userStore.formState.user.id } }"
+                                            class="bg-blue-600 hover:bg-blue-400 text-white font-bold px-4 py-1 rounded inline-flex items-center">
+                                            Edit Photo
+                                        </router-link>
+                                    </div>
                                 </div>
                             </div>
                         </div>

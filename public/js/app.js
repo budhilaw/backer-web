@@ -30409,7 +30409,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "UploadPhoto",
-  props: ['id'],
+  props: {
+    id: {
+      required: true,
+      type: String
+    }
+  },
   setup: function setup() {
     var userStore = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('userStore');
     var uploadForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
@@ -31574,12 +31579,21 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_24 = {
-  "class": "w-full px-3"
+  "class": "flex px-3 mt-4"
 };
+var _hoisted_25 = {
+  key: 0,
+  "class": "ml-4"
+};
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Edit Photo ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _$setup$userStore$sta, _$setup$userStore$sta2, _$setup$userStore$sta3, _$setup$userStore$sta4, _$setup$userStore$sta5, _$setup$userStore$sta6, _$setup$userStore$sta7, _$setup$userStore$sta8;
+  var _$setup$userStore$sta, _$setup$userStore$sta2, _$setup$userStore$sta3, _$setup$userStore$sta4, _$setup$userStore$sta5, _$setup$userStore$sta6, _$setup$userStore$sta7, _$setup$userStore$sta8, _$setup$userStore$for;
 
   var _component_Navbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Navbar");
+
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
   var _component_Footer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Footer");
 
@@ -31640,8 +31654,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[5] || (_cache[5] = function () {
       return $setup.doUpdate && $setup.doUpdate.apply($setup, arguments);
     }),
-    "class": "bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center"
-  }, " Create ")])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
+    "class": "bg-green-button hover:bg-green-400 text-white font-bold px-4 py-1 rounded inline-flex items-center"
+  }, " Change "), (_$setup$userStore$for = $setup.userStore.formState.user) !== null && _$setup$userStore$for !== void 0 && _$setup$userStore$for.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: {
+      name: 'UploadPhoto',
+      params: {
+        id: $setup.userStore.formState.user.id
+      }
+    },
+    "class": "bg-blue-600 hover:bg-blue-400 text-white font-bold px-4 py-1 rounded inline-flex items-center"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_26];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["to"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)]);
 }
 
 /***/ }),
@@ -32970,13 +33001,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , _hoisted_7)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    src: $setup.baseURL + '/images/avatar/avatar.jpg',
+    src: $setup.baseURL + '/avatar/avatar.jpg',
     alt: "",
     "class": "rounded-full border-white border-4"
   }, null, 8
   /* PROPS */
   , _hoisted_9)])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    src: $setup.baseURL + '/images/avatar/icon-avatar-add.svg',
+    src: $setup.baseURL + '/avatar/icon-avatar-add.svg',
     alt: "",
     "class": "absolute right-0 bottom-0 pb-2"
   }, null, 8
@@ -33045,7 +33076,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL = 'https://backer.test';
+window.axios.defaults.baseURL = "https://backer.test";
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -33391,122 +33422,7 @@ var methods = {
   methods: methods,
   campaigns: campaigns,
   campaign: campaign
-}); // export default function useCampaign() {
-//     const campaign = ref([])
-//     const campaignImages = ref([])
-//     const router = useRouter()
-//
-//     const createCampaign = async (data) => {
-//         const token = localStorage.access_token
-//         let res = await axios.post('/api/campaign/store', data, {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             },
-//         })
-//         let id = res.data.data.id
-//         await router.push({ name: 'UploadImage', params: { id: id } })
-//     }
-//
-//     const getCampaign = async () => {
-//         let response = await axios.get('/api/campaign')
-//         campaign.value = response.data.data
-//     }
-//
-//     const getCampaignBySlug = async (slug) => {
-//         let response = await axios.get('/api/campaign/' + slug)
-//         campaign.value = response.data.data
-//     }
-//
-//     const listCampaignImages = async (campaignId) => {
-//         const token = localStorage.access_token
-//
-//         let res = await axios.get('/api/campaign/image/list/' + campaignId, {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             },
-//         });
-//         res.data.data.forEach((item) => {
-//             let name = item["file_name"].replace("images/campaign/", "")
-//             campaignImages.value.push({
-//                 id: item["id"],
-//                 url: "/storage/" + item["file_name"],
-//                 name: name,
-//                 primary: item["is_primary"]
-//             })
-//         })
-//     }
-//
-//     const uploadImageCampaign = async (event, id) => {
-//         const token = localStorage.access_token
-//
-//         let files = event.target.files
-//         for(let i=0; i < files.length; i++){
-//             let formData = new FormData
-//             let url = URL.createObjectURL(files[i])
-//             formData.set('image', files[i])
-//             formData.set('is_primary', false)
-//
-//             let res = await axios.post('/api/campaign/image/upload/' + id, formData, {
-//                 headers: {
-//                     'Authorization': `Bearer ${token}`
-//                 },
-//             })
-//
-//             let name = res.data.data["file_name"].replace("images/campaign/", "")
-//
-//             campaignImages.value.push({
-//                 id: res.data.data["id"],
-//                 url: url,
-//                 name: name,
-//                 primary: res.data.data["is_primary"],
-//                 size: files[i].size,
-//                 type: files[i].type
-//             })
-//         }
-//     }
-//
-//     const deleteImageCampaign = async (id, index) => {
-//         const token = localStorage.access_token
-//
-//         let res = await axios.delete('/api/campaign/image/destroy/' + id, {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             },
-//         })
-//         campaignImages.value.splice(index,1)
-//     }
-//
-//     const setPrimaryImage = async (id, index) => {
-//         const token = localStorage.access_token
-//
-//         let res = await axios.get('/api/campaign/image/primary/' + id, {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             },
-//         })
-//
-//         campaignImages.value = campaignImages.value.map((item, index) => {
-//             if(item.primary === 1) {
-//                 campaignImages.value[index].primary = 0
-//             }
-//             return item
-//         })
-//
-//         campaignImages.value[index].primary = 1
-//     }
-//
-//     return {
-//         campaign,
-//         campaignImages,
-//         createCampaign,
-//         getCampaign,
-//         getCampaignBySlug,
-//         listCampaignImages,
-//         uploadImageCampaign,
-//         deleteImageCampaign,
-//         setPrimaryImage
-//     }
-// }
+});
 
 /***/ }),
 
@@ -33795,78 +33711,7 @@ var methods = {
   state: (0,vue__WEBPACK_IMPORTED_MODULE_0__.readonly)(state),
   methods: methods,
   formState: formState
-}); // export default function useUser() {
-//     const user = ref([])
-//     const router = useRouter()
-//     const errors = ref([])
-//
-//     const storeUser = async (data) => {
-//         await axios.post('/api/backer', data)
-//         await router.push({name: 'user.dashboard'})
-//     }
-//
-//     const register = async (data) => {
-//         try {
-//             await axios.post('/api/auth/register', data)
-//             await router.push({name: 'Login'})
-//         } catch (e) {
-//             if(e.response.status === 422) {
-//                 for(const key in e.response.data.errors) {
-//                     errors.value[key] = e.response.data.errors[key][0]
-//                 }
-//             } else if(e.response.status === 401) {
-//                 errors.value['general'] = e.response.data.error
-//             }
-//         }
-//     }
-//
-//     const login = async (data) => {
-//         try {
-//             let res = await axios.post('/api/auth/login', data)
-//             await localStorage.setItem("access_token", res.data.access_token)
-//
-//             await router.push({name: 'Home'})
-//         } catch (e) {
-//             if(e.response.status === 422) {
-//                 for(const key in e.response.data.errors) {
-//                     errors.value[key] = e.response.data.errors[key][0]
-//                 }
-//             } else if(e.response.status === 401) {
-//                 errors.value['general'] = e.response.data.error
-//             }
-//         }
-//     }
-//
-//     const getCampaigns = async () => {
-//         const token = localStorage.access_token
-//         let res = await axios.get('/api/user/campaigns', {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         })
-//         state.campaigns = res.data.data
-//     }
-//
-//     const removeCampaign = async (id) => {
-//         const token = localStorage.access_token
-//         let res = await axios.delete('/api/campaign/destroy/' + id, {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         })
-//         state.campaigns = res.data.data
-//     }
-//
-//     return {
-//         user,
-//         errors,
-//         login,
-//         register,
-//         storeUser,
-//         getCampaigns,
-//         removeCampaign
-//     }
-// }
+});
 
 /***/ }),
 
