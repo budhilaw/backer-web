@@ -17,10 +17,6 @@ hosts:
     hostname: '157.230.40.38'
     deploy_path: '{{base_deploy_path}}/backer'
 
-#  stag:
-#    hostname: 'ip_of_stage_host'
-#    deploy_path: '{{base_deploy_path}}/stag.example.com'
-
 tasks:
   deploy:
     - deploy:prepare
