@@ -62,6 +62,16 @@
                             >.
                         </p>
                     </div>
+                    <div class="mb-6">
+                        <div class="mb-4">
+                            <button
+                                @click="googleLogin"
+                                class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
+                            >
+                                Login with Google
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,6 +80,7 @@
 
 <script>
 import { inject, reactive } from "vue";
+import router from "../router";
 
 export default {
     name: "Login",
@@ -85,10 +96,15 @@ export default {
             userStore.methods.login(form)
         }
 
+        const googleLogin = () => {
+            window.location.href = "/api/auth/redirect"
+        }
+
         return {
             userStore,
             form,
-            doLogin
+            doLogin,
+            googleLogin
         }
     }
 }

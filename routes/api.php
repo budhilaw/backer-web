@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\AdminController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +63,32 @@ Route::group(['middleware' => ['auth:api', 'adminOnly'], 'prefix' => 'admin'], f
     Route::get('/transaction/verify/{id}', [AdminController::class, 'verifyTransaction']);
 });
 
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->stateless()->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $user_google = Socialite::driver('google')->user();
+    $user = User::where('email', $user_google->getEmail())->first();
+
+    //jika user ada maka langsung di redirect ke halaman home
+    //jika user tidak ada maka simpan ke database
+    //$user_google menyimpan data google account seperti email, foto, dsb
+
+    if ($user != null) {
+        return response()->json(['user' => \auth()->login($user, true)]);
+//        return redirect()->route('home');
+    } else {
+        $create = User::Create([
+            'email' => $user_google->getEmail(),
+            'name' => $user_google->getName(),
+            'password' => 0,
+            'email_verified_at' => now()
+        ]);
+
+
+        \auth()->login($create, true);
+        return response()->json(['user' => \auth()->login($user, true)]);
+    }
+//        return redirect()->route('home');
+});

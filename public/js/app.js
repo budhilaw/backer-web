@@ -30180,6 +30180,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../router */ "./resources/js/router.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login",
@@ -30194,10 +30196,15 @@ __webpack_require__.r(__webpack_exports__);
       userStore.methods.login(form);
     };
 
+    var googleLogin = function googleLogin() {
+      window.location.href = "/api/auth/redirect";
+    };
+
     return {
       userStore: userStore,
       form: form,
-      doLogin: doLogin
+      doLogin: doLogin,
+      googleLogin: googleLogin
     };
   }
 });
@@ -32209,12 +32216,9 @@ var _hoisted_14 = {
 var _hoisted_15 = {
   "class": "flex progress-info"
 };
-
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_16 = {
   "class": "ml-auto font-semibold"
-}, "Rp 100.000.000", -1
-/* HOISTED */
-);
+};
 
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Fund Now");
 
@@ -32279,7 +32283,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* PROPS */
     , ["percentage"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.current_amount / item.goal_amount * 100) + "%", 1
     /* TEXT */
-    ), _hoisted_16])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, "Rp. " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.goal_amount), 1
+    /* TEXT */
+    )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       "class": "mt-5 text-center button-cta block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-2 text-lg rounded-full",
       to: {
         name: 'SingleCampaign',
@@ -32406,6 +32412,12 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
+var _hoisted_19 = {
+  "class": "mb-6"
+};
+var _hoisted_20 = {
+  "class": "mb-4"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$setup$userStore$sta, _$setup$userStore$sta2, _$setup$userStore$sta3, _$setup$userStore$sta4, _$setup$userStore$sta5, _$setup$userStore$sta6, _$setup$userStore$sta7, _$setup$userStore$sta8, _$setup$userStore$sta9, _$setup$userStore$sta10;
 
@@ -32438,7 +32450,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.doLogin && $setup.doLogin.apply($setup, arguments);
     }),
     "class": "block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
-  }, " Sign In ")])]), _hoisted_18])])])]);
+  }, " Sign In ")])]), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[3] || (_cache[3] = function () {
+      return $setup.googleLogin && $setup.googleLogin.apply($setup, arguments);
+    }),
+    "class": "block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
+  }, " Login with Google ")])])])])])]);
 }
 
 /***/ }),
